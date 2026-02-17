@@ -44,15 +44,15 @@
             height: 64px;
             display: flex; align-items: center; justify-content: space-between;
         }
-        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-brand { display: flex; align-items: center; gap: 8px; }
         .nav-logo {
-            width: 32px; height: 32px;
+            width: 4px; height: 32px;
             background: var(--teal);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 14px; color: var(--navy);
-            border-radius: 8px;
+            border-radius: 2px;
+            flex-shrink: 0;
         }
-        .nav-name { font-weight: 600; font-size: 14px; color: var(--navy); letter-spacing: 0.5px; }
+        .nav-name { font-weight: 800; font-size: 13px; color: var(--navy); line-height: 1.15; letter-spacing: 0.3px; }
+        .nav-name span { display: block; }
         .nav-name span { color: var(--teal); }
         .nav-cta {
             background: var(--navy); color: var(--white);
@@ -247,7 +247,11 @@
 
         /* ===== FOOTER ===== */
         footer { padding: 40px; background: var(--navy); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-        .footer-brand { font-size: 13px; font-weight: 500; color: #64748B; }
+        .footer-brand { font-size: 13px; font-weight: 500; color: #64748B; display: flex; align-items: center; gap: 12px; }
+        .footer-logo { display: flex; align-items: center; gap: 8px; }
+        .footer-logo-bar { width: 3px; height: 24px; background: var(--teal); border-radius: 2px; flex-shrink: 0; }
+        .footer-logo-text { font-weight: 800; font-size: 11px; color: var(--white); line-height: 1.15; letter-spacing: 0.3px; }
+        .footer-logo-text span { display: block; }
         .footer-brand span { color: var(--teal); }
         .footer-links { display: flex; gap: 24px; }
         .footer-links a { font-size: 13px; color: #94A3B8; text-decoration: none; transition: color 0.2s; }
@@ -289,8 +293,8 @@
 <!-- NAV -->
 <nav>
     <div class="nav-brand">
-        <div class="nav-logo">AVI</div>
-        <div class="nav-name">AI Value Index <span>by Meijanto</span></div>
+        <div class="nav-logo"></div>
+        <div class="nav-name"><span>AI Value</span><span>Index</span></div>
     </div>
     <button class="nav-cta" onclick="document.querySelector('.bottom-cta').scrollIntoView({behavior:'smooth'})">Request Scorecard</button>
 </nav>
@@ -429,7 +433,7 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-brand">AI Value Index <span>by Meijanto</span> &middot; Strategic Finance for the AI Era</div>
+    <div class="footer-brand"><div class="footer-logo"><div class="footer-logo-bar"></div><div class="footer-logo-text"><span>AI Value</span><span>Index</span></div></div><span>&middot; Strategic Finance for the AI Era</span></div>
     <div class="footer-links">
         <a href="#">LinkedIn</a>
         <a href="#">Newsletter</a>
