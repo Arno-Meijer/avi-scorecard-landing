@@ -32,8 +32,8 @@
   /* ===== NAV ===== */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: var(--white);
-    border-bottom: 1px solid #E8E6E3;
+    background: #F0EDEA;
+    border-bottom: 1px solid #E2DFDB;
     padding: 0 40px;
     height: 60px;
     display: flex; align-items: center; justify-content: space-between;
@@ -67,7 +67,7 @@
   /* ===== HERO ===== */
   .hero {
     margin-top: 60px;
-    background: var(--navy);
+    background: #F0EDEA;
     padding: 80px 40px 60px;
     position: relative;
     overflow: hidden;
@@ -76,7 +76,7 @@
     content: '';
     position: absolute; top: 0; right: 0;
     width: 50%; height: 100%;
-    background: linear-gradient(135deg, transparent 0%, rgba(0,180,216,0.03) 50%, rgba(0,180,216,0.08) 100%);
+    background: linear-gradient(135deg, transparent 0%, rgba(0,180,216,0.04) 50%, rgba(0,180,216,0.08) 100%);
   }
   .hero-inner {
     max-width: 900px;
@@ -85,7 +85,7 @@
   }
   .hero-tag {
     display: inline-block;
-    background: rgba(0,180,216,0.15);
+    background: rgba(0,180,216,0.12);
     color: var(--teal);
     font-size: 12px; font-weight: 600;
     padding: 6px 16px;
@@ -98,14 +98,14 @@
     font-size: clamp(32px, 5vw, 52px);
     font-weight: 800;
     line-height: 1.1;
-    color: var(--white);
+    color: var(--navy);
     margin-bottom: 12px;
   }
   .hero h1 .teal { color: var(--teal); }
   .hero h1 .amber { color: var(--amber); }
   .hero-sub {
     font-size: 18px; font-weight: 400;
-    color: #94A3B8;
+    color: #475569;
     line-height: 1.6;
     max-width: 640px;
     margin-bottom: 36px;
@@ -125,7 +125,7 @@
   }
   .hero-stat-label {
     font-size: 12px; font-weight: 500;
-    color: #64748B;
+    color: #6B7280;
     margin-top: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -133,7 +133,7 @@
 
   /* ===== CTA BOX ===== */
   .cta-box {
-    background: var(--mid-navy);
+    background: var(--navy);
     padding: 32px 36px;
     display: flex; align-items: center; gap: 16px;
     flex-wrap: wrap;
@@ -173,7 +173,7 @@
   .cta-box button:hover { background: var(--amber); transform: translateY(-1px); }
   .cta-note {
     width: 100%;
-    font-size: 12px; color: #64748B;
+    font-size: 12px; color: #94A3B8;
     margin-top: 4px;
   }
 
@@ -526,7 +526,7 @@
         <div class="hero-stat-label">Dimensions</div>
       </div>
       <div class="hero-stat">
-        <div class="hero-stat-num">10<span style="font-size:20px;color:#64748B">min</span></div>
+        <div class="hero-stat-num">10<span style="font-size:20px;color:#6B7280">min</span></div>
         <div class="hero-stat-label">To complete</div>
       </div>
     </div>
