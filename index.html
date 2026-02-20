@@ -1,465 +1,587 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Native Metrics Scorecard | AI Value Index</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #1B2A4A;
-            --teal: #00B4D8;
-            --light-teal: #E8F5F3;
-            --amber: #E8A838;
-            --mid-navy: #2C3E6B;
-            --bg: #FFFFFF;
-            --light-blue: #EEF2FF;
-            --dark-text: #030303;
-            --white: #FFFFFF;
-            --muted: #94A3B8;
-            --body-text: #64748B;
-            --radius: 14px;
-            --radius-pill: 100px;
-            --shadow: 0 2px 12px rgba(27,42,74,0.07);
-            --shadow-lg: 0 8px 32px rgba(27,42,74,0.10);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Exit Readiness Scorecard | AI Value Firm</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B2A4A;
+  --teal: #00B4D8;
+  --light-teal: #E8F5F3;
+  --amber: #E8A838;
+  --mid-navy: #2C3E6B;
+  --bg: #FFFFFF;
+  --light-blue: #EEF2FF;
+  --dark-text: #030303;
+  --white: #FFFFFF;
+  --muted: #94A3B8;
+  --body-text: #64748B;
+  --radius: 14px;
+  --radius-pill: 100px;
+  --shadow: 0 2px 12px rgba(27,42,74,0.07);
+  --shadow-lg: 0 8px 32px rgba(27,42,74,0.10);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--dark-text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #F0F0F0;
+  padding: 0 40px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 8px; }
+.nav-logo { width: 4px; height: 32px; background: var(--teal); border-radius: 2px; flex-shrink: 0; }
+.nav-name { font-weight: 800; font-size: 13px; color: var(--navy); line-height: 1.15; letter-spacing: 0.3px; }
+.nav-name span { display: block; }
+.nav-cta {
+  background: var(--navy); color: var(--white); font-weight: 700; font-size: 13px;
+  padding: 10px 28px; border: none; cursor: pointer; letter-spacing: 0.3px;
+  transition: all 0.2s; border-radius: var(--radius-pill);
+}
+.nav-cta:hover { background: #111827; transform: translateY(-1px); }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: var(--dark-text);
-            background: var(--bg);
-            -webkit-font-smoothing: antialiased;
-        }
+/* ===== HERO ===== */
+.hero {
+  margin-top: 64px;
+  background: linear-gradient(to bottom, var(--white) 70%, #F9FAFB 100%);
+  padding: 100px 40px 80px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-tag {
+  display: inline-block; background: #EEF2FF; color: var(--navy);
+  font-size: 12px; font-weight: 600; padding: 8px 20px;
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px;
+  border-radius: var(--radius-pill); border: 1px solid #C7D2FE;
+}
+.hero h1 {
+  font-size: clamp(36px, 5vw, 56px); font-weight: 800; line-height: 1.08;
+  color: var(--navy); margin-bottom: 20px;
+}
+.hero h1 .amber { color: var(--teal); font-weight: 800; }
+.hero-sub {
+  font-size: 17px; font-weight: 400; color: var(--body-text); line-height: 1.7;
+  max-width: 580px; margin: 0 auto 44px;
+}
+.hero-stats {
+  display: flex; gap: 16px; margin-bottom: 44px;
+  justify-content: center; flex-wrap: wrap;
+}
+.hero-stat {
+  display: flex; flex-direction: column; background: #F9FAFB;
+  padding: 18px 24px; border-radius: 12px; border: 1px solid #F0F0F0; min-width: 120px;
+}
+.hero-stat-num { font-size: 32px; font-weight: 800; color: var(--navy); line-height: 1; }
+.hero-stat-num span { font-size: 18px; color: var(--body-text); }
+.hero-stat-label {
+  font-size: 11px; font-weight: 500; color: var(--body-text); margin-top: 4px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
 
-        /* ===== NAV ===== */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid #F0F0F0;
-            padding: 0 40px;
-            height: 64px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .nav-brand { display: flex; align-items: center; gap: 8px; }
-        .nav-logo {
-            width: 4px; height: 32px;
-            background: var(--teal);
-            border-radius: 2px;
-            flex-shrink: 0;
-        }
-        .nav-name { font-weight: 800; font-size: 13px; color: var(--navy); line-height: 1.15; letter-spacing: 0.3px; }
-        .nav-name span { display: block; }
-        .nav-name span { color: var(--navy); }
-        .nav-cta {
-            background: var(--navy); color: var(--white);
-            font-weight: 700; font-size: 13px;
-            padding: 10px 28px; border: none; cursor: pointer;
-            letter-spacing: 0.3px;
-            transition: all 0.2s;
-            border-radius: var(--radius-pill);
-        }
-        .nav-cta:hover { background: #111827; transform: translateY(-1px); }
+/* ===== CTA BOX ===== */
+.cta-box {
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap; justify-content: center;
+}
+.cta-box input[type="email"] {
+  min-width: 280px; padding: 14px 20px; font-family: 'Inter', sans-serif;
+  font-size: 15px; border: 1px solid #E5E7EB; background: #F9FAFB;
+  color: var(--navy); outline: none; transition: border-color 0.2s;
+  border-radius: var(--radius-pill);
+}
+.cta-box input[type="email"]::placeholder { color: var(--muted); }
+.cta-box input[type="email"]:focus { border-color: var(--navy); }
+.cta-box button {
+  padding: 14px 36px; background: var(--navy); color: var(--white);
+  font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+  border: none; cursor: pointer; letter-spacing: 0.3px; transition: all 0.2s;
+  white-space: nowrap; border-radius: var(--radius-pill);
+}
+.cta-box button:hover { background: #111827; transform: translateY(-1px); }
+.cta-note { width: 100%; text-align: center; font-size: 12px; color: var(--body-text); margin-top: 8px; }
 
-        /* ===== HERO ===== */
-        .hero {
-            margin-top: 64px;
-            background: linear-gradient(to bottom, var(--white) 70%, #F9FAFB 100%);
-            padding: 100px 40px 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
-        .hero-tag {
-            display: inline-block;
-            background: #EEF2FF; color: var(--navy);
-            font-size: 12px; font-weight: 600;
-            padding: 8px 20px;
-            letter-spacing: 1.5px; text-transform: uppercase;
-            margin-bottom: 28px;
-            border-radius: var(--radius-pill);
-            border: 1px solid #C7D2FE;
-        }
-        .hero h1 {
-            font-size: clamp(36px, 5vw, 56px); font-weight: 800;
-            line-height: 1.08; color: var(--navy); margin-bottom: 20px;
-        }
-        .hero h1 strong { color: var(--navy); font-weight: 800; }
-        .hero h1 .amber { color: var(--teal); font-weight: 800; }
-        .hero-sub {
-            font-size: 17px; font-weight: 400; color: var(--body-text);
-            line-height: 1.7; max-width: 580px; margin: 0 auto 44px;
-        }
-        .hero-stats {
-            display: flex; gap: 16px; margin-bottom: 44px;
-            justify-content: center; flex-wrap: wrap;
-        }
-        .hero-stat {
-            display: flex; flex-direction: column;
-            background: #F9FAFB; padding: 18px 24px;
-            border-radius: 12px; border: 1px solid #F0F0F0; min-width: 120px;
-        }
-        .hero-stat-num { font-size: 32px; font-weight: 800; color: var(--navy); line-height: 1; }
-        .hero-stat-num span { font-size: 18px; color: var(--body-text); }
-        .hero-stat-label {
-            font-size: 11px; font-weight: 500; color: var(--body-text);
-            margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;
-        }
+/* ===== SECTIONS ===== */
+section { padding: 96px 40px; max-width: 1000px; margin: 0 auto; }
+.section-tag {
+  display: inline-block; background: #EEF2FF; color: var(--navy);
+  font-size: 11px; font-weight: 700; padding: 6px 16px;
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px;
+  border-radius: var(--radius-pill); border: 1px solid #C7D2FE;
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+  color: var(--navy); line-height: 1.12; margin-bottom: 16px;
+}
+.section-title .light { color: var(--teal); font-weight: 800; }
+.section-desc {
+  font-size: 16px; color: var(--body-text); line-height: 1.7;
+  max-width: 600px; margin-bottom: 48px;
+}
 
-        /* ===== CTA BOX ===== */
-        .cta-box {
-            display: flex; align-items: center; gap: 12px;
-            flex-wrap: wrap; justify-content: center;
-        }
-        .cta-box input[type="email"] {
-            min-width: 280px; padding: 14px 20px;
-            font-family: 'Inter', sans-serif; font-size: 15px;
-            border: 1px solid #E5E7EB; background: #F9FAFB;
-            color: var(--navy); outline: none;
-            transition: border-color 0.2s; border-radius: var(--radius-pill);
-        }
-        .cta-box input[type="email"]::placeholder { color: var(--muted); }
-        .cta-box input[type="email"]:focus { border-color: var(--navy); }
-        .cta-box button {
-            padding: 14px 36px; background: var(--navy); color: var(--white);
-            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
-            border: none; cursor: pointer; letter-spacing: 0.3px;
-            transition: all 0.2s; white-space: nowrap; border-radius: var(--radius-pill);
-        }
-        .cta-box button:hover { background: #111827; transform: translateY(-1px); }
-        .cta-note { width: 100%; text-align: center; font-size: 12px; color: var(--body-text); margin-top: 8px; }
+/* ===== WHAT YOU GET ===== */
+.benefits {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+}
+.benefit {
+  padding: 36px; background: var(--white); border: 1px solid #F0F0F0;
+  border-radius: var(--radius); transition: transform 0.2s, box-shadow 0.2s;
+}
+.benefit:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.benefit-icon {
+  width: 48px; height: 48px; background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px; font-size: 20px; border-radius: 12px;
+}
+.benefit h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.benefit p { font-size: 14px; color: var(--body-text); line-height: 1.7; }
 
-        /* ===== SECTIONS ===== */
-        section { padding: 96px 40px; max-width: 1000px; margin: 0 auto; }
-        .section-tag {
-            display: inline-block; background: #EEF2FF; color: var(--navy);
-            font-size: 11px; font-weight: 700; padding: 6px 16px;
-            letter-spacing: 1.5px; text-transform: uppercase;
-            margin-bottom: 16px; border-radius: var(--radius-pill);
-            border: 1px solid #C7D2FE;
-        }
-        .section-title {
-            font-size: clamp(28px, 4vw, 44px); font-weight: 800;
-            color: var(--navy); line-height: 1.12; margin-bottom: 16px;
-        }
-        .section-title .light { color: var(--teal); font-weight: 800; }
-        .section-desc { font-size: 16px; color: var(--body-text); line-height: 1.7; max-width: 600px; margin-bottom: 48px; }
+/* ===== DIMENSIONS ===== */
+.dimensions-section { background: var(--light-blue); padding: 96px 40px; }
+.dimensions-inner { max-width: 1000px; margin: 0 auto; }
+.dimensions-grid {
+  display: grid; grid-template-columns: 1fr; gap: 1px;
+  background: #E0E4EB; border-radius: var(--radius); overflow: hidden;
+}
+.dimension {
+  background: var(--white); padding: 28px 32px;
+  display: grid; grid-template-columns: 48px 1fr auto;
+  align-items: center; gap: 20px; transition: all 0.2s;
+}
+.dimension:hover { background: #F8FAFF; }
+.dim-num { font-size: 28px; font-weight: 800; color: var(--teal); text-align: center; }
+.dim-content h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.dim-content p { font-size: 13px; color: var(--body-text); line-height: 1.5; }
+.dim-tag {
+  font-size: 11px; font-weight: 600; color: var(--body-text);
+  background: #F3F4F6; padding: 6px 14px; white-space: nowrap;
+  border-radius: var(--radius-pill);
+}
 
-        /* ===== WHAT YOU GET ===== */
-        .benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .benefit {
-            padding: 36px; background: var(--white); border: 1px solid #F0F0F0;
-            border-radius: var(--radius); transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .benefit:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-        .benefit-icon {
-            width: 48px; height: 48px; background: var(--navy);
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px; font-size: 20px; border-radius: 12px;
-        }
-        .benefit h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-        .benefit p { font-size: 14px; color: var(--body-text); line-height: 1.7; }
+/* ===== HOW IT WORKS ===== */
+.steps {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; counter-reset: step;
+}
+.step {
+  padding: 36px 28px; background: #F9FAFB; position: relative;
+  counter-increment: step; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid #F0F0F0; transition: transform 0.2s, box-shadow 0.2s;
+}
+.step:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.step::before {
+  content: counter(step); font-size: 56px; font-weight: 800;
+  color: rgba(27,42,74,0.05); position: absolute; top: 14px; right: 18px; line-height: 1;
+}
+.step h3 {
+  font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.step p { font-size: 14px; color: var(--body-text); line-height: 1.7; }
 
-        /* ===== DIMENSIONS ===== */
-        .dimensions-section { background: var(--light-blue); padding: 96px 40px; }
-        .dimensions-inner { max-width: 1000px; margin: 0 auto; }
-        .dimensions-grid {
-            display: grid; grid-template-columns: 1fr; gap: 1px;
-            background: #E0E4EB; border-radius: var(--radius); overflow: hidden;
-        }
-        .dimension {
-            background: var(--white); padding: 28px 32px;
-            display: grid; grid-template-columns: 48px 1fr auto;
-            align-items: center; gap: 20px; transition: all 0.2s;
-        }
-        .dimension:hover { background: #F8FAFF; }
-        .dim-num { font-size: 28px; font-weight: 800; color: var(--teal); text-align: center; }
-        .dim-content h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-        .dim-content p { font-size: 13px; color: var(--body-text); line-height: 1.5; }
-        .dim-tag {
-            font-size: 11px; font-weight: 600; color: var(--body-text);
-            background: #F3F4F6; padding: 6px 14px; white-space: nowrap; border-radius: var(--radius-pill);
-        }
+/* ===== PORTFOLIO PREVIEW ===== */
+.portfolio-section { background: #F9FAFB; padding: 96px 40px; }
+.portfolio-preview {
+  background: var(--white); padding: 48px; overflow-x: auto;
+  border-radius: var(--radius); border: 1px solid #F0F0F0;
+  max-width: 1000px; margin: 0 auto;
+}
+.portfolio-preview h3 {
+  font-size: 13px; font-weight: 600; color: var(--navy);
+  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;
+}
+.heatmap { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
+.heatmap th {
+  padding: 10px 14px; font-weight: 600; color: var(--body-text); text-align: center;
+  border-bottom: 1px solid #F0F0F0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.heatmap th:first-child { text-align: left; }
+.heatmap td { padding: 10px 14px; text-align: center; border-bottom: 1px solid #F8F8F8; }
+.heatmap td:first-child { text-align: left; color: var(--navy); font-weight: 600; }
+.heatmap td:last-child { color: var(--navy); font-weight: 700; }
+.dot {
+  display: inline-block; width: 28px; height: 28px; line-height: 28px;
+  font-size: 14px; text-align: center; border-radius: 6px;
+}
+.dot-red { background: rgba(239,68,68,0.15); color: #EF4444; }
+.dot-yellow { background: rgba(234,179,8,0.15); color: #EAB308; }
+.dot-green { background: rgba(34,197,94,0.15); color: #22C55E; }
 
-        /* ===== HOW IT WORKS ===== */
-        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; counter-reset: step; }
-        .step {
-            padding: 36px 28px; background: #F9FAFB; position: relative;
-            counter-increment: step; border-radius: var(--radius); overflow: hidden;
-            border: 1px solid #F0F0F0; transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .step:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-        .step::before {
-            content: counter(step); font-size: 56px; font-weight: 800;
-            color: rgba(27,42,74,0.05); position: absolute; top: 14px; right: 18px; line-height: 1;
-        }
-        .step h3 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .step p { font-size: 14px; color: var(--body-text); line-height: 1.7; }
+/* ===== SOCIAL PROOF ===== */
+.proof-bar {
+  background: #F9FAFB; padding: 48px 40px;
+  display: flex; justify-content: center; align-items: center;
+  gap: 64px; flex-wrap: wrap; text-align: center;
+}
+.proof-item { display: flex; flex-direction: column; align-items: center; }
+.proof-num { font-size: 32px; font-weight: 800; color: var(--navy); }
+.proof-label {
+  font-size: 12px; font-weight: 500; color: var(--body-text); margin-top: 4px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.proof-title { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.proof-desc { font-size: 12px; color: var(--body-text); line-height: 1.5; max-width: 220px; }
 
-        /* ===== PORTFOLIO PREVIEW ===== */
-        .portfolio-section { background: #F9FAFB; padding: 96px 40px; }
-        .portfolio-preview {
-            background: var(--white); padding: 48px; overflow-x: auto;
-            border-radius: var(--radius); border: 1px solid #F0F0F0;
-            max-width: 1000px; margin: 0 auto;
-        }
-        .portfolio-preview h3 { font-size: 13px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; }
-        .heatmap { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
-        .heatmap th { padding: 10px 14px; font-weight: 600; color: var(--body-text); text-align: center; border-bottom: 1px solid #F0F0F0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .heatmap th:first-child { text-align: left; }
-        .heatmap td { padding: 10px 14px; text-align: center; border-bottom: 1px solid #F8F8F8; }
-        .heatmap td:first-child { text-align: left; color: var(--navy); font-weight: 600; }
-        .heatmap td:last-child { color: var(--navy); font-weight: 700; }
-        .dot { display: inline-block; width: 28px; height: 28px; line-height: 28px; font-size: 14px; text-align: center; border-radius: 6px; }
-        .dot-red { background: rgba(239,68,68,0.15); color: #EF4444; }
-        .dot-yellow { background: rgba(234,179,8,0.15); color: #EAB308; }
-        .dot-green { background: rgba(34,197,94,0.15); color: #22C55E; }
+/* ===== RATING SCALE ===== */
+.rating-scale {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  margin-top: 40px;
+}
+.rating-item {
+  padding: 20px 16px; text-align: center;
+  border-radius: var(--radius); border: 1px solid #F0F0F0; background: var(--white);
+}
+.rating-letter { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+.rating-name { font-size: 11px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.rating-range { font-size: 10px; color: var(--muted); }
 
-        /* ===== SOCIAL PROOF ===== */
-        .proof-bar {
-            background: #F9FAFB; padding: 48px 40px;
-            display: flex; justify-content: center; align-items: center;
-            gap: 64px; flex-wrap: wrap; text-align: center;
-        }
-        .proof-item { display: flex; flex-direction: column; align-items: center; }
-        .proof-num { font-size: 32px; font-weight: 800; color: var(--navy); }
-        .proof-label { font-size: 12px; font-weight: 500; color: var(--body-text); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+/* ===== WHO THIS IS FOR ===== */
+.who-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.who-card {
+  padding: 36px; background: var(--navy); border-radius: var(--radius);
+  border: 1px solid var(--navy); transition: transform 0.2s;
+}
+.who-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.who-card-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.who-card p { color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.7; }
 
-        /* ===== WHO THIS IS FOR ===== */
-        .who-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
-        .who-card {
-            padding: 36px; background: #F9FAFB; border-radius: var(--radius);
-            border: 1px solid #F0F0F0; transition: transform 0.2s;
-        }
-        .who-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-        .who-card-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
-        .who-card p { color: var(--body-text); font-size: 14px; line-height: 1.7; }
+/* ===== BRIDGE SECTION ===== */
+.bridge-section { background: var(--light-blue); padding: 96px 40px; }
+.bridge-inner { max-width: 1000px; margin: 0 auto; }
+.bridge-cards {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; margin-top: 40px;
+}
+.bridge-card {
+  padding: 40px 32px; border-radius: var(--radius); border: 1px solid #F0F0F0;
+  display: flex; flex-direction: column;
+}
+.bridge-card.scorecard-card { background: var(--white); }
+.bridge-card.service-card { background: var(--navy); color: var(--white); }
+.bridge-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+.bridge-card.service-card h3 { color: var(--white); }
+.bridge-card p { font-size: 14px; line-height: 1.7; }
+.bridge-card.service-card p { color: rgba(255,255,255,0.75); }
+.bridge-card .card-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; margin-bottom: 16px;
+}
+.bridge-card.scorecard-card .card-label { color: var(--teal); }
+.bridge-card.service-card .card-label { color: var(--amber); }
+.bridge-arrow {
+  font-size: 32px; color: var(--teal); font-weight: 800; padding: 0 20px;
+  display: flex; align-items: center;
+}
+.bridge-features {
+  margin-top: 16px; padding: 0; list-style: none;
+}
+.bridge-features li {
+  font-size: 13px; color: var(--body-text); padding: 4px 0;
+  padding-left: 20px; position: relative;
+}
+.bridge-card.service-card .bridge-features li { color: rgba(255,255,255,0.75); }
+.bridge-features li::before {
+  content: ''; position: absolute; left: 0; top: 11px;
+  width: 8px; height: 8px; border-radius: 2px;
+}
+.bridge-card.scorecard-card .bridge-features li::before { background: var(--teal); }
+.bridge-card.service-card .bridge-features li::before { background: var(--amber); }
 
-        /* ===== BOTTOM CTA ===== */
-        .bottom-cta { background: var(--light-blue); padding: 96px 40px; text-align: center; }
-        .bottom-cta-inner { max-width: 640px; margin: 0 auto; }
-        .bottom-cta h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--navy); margin-bottom: 16px; line-height: 1.12; }
-        .bottom-cta h2 .teal { color: var(--teal); }
-        .bottom-cta p { font-size: 16px; color: var(--body-text); margin-bottom: 36px; line-height: 1.7; }
-        .bottom-cta .cta-box { justify-content: center; }
+/* ===== BOTTOM CTA ===== */
+.bottom-cta { background: var(--white); padding: 96px 40px; text-align: center; }
+.bottom-cta-inner { max-width: 640px; margin: 0 auto; }
+.bottom-cta h2 {
+  font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+  color: var(--navy); margin-bottom: 16px; line-height: 1.12;
+}
+.bottom-cta h2 .teal { color: var(--teal); }
+.bottom-cta p { font-size: 16px; color: var(--body-text); margin-bottom: 36px; line-height: 1.7; }
+.bottom-cta .cta-box { justify-content: center; }
 
-        /* ===== FOOTER ===== */
-        footer { padding: 40px; background: var(--navy); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-        .footer-brand { font-size: 13px; font-weight: 500; color: var(--white); display: flex; align-items: center; gap: 12px; }
-        .footer-logo { display: flex; align-items: center; gap: 8px; }
-        .footer-logo-bar { width: 3px; height: 24px; background: var(--white); border-radius: 2px; flex-shrink: 0; }
-        .footer-logo-text { font-weight: 800; font-size: 11px; color: var(--white); line-height: 1.15; letter-spacing: 0.3px; }
-        .footer-logo-text span { display: block; }
-        .footer-brand span { color: var(--white); }
-        .footer-links { display: flex; gap: 24px; }
-        .footer-links a { font-size: 13px; color: #94A3B8; text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: var(--white); }
+/* ===== FOOTER ===== */
+footer {
+  padding: 40px; background: var(--navy);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-brand {
+  font-size: 13px; font-weight: 500; color: var(--white);
+  display: flex; align-items: center; gap: 12px;
+}
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo-bar { width: 3px; height: 24px; background: var(--white); border-radius: 2px; flex-shrink: 0; }
+.footer-logo-text { font-weight: 800; font-size: 11px; color: var(--white); line-height: 1.15; letter-spacing: 0.3px; }
+.footer-logo-text span { display: block; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; color: #94A3B8; text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--white); }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            nav { padding: 0 20px; }
-            .hero { padding: 72px 20px 56px; }
-            .hero-stats { gap: 12px; }
-            section { padding: 64px 20px; }
-            .dimensions-section { padding: 64px 20px; }
-            .portfolio-section { padding: 64px 20px; }
-            .cta-box input[type="email"] { min-width: 100%; }
-            .dimension { grid-template-columns: 36px 1fr; gap: 12px; padding: 20px; }
-            .dim-tag { display: none; }
-            .portfolio-preview { padding: 28px 20px; }
-            .proof-bar { padding: 32px 20px; gap: 32px; }
-            .bottom-cta { padding: 64px 20px; }
-            footer { padding: 24px 20px; }
-        }
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .hero { padding: 72px 20px 56px; }
+  .hero-stats { gap: 12px; }
+  section { padding: 64px 20px; }
+  .dimensions-section { padding: 64px 20px; }
+  .portfolio-section { padding: 64px 20px; }
+  .cta-box input[type="email"] { min-width: 100%; }
+  .dimension { grid-template-columns: 36px 1fr; gap: 12px; padding: 20px; }
+  .dim-tag { display: none; }
+  .portfolio-preview { padding: 28px 20px; }
+  .proof-bar { padding: 32px 20px; gap: 32px; }
+  .bottom-cta { padding: 64px 20px; }
+  footer { padding: 24px 20px; }
+  .rating-scale { grid-template-columns: repeat(3, 1fr); }
+  .bridge-cards { grid-template-columns: 1fr; gap: 16px; }
+  .bridge-arrow { justify-content: center; transform: rotate(90deg); padding: 8px 0; }
+  .bridge-section { padding: 64px 20px; }
+}
 
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .hero-inner > * { animation: fadeUp 0.7s ease-out both; }
-        .hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
-        .hero-inner > *:nth-child(2) { animation-delay: 0.2s; }
-        .hero-inner > *:nth-child(3) { animation-delay: 0.3s; }
-        .hero-inner > *:nth-child(4) { animation-delay: 0.4s; }
-        .hero-inner > *:nth-child(5) { animation-delay: 0.5s; }
-        .hero-inner > *:nth-child(6) { animation-delay: 0.6s; }
-    
-        /* FOG SHADER */
-        .shader-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .shader-container canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-    </style>
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-inner > * { animation: fadeUp 0.7s ease-out both; }
+.hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-inner > *:nth-child(2) { animation-delay: 0.2s; }
+.hero-inner > *:nth-child(3) { animation-delay: 0.3s; }
+.hero-inner > *:nth-child(4) { animation-delay: 0.4s; }
+.hero-inner > *:nth-child(5) { animation-delay: 0.5s; }
+.hero-inner > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* FOG SHADER */
+.shader-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.shader-container canvas { width: 100%; height: 100%; display: block; }
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-    <div class="nav-brand">
-        <div class="nav-logo"></div>
-        <div class="nav-name"><span>AI Value</span><span>Index</span></div>
-    </div>
-    <button class="nav-cta" onclick="document.querySelector('.bottom-cta').scrollIntoView({behavior:'smooth'})">Request Scorecard</button>
+  <div class="nav-brand">
+    <div class="nav-logo"></div>
+    <div class="nav-name"><span>AI Value</span><span>Firm</span></div>
+  </div>
+  <button class="nav-cta" onclick="document.querySelector('.bottom-cta').scrollIntoView({behavior:'smooth'})">Get the Scorecard</button>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-    <div class="shader-container"><canvas id="fog-shader"></canvas></div>
-    <div class="hero-inner">
-        <div class="hero-tag">Free Assessment Tool</div>
-        <h1>Is AI showing up in<br>your <span class="amber">P&amp;L</span>?</h1>
-        <p class="hero-sub">
-            95% of AI projects fail to prove ROI. Not because there's no value, but because nobody measures it. Score your AI-readiness in 10 minutes and find out exactly where to focus.
-        </p>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-num">15</div>
-                <div class="hero-stat-label">Questions</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">5</div>
-                <div class="hero-stat-label">Dimensions</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-num">10<span>min</span></div>
-                <div class="hero-stat-label">To complete</div>
-            </div>
-        </div>
-        <div class="cta-box">
-            <input type="email" placeholder="Your work email">
-            <button>Download Scorecard</button>
-        </div>
-        <div class="cta-note">Free PDF + scoring guide. No spam, unsubscribe anytime.</div>
+  <div class="shader-container"><canvas id="fog-shader"></canvas></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Free Assessment Tool</div>
+    <h1>Would a buyer pay a<br><span class="amber">premium</span> for your AI?</h1>
+    <p class="hero-sub">
+      Most companies can't prove what their AI is worth. Score your exit readiness across 5 dimensions in 15 minutes and discover where a buyer would discount - or pay more.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">15</div>
+        <div class="hero-stat-label">Questions</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">5</div>
+        <div class="hero-stat-label">Dimensions</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">15<span>min</span></div>
+        <div class="hero-stat-label">To complete</div>
+      </div>
     </div>
+    <div class="cta-box">
+      <input type="email" placeholder="Your work email">
+      <button>Download Scorecard</button>
+    </div>
+    <div class="cta-note">Free HTML scorecard + scoring guide. No spam, unsubscribe anytime.</div>
+  </div>
 </div>
 
-<!-- SOCIAL PROOF BAR -->
+<!-- CREDIBILITY BAR -->
 <div class="proof-bar">
-    <div class="proof-item"><div class="proof-num">50+</div><div class="proof-label">Companies benchmarked</div></div>
-    <div class="proof-item"><div class="proof-num">5</div><div class="proof-label">Industry sectors covered</div></div>
-    <div class="proof-item"><div class="proof-num">47</div><div class="proof-label">Average score (out of 100)</div></div>
+  <div class="proof-item"><div class="proof-title">Ex-EY Parthenon</div><div class="proof-desc">Transaction strategy & due diligence background</div></div>
+  <div class="proof-item"><div class="proof-title">AI + Value</div><div class="proof-desc">AI strategy meets financial modelling & unit economics</div></div>
+  <div class="proof-item"><div class="proof-title">Cross-Industry</div><div class="proof-desc">Including SaaS, manufacturing, healthcare & financial services</div></div>
 </div>
 
 <!-- WHAT YOU GET -->
 <section>
-    <div class="section-tag">What You Get</div>
-    <h2 class="section-title">A complete AI health check<br><span class="light">in one page</span></h2>
-    <p class="section-desc">Not another generic AI maturity framework. This scorecard maps directly to P&amp;L impact, so you know exactly where AI creates value and where it's burning cash.</p>
-    <div class="benefits">
-        <div class="benefit">
-            <div class="benefit-icon" style="color:var(--teal)">&#9632;</div>
-            <h3>Score 0 – 100</h3>
-            <p>15 questions across 5 dimensions, scored with clear red/yellow/green thresholds. Know instantly where you stand from F (pre-AI) to A (AI-native leader).</p>
-        </div>
-        <div class="benefit">
-            <div class="benefit-icon" style="color:var(--amber)">&#9650;</div>
-            <h3>Industry Benchmarks</h3>
-            <p>Compare against median scores from 50+ companies. Works across SaaS, manufacturing, financial services, healthcare, and professional services.</p>
-        </div>
-        <div class="benefit">
-            <div class="benefit-icon" style="color:var(--teal)">&#9654;</div>
-            <h3>Top 3 Levers</h3>
-            <p>Your three lowest-scoring areas become your 90-day action plan. Concrete first steps, not vague “improve AI adoption” advice.</p>
-        </div>
+  <div class="section-tag">What You Get</div>
+  <h2 class="section-title">See your company through<br><span class="light">a buyer's eyes</span></h2>
+  <p class="section-desc">Not another generic AI maturity framework. This scorecard applies a buyer's due diligence lens, so you know exactly where AI adds to your valuation - and where it creates risk.</p>
+  <div class="benefits">
+    <div class="benefit">
+      <div class="benefit-icon" style="color:var(--teal)">&#9632;</div>
+      <h3>Score 0 - 100</h3>
+      <p>15 questions across 5 dimensions with clear thresholds. Your rating goes from F (Multiple Compression) to A (Premium Ready) - the same language buyers use.</p>
     </div>
+    <div class="benefit">
+      <div class="benefit-icon" style="color:var(--amber)">&#9650;</div>
+      <h3>Buyer's Lens</h3>
+      <p>Every question is framed the way a buyer would ask it in due diligence. Revenue visibility, defensibility, cost control, operating leverage, and governance readiness.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon" style="color:var(--teal)">&#9654;</div>
+      <h3>Top 3 Levers</h3>
+      <p>Your three lowest-scoring areas become your priority list. Concrete gaps a buyer would flag - with clear direction on what to fix first.</p>
+    </div>
+  </div>
 </section>
 
 <!-- 5 DIMENSIONS -->
 <div class="dimensions-section">
-    <div class="dimensions-inner">
-        <div class="section-tag">The Framework</div>
-        <h2 class="section-title">Five dimensions <span class="light">that matter</span></h2>
-        <p class="section-desc">Each dimension scores 0 – 20 based on 3 targeted questions. Together they reveal whether AI is creating real value or just creating costs.</p>
-        <div class="dimensions-grid">
-            <div class="dimension"><div class="dim-num">1</div><div class="dim-content"><h3>Revenue &amp; Productivity Efficiency</h3><p>Is AI actually improving output per FTE? Measures output trends, AI-attributed value, and time-to-value compression.</p></div><div class="dim-tag">3 questions</div></div>
-            <div class="dimension"><div class="dim-num">2</div><div class="dim-content"><h3>AI Adoption Depth</h3><p>Beyond “we use ChatGPT.” Measures maturity level (1–5), percentage of core processes with structured AI, and org-wide adoption rate.</p></div><div class="dim-tag">3 questions</div></div>
-            <div class="dimension"><div class="dim-num">3</div><div class="dim-content"><h3>AI Economics &amp; Cost Intelligence</h3><p>Do you know what AI costs you and what it returns? Covers cost visibility, cost-to-value ratio, and margin impact tracking.</p></div><div class="dim-tag">3 questions</div></div>
-            <div class="dimension"><div class="dim-num">4</div><div class="dim-content"><h3>Operational Leverage</h3><p>The ultimate proof AI works: output growing faster than headcount. Measures scaling efficiency, automation rate, and capacity redeployment.</p></div><div class="dim-tag">3 questions</div></div>
-            <div class="dimension"><div class="dim-num">5</div><div class="dim-content"><h3>Governance &amp; Strategic Readiness</h3><p>Can you sustain and scale AI? Assesses governance structure, data readiness, and internal AI capability vs. vendor dependency.</p></div><div class="dim-tag">3 questions</div></div>
-        </div>
+  <div class="dimensions-inner">
+    <div class="section-tag">The Framework</div>
+    <h2 class="section-title">Five dimensions <span class="light">buyers care about</span></h2>
+    <p class="section-desc">Each dimension scores 0 - 20 based on 3 targeted questions. Together they reveal whether your AI would command a premium - or become a discount.</p>
+    <div class="dimensions-grid">
+      <div class="dimension"><div class="dim-num">1</div><div class="dim-content"><h3>AI Revenue &amp; Monetization</h3><p>Can a buyer see AI in your revenue model? Measures pricing visibility, retention impact, and revenue per employee trend.</p></div><div class="dim-tag">3 questions</div></div>
+      <div class="dimension"><div class="dim-num">2</div><div class="dim-content"><h3>Product Defensibility &amp; Moat</h3><p>What do you own that a competitor can't replicate in 12 months? Covers proprietary data, switching costs, and IP ownership.</p></div><div class="dim-tag">3 questions</div></div>
+      <div class="dimension"><div class="dim-num">3</div><div class="dim-content"><h3>AI Economics &amp; Margin Quality</h3><p>Does the organization understand and control AI costs? Measures cost visibility, return on investment, and forecast accuracy.</p></div><div class="dim-tag">3 questions</div></div>
+      <div class="dimension"><div class="dim-num">4</div><div class="dim-content"><h3>Operational Leverage</h3><p>Does AI deliver proven, measurable impact - or is it "cool tech" with no P&amp;L effect? Covers output vs. headcount, automation rate, and attributable impact.</p></div><div class="dim-tag">3 questions</div></div>
+      <div class="dimension"><div class="dim-num">5</div><div class="dim-content"><h3>Governance &amp; Deal Readiness</h3><p>Would your AI practices survive a buyer's legal team? Assesses governance documentation, IP ownership trail, and talent risk.</p></div><div class="dim-tag">3 questions</div></div>
     </div>
+
+    <!-- Rating Scale -->
+    <div class="rating-scale">
+      <div class="rating-item">
+        <div class="rating-letter" style="color:var(--teal)">A</div>
+        <div class="rating-name">Premium Ready</div>
+        <div class="rating-range">80 - 100</div>
+      </div>
+      <div class="rating-item">
+        <div class="rating-letter" style="color:#22C55E">B</div>
+        <div class="rating-name">Investable with Gaps</div>
+        <div class="rating-range">60 - 79</div>
+      </div>
+      <div class="rating-item">
+        <div class="rating-letter" style="color:#EAB308">C</div>
+        <div class="rating-name">Discount Territory</div>
+        <div class="rating-range">40 - 59</div>
+      </div>
+      <div class="rating-item">
+        <div class="rating-letter" style="color:var(--amber)">D</div>
+        <div class="rating-name">Earn-out Risk</div>
+        <div class="rating-range">20 - 39</div>
+      </div>
+      <div class="rating-item">
+        <div class="rating-letter" style="color:#EF4444">F</div>
+        <div class="rating-name">Multiple Compression</div>
+        <div class="rating-range">0 - 19</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- HOW IT WORKS -->
 <section>
-    <div class="section-tag">How It Works</div>
-    <h2 class="section-title">From download to action <span class="light">in 15 minutes</span></h2>
-    <div class="steps">
-        <div class="step"><h3>Score</h3><p>Answer 15 questions honestly. Each scores 0–4 based on clear, objective thresholds.</p></div>
-        <div class="step"><h3>Diagnose</h3><p>See your score per dimension: red (urgent gap), yellow (work in progress), green (strong).</p></div>
-        <div class="step"><h3>Prioritize</h3><p>Your 3 lowest scores become your focus areas with concrete next steps.</p></div>
-        <div class="step"><h3>Benchmark</h3><p>Compare against 50+ companies. See where you stand vs. your industry.</p></div>
-    </div>
+  <div class="section-tag">How It Works</div>
+  <h2 class="section-title">From download to action <span class="light">in 15 minutes</span></h2>
+  <div class="steps">
+    <div class="step"><h3>Score</h3><p>Answer 15 questions honestly. Each scores 0-4 based on what you can prove - not what you believe.</p></div>
+    <div class="step"><h3>Diagnose</h3><p>See your score per dimension: red (buyer would discount), yellow (needs work), green (strong position).</p></div>
+    <div class="step"><h3>Prioritize</h3><p>Your 3 lowest scores become your focus areas - the gaps a buyer would flag first.</p></div>
+    <div class="step"><h3>Act</h3><p>Use the results as a starting point, or go deeper with our AI Exit Readiness assessment.</p></div>
+  </div>
 </section>
 
 <!-- PORTFOLIO PREVIEW -->
 <div class="portfolio-section">
-    <div class="portfolio-preview">
-        <h3>Built for portfolio reviews</h3>
-        <table class="heatmap">
-            <tr><th>Company</th><th>Revenue Eff.</th><th>AI Depth</th><th>Economics</th><th>Leverage</th><th>Governance</th><th>Total</th></tr>
-            <tr><td>Portco Alpha</td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td>62 / B</td></tr>
-            <tr><td>Portco Beta</td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td>38 / D</td></tr>
-            <tr><td>Portco Gamma</td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td>81 / A</td></tr>
-        </table>
-        <p style="font-size:12px;color:var(--body-text);margin-top:16px;">PE operating partners use the scorecard to create portfolio-wide heatmaps and prioritize AI interventions by impact on exit multiples.</p>
-    </div>
+  <div class="portfolio-preview">
+    <h3>Built for portfolio reviews</h3>
+    <table class="heatmap">
+      <tr><th>Company</th><th>Revenue</th><th>Moat</th><th>Economics</th><th>Leverage</th><th>Governance</th><th>Total</th></tr>
+      <tr><td>Portco Alpha</td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td>62 / B</td></tr>
+      <tr><td>Portco Beta</td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td>38 / D</td></tr>
+      <tr><td>Portco Gamma</td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td>81 / A</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--body-text);margin-top:16px;">PE operating partners use the scorecard to create portfolio-wide heatmaps and prioritize AI interventions by impact on exit multiples.</p>
+  </div>
 </div>
 
 <!-- WHO IS THIS FOR -->
 <section>
-    <div class="section-tag">Who This Is For</div>
-    <h2 class="section-title">Two audiences, <span class="light">one scorecard</span></h2>
-    <div class="who-cards">
-        <div class="who-card">
-            <div class="who-card-tag" style="color:var(--teal);">PE Operating Partners</div>
-            <p>Score every portco in your portfolio. Aggregate into a heatmap. Prioritize interventions by impact on exit multiples. Track quarter-over-quarter improvement.</p>
-        </div>
-        <div class="who-card">
-            <div class="who-card-tag" style="color:var(--amber);">CFOs &amp; Business Leaders</div>
-            <p>Use as a board reporting supplement: “here's where we stand vs. market.” Identify the 3 areas with the highest untapped value. Build the case for AI investment with concrete gaps.</p>
-        </div>
+  <div class="section-tag">Who This Is For</div>
+  <h2 class="section-title">Two audiences, <span class="light">one scorecard</span></h2>
+  <div class="who-cards">
+    <div class="who-card">
+      <div class="who-card-tag" style="color:var(--teal);">PE Operating Partners</div>
+      <p>Score every portfolio company in your fund. Aggregate into a heatmap. Prioritize interventions by impact on exit multiples. Track quarter-over-quarter improvement across the portfolio.</p>
     </div>
+    <div class="who-card">
+      <div class="who-card-tag" style="color:var(--amber);">CFOs &amp; Business Leaders</div>
+      <p>Find out what a buyer would see when they look at your AI. Identify the 3 areas where you're leaving value on the table. Build the case for AI investment with concrete gaps - not opinions.</p>
+    </div>
+  </div>
 </section>
+
+<!-- BRIDGE: SCORECARD → SERVICE -->
+<div class="bridge-section">
+  <div class="bridge-inner">
+    <div class="section-tag">Go Deeper</div>
+    <h2 class="section-title">The scorecard tells you <span class="light">what</span>.<br>We tell you <span class="light">why and how</span>.</h2>
+    <p class="section-desc">Scored below a B? Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a 90-day action plan.</p>
+    <div class="bridge-cards">
+      <div class="bridge-card scorecard-card">
+        <div class="card-label">Free Scorecard</div>
+        <h3>Self-Assessment</h3>
+        <p>15 questions, 15 minutes. See where you stand and where the gaps are.</p>
+        <ul class="bridge-features">
+          <li>Score across 5 dimensions</li>
+          <li>Top 3 priority levers</li>
+          <li>A through F rating</li>
+        </ul>
+      </div>
+      <div class="bridge-arrow">&#8594;</div>
+      <div class="bridge-card service-card">
+        <div class="card-label">AI Exit Readiness</div>
+        <h3>Expert Assessment</h3>
+        <p>3-week deep dive. Data-validated scores, peer benchmarks, and a concrete plan.</p>
+        <ul class="bridge-features">
+          <li>P&amp;L impact analysis</li>
+          <li>Peer benchmarking</li>
+          <li>Board-ready report</li>
+          <li>90-day action plan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- BOTTOM CTA -->
 <div class="bottom-cta">
-    <div class="bottom-cta-inner">
-        <h2>Stop guessing.<br>Start <span class="teal">measuring</span>.</h2>
-        <p>Get the AI-Native Metrics Scorecard and find out in 10 minutes whether AI is creating value or just creating costs.</p>
-        <div class="cta-box">
-            <input type="email" placeholder="Your work email">
-            <button>Download Scorecard</button>
-        </div>
-        <p style="font-size:12px;color:var(--body-text);margin-top:12px;">Free PDF with scoring guide and industry benchmarks. No spam.</p>
+  <div class="bottom-cta-inner">
+    <h2>Stop guessing.<br>Start <span class="teal">measuring</span>.</h2>
+    <p>Get the AI Exit Readiness Scorecard and find out in 15 minutes whether a buyer would pay a premium for your AI - or discount it.</p>
+    <div class="cta-box">
+      <input type="email" placeholder="Your work email">
+      <button>Download Scorecard</button>
     </div>
+    <p style="font-size:12px;color:var(--body-text);margin-top:12px;">Free HTML scorecard with scoring guide. No spam.</p>
+  </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-brand"><div class="footer-logo"><div class="footer-logo-bar"></div><div class="footer-logo-text"><span>AI Value</span><span>Index</span></div></div><span>&middot; Strategic Finance for the AI Era</span></div>
-    <div class="footer-links">
-        <a href="#">LinkedIn</a>
-        <a href="#">Newsletter</a>
-        <a href="#">Contact</a>
-    </div>
+  <div class="footer-brand"><div class="footer-logo"><div class="footer-logo-bar"></div><div class="footer-logo-text"><span>AI Value</span><span>Firm</span></div></div><span>&middot; AI that shows up in the numbers</span></div>
+  <div class="footer-links">
+    <a href="https://linkedin.com/company/meijanto" target="_blank">LinkedIn</a>
+    <a href="#">Newsletter</a>
+    <a href="mailto:arno@meijanto.com">Contact</a>
+  </div>
 </footer>
-
 
 <!-- FOG SHADER SCRIPT -->
 <script>
@@ -470,12 +592,7 @@
   var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
   if (!gl) return;
 
-  var INTENSITY = 1.0;
-  var SPEED = 0.50;
-  var SCALE = 0.50;
-
   var vertSource = 'attribute vec2 a_position; void main() { gl_Position = vec4(a_position, 0.0, 1.0); }';
-
   var fragSource = [
     'precision highp float;',
     'uniform vec2 u_resolution;',
@@ -544,10 +661,7 @@
     var s = gl.createShader(type);
     gl.shaderSource(s, source);
     gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      console.error('Fog shader:', gl.getShaderInfoLog(s));
-      return null;
-    }
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error('Fog shader:', gl.getShaderInfoLog(s)); return null; }
     return s;
   }
 
@@ -566,7 +680,6 @@
 
   var uRes = gl.getUniformLocation(prog, 'u_resolution');
   var uTime = gl.getUniformLocation(prog, 'u_time');
-
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
