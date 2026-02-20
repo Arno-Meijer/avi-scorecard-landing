@@ -335,23 +335,24 @@ footer {
   .nav-cta { padding: 8px 20px; font-size: 12px; }
 
   /* HERO */
-  .hero { padding: 64px 24px 48px; }
+  .hero { padding: 64px 24px 48px; background: var(--white); }
+  .shader-container { display: none; }
   .hero h1 { font-size: 28px; line-height: 1.15; margin-bottom: 16px; }
-  .hero h1 br { display: none; }
+  .hero h1 br, .section-title br, .bottom-cta h2 br { display: none; }
   .hero-tag { font-size: 11px; padding: 6px 16px; margin-bottom: 20px; }
   .hero-sub { font-size: 15px; line-height: 1.6; margin-bottom: 32px; }
   .hero-stats {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
     margin-bottom: 32px;
   }
-  .hero-stat { padding: 14px 12px; align-items: center; min-width: auto; }
+  .hero-stat { padding: 14px 12px; align-items: center; min-width: auto; background: var(--white); border-color: #E5E7EB; }
   .hero-stat-num { font-size: 24px; }
   .hero-stat-num span { font-size: 14px; }
   .hero-stat-label { font-size: 10px; margin-top: 2px; }
 
   /* CTA */
   .cta-box { flex-direction: column; gap: 10px; }
-  .cta-box input[type="email"] { min-width: 100%; padding: 12px 18px; font-size: 14px; }
+  .cta-box input[type="email"] { min-width: 100%; padding: 12px 18px; font-size: 14px; background: var(--white); }
   .cta-box button { width: 100%; padding: 14px 24px; font-size: 14px; }
   .cta-note { font-size: 11px; }
 
@@ -386,13 +387,13 @@ footer {
 
   /* HOW IT WORKS */
   .steps { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .step { padding: 24px 20px; }
+  .step { padding: 24px 20px; background: var(--white); }
   .step::before { font-size: 40px; top: 8px; right: 12px; }
   .step h3 { font-size: 12px; margin-bottom: 8px; }
   .step p { font-size: 13px; }
 
   /* PORTFOLIO */
-  .portfolio-section { padding: 56px 24px; }
+  .portfolio-section { padding: 56px 24px; background: var(--white); }
   .portfolio-preview { padding: 20px 16px; }
   .portfolio-preview h3 { font-size: 11px; }
   .heatmap { font-size: 11px; min-width: 500px; }
@@ -401,7 +402,7 @@ footer {
   .dot { width: 22px; height: 22px; line-height: 22px; font-size: 12px; }
 
   /* CREDIBILITY BAR */
-  .proof-bar { padding: 32px 24px; gap: 24px; flex-direction: column; }
+  .proof-bar { padding: 32px 24px; gap: 24px; flex-direction: column; background: var(--white); }
   .proof-item { flex-direction: column; align-items: center; }
   .proof-title { font-size: 14px; }
   .proof-desc { font-size: 11px; text-align: center; }
@@ -467,7 +468,7 @@ footer {
   <div class="shader-container"><canvas id="fog-shader"></canvas></div>
   <div class="hero-inner">
     <div class="hero-tag">Free Assessment Tool</div>
-    <h1>Would a buyer pay a<br><span class="amber">premium</span> for your AI?</h1>
+    <h1>Would a buyer pay a <br><span class="amber">premium</span> for your AI?</h1>
     <p class="hero-sub">
       Most companies can't prove what their AI is worth. Score your exit readiness across 5 dimensions in 15 minutes and discover where a buyer would discount - or pay more.
     </p>
@@ -503,7 +504,7 @@ footer {
 <!-- WHAT YOU GET -->
 <section>
   <div class="section-tag">What You Get</div>
-  <h2 class="section-title">See your company through<br><span class="light">a buyer's eyes</span></h2>
+  <h2 class="section-title">See your company through <br><span class="light">a buyer's eyes</span></h2>
   <p class="section-desc">Not another generic AI maturity framework. This scorecard applies a buyer's due diligence lens, so you know exactly where AI adds to your valuation - and where it creates risk.</p>
   <div class="benefits">
     <div class="benefit">
@@ -615,7 +616,7 @@ footer {
 <div class="bridge-section">
   <div class="bridge-inner">
     <div class="section-tag">Go Deeper</div>
-    <h2 class="section-title">The scorecard tells you <span class="light">what</span>.<br>We tell you <span class="light">why and how</span>.</h2>
+    <h2 class="section-title">The scorecard tells you <span class="light">what</span>. <br>We tell you <span class="light">why and how</span>.</h2>
     <p class="section-desc">Scored below a B? Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a 90-day action plan.</p>
     <div class="bridge-cards">
       <div class="bridge-card scorecard-card">
@@ -647,7 +648,7 @@ footer {
 <!-- BOTTOM CTA -->
 <div class="bottom-cta">
   <div class="bottom-cta-inner">
-    <h2>Stop guessing.<br>Start <span class="teal">measuring</span>.</h2>
+    <h2>Stop guessing. <br>Start <span class="teal">measuring</span>.</h2>
     <p>Get the AI Exit Readiness Scorecard and find out in 15 minutes whether a buyer would pay a premium for your AI - or discount it.</p>
     <div class="cta-box">
       <input type="email" placeholder="Your work email">
