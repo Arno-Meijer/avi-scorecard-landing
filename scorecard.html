@@ -1122,7 +1122,7 @@ footer {
 
     <!-- SHOW RESULTS GATE -->
     <div class="show-results-gate" id="showResultsGate" style="display:none;">
-      <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Full Results</button>
+      <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Results & Recommendations</button>
       <p class="gate-note">Your scores will be saved and shared with AI Value Firm for a personalized recommendation.</p>
     </div>
 
@@ -1140,21 +1140,47 @@ footer {
       <!-- BUYER INSIGHTS -->
       <div class="buyer-insights" id="buyerInsights" style="display:none;">
         <div class="insight-card objection-card">
-          <div class="insight-icon">&#9888;</div>
+          <div class="insight-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
           <div class="insight-label">Biggest Buyer Objection</div>
           <div class="insight-text" id="buyerObjection"></div>
         </div>
         <div class="insight-card fix-card">
-          <div class="insight-icon">&#9889;</div>
+          <div class="insight-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
           <div class="insight-label">Fix in 30 Days</div>
           <div class="insight-text" id="fixIn30"></div>
         </div>
+      </div>
+
+      <!-- RATING TABLE -->
+      <div class="rating-table-section" style="margin:0;padding:40px 0 0;">
+        <div class="rating-table-inner">
+          <h3>Scoring Guide</h3>
+          <table class="rating-table" id="ratingTable">
+            <thead><tr><th>Score</th><th>Rating</th><th>What It Means</th></tr></thead>
+            <tbody>
+              <tr data-range="A"><td class="rt-score">80-100</td><td class="rt-rating" style="color:var(--teal)">A - Premium Ready</td><td>Your AI practices would withstand buyer scrutiny. Strong position for premium valuation. Focus: document and package for data room.</td></tr>
+              <tr data-range="B"><td class="rt-score">60-79</td><td class="rt-rating" style="color:var(--green)">B - Investable with Gaps</td><td>Solid foundation, gaps in 1-2 dimensions. A buyer would still engage but negotiate. Focus: close gaps within 90 days.</td></tr>
+              <tr data-range="C"><td class="rt-score">40-59</td><td class="rt-rating" style="color:var(--yellow)">C - Discount Territory</td><td>AI activity exists but limited proof of P&L impact. Buyers will cap the multiple. Focus: prove 2-3 use cases with hard numbers.</td></tr>
+              <tr data-range="D"><td class="rt-score">20-39</td><td class="rt-rating" style="color:var(--amber)">D - Earn-out Risk</td><td>Aware of AI but nothing a buyer can underwrite. Value shifts to earn-outs and contingencies. Focus: quick wins with measurable ROI.</td></tr>
+              <tr data-range="F"><td class="rt-score">0-19</td><td class="rt-rating" style="color:var(--red)">F - Multiple Compression</td><td>No credible AI story. Buyers either walk or discount heavily. Urgent: establish baseline metrics and governance.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- NEXT STEP CTA -->
+      <div class="cta-section" style="padding:48px 0 0;">
+        <span class="section-tag">Next Step</span>
+        <h2>Turn your score into a <span class="light">buyer-ready AI narrative</span></h2>
+        <p>Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a concrete 90-day action plan.</p>
+        <a href="#" class="btn book-call-btn" style="display:inline-block;text-decoration:none;margin-top:20px;">Book Your Exit Readiness Review</a>
+        <p class="cta-helper">25-minute call. No strings attached.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MOAT LAYERS -->
+<!-- MOAT LAYERS (reference - stays outside gate, visible during assessment) -->
 <section class="moat-section">
   <span class="section-tag" style="display:block;text-align:center;margin-bottom:20px;">Reference</span>
   <h3>AI Defensibility Layers (for Q4-Q6)</h3>
@@ -1180,35 +1206,6 @@ footer {
       <div class="moat-desc">Own models, training data, patents. Very strong - but rare and capital-intensive.</div>
     </div>
   </div>
-</section>
-
-<!-- RATING TABLE -->
-<section class="rating-table-section">
-  <div class="rating-table-inner">
-    <h3>Scoring Guide</h3>
-    <table class="rating-table" id="ratingTable">
-      <thead><tr><th>Score</th><th>Rating</th><th>What It Means</th></tr></thead>
-      <tbody>
-        <tr data-range="A"><td class="rt-score">80-100</td><td class="rt-rating" style="color:var(--teal)">A - Premium Ready</td><td>Your AI practices would withstand buyer scrutiny. Strong position for premium valuation. Focus: document and package for data room.</td></tr>
-        <tr data-range="B"><td class="rt-score">60-79</td><td class="rt-rating" style="color:var(--green)">B - Investable with Gaps</td><td>Solid foundation, gaps in 1-2 dimensions. A buyer would still engage but negotiate. Focus: close gaps within 90 days.</td></tr>
-        <tr data-range="C"><td class="rt-score">40-59</td><td class="rt-rating" style="color:var(--yellow)">C - Discount Territory</td><td>AI activity exists but limited proof of P&L impact. Buyers will cap the multiple. Focus: prove 2-3 use cases with hard numbers.</td></tr>
-        <tr data-range="D"><td class="rt-score">20-39</td><td class="rt-rating" style="color:var(--amber)">D - Earn-out Risk</td><td>Aware of AI but nothing a buyer can underwrite. Value shifts to earn-outs and contingencies. Focus: quick wins with measurable ROI.</td></tr>
-        <tr data-range="F"><td class="rt-score">0-19</td><td class="rt-rating" style="color:var(--red)">F - Multiple Compression</td><td>No credible AI story. Buyers either walk or discount heavily. Urgent: establish baseline metrics and governance.</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <span class="section-tag">Next Step</span>
-  <h2>Turn your score into a <span class="light">buyer-ready AI narrative</span></h2>
-  <p>Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a concrete 90-day action plan.</p>
-  <div class="cta-form">
-    <input type="email" placeholder="your@email.com">
-    <button class="btn">Book a Free Consultation</button>
-  </div>
-  <p class="cta-helper">30-minute call. No strings attached.</p>
 </section>
 
 <!-- FOOTER -->
