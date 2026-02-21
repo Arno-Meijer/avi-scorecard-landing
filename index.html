@@ -807,33 +807,53 @@ function handleEmailSubmit(e, form) {
     utm_term: utmParams.utm_term
   };
 
-  // Send data via hidden form + iframe (bypasses CORS)
+  // Build redirect URL
+  var scorecardUrl = 'scorecard.html?email=' + encodeURIComponent(email);
+  if (utmParams.utm_source) scorecardUrl += '&utm_source=' + encodeURIComponent(utmParams.utm_source);
+  if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
+  if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
+
+  // Send data via fetch (form-encoded for Google Apps Script compatibility)
+  var payloadStr = JSON.stringify(payload);
+  var formBody = 'payload=' + encodeURIComponent(payloadStr);
+
+  if (typeof fetch === 'function') {
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formBody
+    }).then(function() {
+      window.location.href = scorecardUrl;
+    }).catch(function() {
+      // Fetch failed, try iframe fallback then redirect anyway
+      sendViaIframe(payloadStr);
+      setTimeout(function() { window.location.href = scorecardUrl; }, 800);
+    });
+  } else {
+    sendViaIframe(payloadStr);
+    setTimeout(function() { window.location.href = scorecardUrl; }, 800);
+  }
+
+  return false;
+}
+
+function sendViaIframe(payloadStr) {
   var hiddenForm = document.createElement('form');
   hiddenForm.method = 'POST';
   hiddenForm.action = WEBHOOK_URL;
   hiddenForm.target = 'hidden_iframe';
   hiddenForm.style.display = 'none';
-
   var payloadInput = document.createElement('input');
   payloadInput.type = 'hidden';
   payloadInput.name = 'payload';
-  payloadInput.value = JSON.stringify(payload);
+  payloadInput.value = payloadStr;
   hiddenForm.appendChild(payloadInput);
-
   document.body.appendChild(hiddenForm);
   hiddenForm.submit();
-  document.body.removeChild(hiddenForm);
-
-  // Auto-redirect to scorecard (pass UTM params along)
   setTimeout(function() {
-    var scorecardUrl = 'scorecard.html?email=' + encodeURIComponent(email);
-    if (utmParams.utm_source) scorecardUrl += '&utm_source=' + encodeURIComponent(utmParams.utm_source);
-    if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
-    if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
-    window.location.href = scorecardUrl;
-  }, 400);
-
-  return false;
+    if (hiddenForm.parentNode) hiddenForm.parentNode.removeChild(hiddenForm);
+  }, 3000);
 }
 </script>
 </body>
