@@ -471,7 +471,7 @@ footer {
       <input type="email" placeholder="Your work email" required>
       <button type="submit">Start the Scorecard</button>
     </form>
-    <div class="cta-note">See how a buyer would score your AI. Free, instant results.</div>
+    <div class="cta-note">15 questions, 10 minutes. Free, no spam.</div>
   </div>
 </div>
 
@@ -769,7 +769,19 @@ footer {
 
 <!-- EMAIL CAPTURE -->
 <script>
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec';
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec';
+
+// Collect UTM params once on page load
+var utmParams = (function() {
+  var params = new URLSearchParams(window.location.search);
+  return {
+    utm_source: params.get('utm_source') || '',
+    utm_medium: params.get('utm_medium') || '',
+    utm_campaign: params.get('utm_campaign') || '',
+    utm_content: params.get('utm_content') || '',
+    utm_term: params.get('utm_term') || ''
+  };
+})();
 
 function handleEmailSubmit(e, form) {
   e.preventDefault();
@@ -782,26 +794,43 @@ function handleEmailSubmit(e, form) {
   btn.disabled = true;
   btn.textContent = 'Starting...';
 
+  // Build payload with UTM tracking
+  var payload = {
+    action: 'landing',
+    email: email,
+    source: 'landing-page',
+    landing_url: window.location.href,
+    utm_source: utmParams.utm_source,
+    utm_medium: utmParams.utm_medium,
+    utm_campaign: utmParams.utm_campaign,
+    utm_content: utmParams.utm_content,
+    utm_term: utmParams.utm_term
+  };
+
   // Send data via hidden form + iframe (bypasses CORS)
   var hiddenForm = document.createElement('form');
   hiddenForm.method = 'POST';
-  hiddenForm.action = GOOGLE_SCRIPT_URL;
+  hiddenForm.action = WEBHOOK_URL;
   hiddenForm.target = 'hidden_iframe';
   hiddenForm.style.display = 'none';
 
   var payloadInput = document.createElement('input');
   payloadInput.type = 'hidden';
   payloadInput.name = 'payload';
-  payloadInput.value = JSON.stringify({ action: 'landing', email: email, source: 'landing-page' });
+  payloadInput.value = JSON.stringify(payload);
   hiddenForm.appendChild(payloadInput);
 
   document.body.appendChild(hiddenForm);
   hiddenForm.submit();
   document.body.removeChild(hiddenForm);
 
-  // Auto-redirect to scorecard after brief delay (fire-and-forget save)
+  // Auto-redirect to scorecard (pass UTM params along)
   setTimeout(function() {
-    window.location.href = 'scorecard.html?email=' + encodeURIComponent(email);
+    var scorecardUrl = 'scorecard.html?email=' + encodeURIComponent(email);
+    if (utmParams.utm_source) scorecardUrl += '&utm_source=' + encodeURIComponent(utmParams.utm_source);
+    if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
+    if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
+    window.location.href = scorecardUrl;
   }, 400);
 
   return false;
