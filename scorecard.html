@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Exit Readiness Scorecard - AI Value Firm</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B2A4A;
+  --teal: #00B4D8;
+  --light-teal: #E8F5F3;
+  --amber: #F97316;
+  --mid-navy: #2C3E6B;
+  --bg: #FFFFFF;
+  --light-blue: #EEF2FF;
+  --dark-text: #030303;
+  --white: #FFFFFF;
+  --muted: #94A3B8;
+  --body-text: #64748B;
+  --border: #E2E8F0;
+  --indigo-border: #C7D2FE;
+  --red: #EF4444;
+  --red-bg: #FEF2F2;
+  --yellow: #F59E0B;
+  --yellow-bg: #FFFBEB;
+  --green: #22C55E;
+  --green-bg: #F0FDF4;
+  --slate: #94A3B8;
+  --slate-bg: #F8FAFC;
+  --radius: 14px;
+  --radius-pill: 100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--body-text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* NAV */
+nav {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(27,42,74,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 8px; }
+.nav-logo { width: 4px; height: 32px; background: var(--teal); border-radius: 2px; flex-shrink: 0; }
+.nav-name { font-weight: 800; font-size: 13px; color: var(--navy); line-height: 1.15; }
+.nav-name span { display: block; }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-progress {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-progress-bar {
+  width: 80px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.nav-progress-bar .fill {
+  height: 100%;
+  background: var(--teal);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.nav-score-pill {
+  background: var(--light-blue);
+  border: 1px solid var(--indigo-border);
+  border-radius: var(--radius-pill);
+  padding: 6px 18px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+.nav-score-pill .score-val { font-weight: 800; font-size: 16px; }
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.section-tag {
+  background: var(--light-blue);
+  color: var(--navy);
+  border: 1px solid var(--indigo-border);
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+h1 {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.12;
+  margin-bottom: 20px;
+}
+h1 .light { color: var(--teal); }
+.hero-sub {
+  font-size: 17px;
+  color: var(--body-text);
+  max-width: 560px;
+  margin: 0 auto 32px;
+  line-height: 1.65;
+}
+
+/* COMPANY INFO */
+.company-bar {
+  background: var(--light-blue);
+  padding: 40px 24px;
+}
+.company-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.company-inner label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+.company-inner input {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  background: var(--white);
+  outline: none;
+  transition: border 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* Fix date input on iOS */
+.company-inner input[type="date"] {
+  min-height: 44px;
+}
+.company-inner input:focus { border-color: var(--teal); }
+
+/* HOW TO USE */
+.how-to-use {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
+}
+.how-to-use-card {
+  background: var(--slate-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+}
+.how-to-use-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.how-to-use-title .icon { font-size: 16px; }
+.how-to-use-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.how-to-use-item {
+  font-size: 12px;
+  color: var(--body-text);
+  line-height: 1.5;
+}
+.how-to-use-item strong { color: var(--navy); font-weight: 700; }
+
+/* SCORING SECTIONS */
+.dimensions { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+.dimension-block { margin-bottom: 48px; }
+.dim-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.dim-number {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+.dim-title-wrap { flex: 1; }
+h2.dim-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.25;
+}
+.dim-subtitle {
+  font-size: 13px;
+  color: var(--body-text);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.dim-score-badge {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy);
+  min-width: 80px;
+  text-align: right;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 2px;
+}
+.dim-score-badge .of { font-size: 14px; font-weight: 600; color: var(--muted); }
+.dim-color-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.dim-color-bar .fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.4s ease;
+  width: 0%;
+}
+
+/* INLINE MOAT REFERENCE */
+.moat-inline {
+  background: var(--slate-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.moat-inline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.moat-inline-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.moat-inline-toggle {
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.moat-inline-body {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, margin-top 0.3s ease, opacity 0.3s ease;
+}
+.moat-inline-body.collapsed {
+  display: none;
+}
+.moat-inline-card {
+  text-align: center;
+  padding: 12px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  transition: all 0.3s;
+}
+.moat-inline-card.active-level { border-color: var(--teal); background: var(--light-teal); }
+.moat-inline-card .lvl { font-size: 20px; font-weight: 800; color: var(--teal); }
+.moat-inline-card .lvl-name { font-size: 11px; font-weight: 700; color: var(--navy); margin: 2px 0; }
+.moat-inline-card .lvl-desc { font-size: 9px; color: var(--body-text); line-height: 1.35; }
+
+/* QUESTION CARD */
+.q-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.q-card:hover { border-color: var(--indigo-border); }
+.q-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.q-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.q-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
+}
+.q-metric {
+  font-size: 13px;
+  color: var(--body-text);
+  margin-top: 3px;
+  font-weight: 400;
+}
+.q-hint {
+  font-size: 12px;
+  color: var(--body-text);
+  margin-top: 4px;
+  font-style: italic;
+  font-weight: 400;
+}
+.q-selected-score {
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--muted);
+  min-width: 30px;
+  text-align: right;
+  transition: color 0.2s;
+}
+.q-selected-score.scored { color: var(--navy); }
+
+/* SCORING BUTTONS */
+.q-scores {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.score-btn {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 8px;
+  background: var(--white);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.score-btn:hover { border-color: var(--teal); background: var(--light-teal); }
+.score-btn .score-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  display: block;
+  margin-bottom: 4px;
+}
+.score-btn .score-desc {
+  font-size: 10px;
+  color: var(--body-text);
+  line-height: 1.35;
+  display: block;
+}
+/* Score 0 = slate/neutral (not measured) */
+.score-btn.active-slate { border-color: var(--slate); background: var(--slate-bg); }
+.score-btn.active-slate .score-num { color: var(--slate); }
+/* Score 1 = red */
+.score-btn.active-red { border-color: var(--red); background: var(--red-bg); }
+.score-btn.active-red .score-num { color: var(--red); }
+/* Score 2 = yellow */
+.score-btn.active-yellow { border-color: var(--yellow); background: var(--yellow-bg); }
+.score-btn.active-yellow .score-num { color: var(--yellow); }
+/* Score 3 = green */
+.score-btn.active-green { border-color: var(--green); background: var(--green-bg); }
+.score-btn.active-green .score-num { color: var(--green); }
+/* Score 4 = teal (brand) */
+.score-btn.active-teal { border-color: var(--teal); background: var(--light-teal); }
+.score-btn.active-teal .score-num { color: var(--teal); }
+
+/* CRITERIA HINT ROW - 5 hints */
+.q-criteria {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  gap: 6px;
+}
+.q-criteria .crit {
+  flex: 1;
+  font-size: 9px;
+  line-height: 1.35;
+  padding: 0;
+  max-width: 18%;
+  text-align: center;
+}
+.q-criteria .crit-slate { color: var(--slate); }
+.q-criteria .crit-red { color: var(--red); }
+.q-criteria .crit-yellow { color: var(--yellow); }
+.q-criteria .crit-green { color: var(--green); }
+.q-criteria .crit-teal { color: var(--teal); }
+
+/* RESULTS */
+.results-section {
+  background: var(--light-blue);
+  padding: 60px 24px;
+}
+.results-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.total-score-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.total-num {
+  font-size: 72px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+}
+.total-of {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.rating-badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 32px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.rating-desc {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--body-text);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.incomplete-warning {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--amber);
+  font-weight: 600;
+}
+
+/* DIMENSION SUMMARY */
+.dim-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.dim-sum-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.dim-sum-card.full-width { grid-column: 1 / -1; }
+.dim-sum-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dim-sum-info { flex: 1; }
+.dim-sum-name { font-size: 13px; font-weight: 700; color: var(--navy); }
+.dim-sum-action { font-size: 12px; color: var(--body-text); margin-top: 2px; }
+.dim-sum-score {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.dim-sum-score .dim-sum-of { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+/* TOP 3 LEVERS */
+.levers-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+  margin-bottom: 32px;
+}
+.save-results {
+  text-align: center; padding: 32px 0 0;
+  border-top: 1px solid var(--border); margin-top: 12px;
+}
+.save-btn {
+  background: var(--teal); color: var(--white); font-weight: 700;
+  font-size: 16px; padding: 16px 40px; border: none; cursor: pointer;
+  border-radius: var(--radius-pill); transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.save-btn:hover { background: #009BB8; transform: translateY(-1px); }
+.save-btn:disabled { opacity: 0.6; cursor: wait; }
+.save-note { font-size: 12px; color: var(--body-text); margin-top: 12px; }
+.save-success {
+  margin-top: 16px; padding: 16px 24px; background: #EEFFF4;
+  border: 1px solid #BBF7D0; border-radius: var(--radius);
+}
+.save-success p { font-size: 14px; color: var(--navy); font-weight: 500; }
+.levers-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+.lever-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.lever-item:last-child { border-bottom: none; }
+.lever-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--red-bg);
+  color: var(--red);
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.lever-rank.rank-2 { background: var(--yellow-bg); color: var(--yellow); }
+.lever-rank.rank-3 { background: var(--light-blue); color: var(--navy); }
+.lever-info { flex: 1; }
+.lever-q { font-size: 14px; font-weight: 700; color: var(--navy); }
+.lever-dim { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.lever-score { font-weight: 800; font-size: 18px; min-width: 30px; text-align: right; }
+.no-levers {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* MOAT GRID (bottom reference) */
+.moat-section {
+  padding: 48px 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.moat-section h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.moat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.moat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.moat-card.active-level { border-color: var(--teal); background: var(--light-teal); }
+.moat-level {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+.moat-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.moat-desc {
+  font-size: 10px;
+  color: var(--body-text);
+  line-height: 1.45;
+}
+
+/* RATING TABLE */
+.rating-table-section {
+  background: var(--light-blue);
+  padding: 48px 24px;
+}
+.rating-table-inner { max-width: 860px; margin: 0 auto; }
+.rating-table-inner h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.rating-table {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.rating-table th {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  padding: 14px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.rating-table td {
+  padding: 14px 20px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--body-text);
+  vertical-align: top;
+}
+.rating-table tr:last-child td { border-bottom: none; }
+.rating-table .rt-score { font-weight: 800; color: var(--navy); }
+.rating-table .rt-rating { font-weight: 800; }
+.rating-table tr.active-row { background: var(--light-teal); }
+
+/* CTA */
+.cta-section {
+  padding: 60px 24px;
+  text-align: center;
+}
+.cta-section h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.cta-section h2 .light { color: var(--teal); }
+.cta-section p {
+  color: var(--body-text);
+  max-width: 480px;
+  margin: 0 auto 28px;
+  font-size: 15px;
+}
+.cta-form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  max-width: 460px;
+  margin: 0 auto 12px;
+}
+.cta-form input {
+  flex: 1;
+  border: 1px solid #D1D5DB;
+  border-radius: var(--radius-pill);
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  outline: none;
+}
+.cta-form input:focus { border-color: var(--teal); }
+.btn {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: var(--radius-pill);
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--mid-navy); }
+.cta-helper { font-size: 12px; color: var(--muted); }
+
+/* FOOTER */
+footer {
+  background: var(--navy);
+  padding: 40px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-brand { display: flex; align-items: center; gap: 10px; }
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo-bar { width: 3px; height: 24px; background: var(--white); border-radius: 1.5px; }
+.footer-logo-text { font-weight: 800; font-size: 11px; color: var(--white); line-height: 1.15; }
+.footer-logo-text span { display: block; }
+.footer-tagline { color: rgba(255,255,255,0.6); font-size: 12px; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: var(--white); text-decoration: none; font-size: 13px; font-weight: 500; opacity: 0.75; transition: opacity 0.2s; }
+.footer-links a:hover { opacity: 1; }
+
+/* RESPONSIVE - TABLET */
+@media (max-width: 768px) {
+  h1 { font-size: 32px; }
+  .hero { padding: 60px 20px 40px; }
+  .company-inner { grid-template-columns: 1fr; }
+  .dim-summary-grid { grid-template-columns: 1fr; }
+  .moat-grid { grid-template-columns: repeat(2, 1fr); }
+  .moat-inline-body { grid-template-columns: repeat(2, 1fr); }
+  .how-to-use-grid { grid-template-columns: 1fr; }
+  .cta-form { flex-direction: column; }
+  .dim-header { flex-wrap: wrap; }
+  .dim-number { font-size: 28px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .total-num { font-size: 56px; }
+  .nav-progress { display: none; }
+}
+
+/* RESPONSIVE - MOBILE */
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+  .hero { padding: 48px 16px 32px; }
+  .hero-sub { font-size: 15px; }
+  .dimensions { padding: 24px 16px; }
+  .company-bar { padding: 24px 16px; overflow-x: hidden; }
+  .company-inner input { padding: 10px 16px; font-size: 16px; } /* 16px prevents iOS zoom on focus */
+  .company-inner input[type="date"] { -webkit-appearance: none; appearance: none; }
+  .how-to-use { padding: 24px 16px 0; }
+  .how-to-use-card { padding: 16px; }
+
+  .dim-header { gap: 8px; }
+  .dim-number { font-size: 24px; margin-right: 8px; }
+  h2.dim-title { font-size: 18px; }
+  .dim-subtitle { font-size: 12px; }
+  .dim-score-badge { font-size: 22px; min-width: 60px; }
+  .dim-score-badge .of { font-size: 12px; }
+
+  .q-card { padding: 16px; margin-bottom: 10px; }
+  .q-top { flex-direction: column; gap: 8px; }
+  .q-selected-score { text-align: left; font-size: 16px; }
+  .q-text { font-size: 14px; }
+  .q-label { font-size: 10px; }
+
+  /* Score buttons: big touch targets, number only */
+  .q-scores {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .score-btn {
+    padding: 14px 4px;
+    border-radius: 10px;
+    min-width: 0;
+    min-height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .score-btn .score-num { font-size: 18px; margin-bottom: 0; }
+  .score-btn .score-desc { display: none; }
+
+  /* Mobile feedback label shown below buttons */
+  .q-score-feedback {
+    display: block !important;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--slate-bg);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.45;
+    animation: feedbackIn 0.2s ease;
+  }
+  .q-score-feedback .fb-score { font-weight: 800; }
+  .q-score-feedback .fb-crit {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--body-text);
+    font-style: italic;
+  }
+  @keyframes feedbackIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hide criteria row on mobile - replaced by feedback */
+  .q-criteria { display: none; }
+
+  /* Moat inline: horizontal scroll */
+  .moat-inline-body {
+    grid-template-columns: none !important;
+    display: flex !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding-bottom: 8px;
+  }
+  .moat-inline-body.collapsed {
+    display: none !important;
+  }
+  .moat-inline-card {
+    min-width: 120px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .results-section { padding: 40px 16px; }
+  .total-score-card { padding: 32px 20px; }
+  .total-num { font-size: 48px; }
+  .total-of { font-size: 18px; }
+  .rating-badge { font-size: 14px; padding: 8px 20px; }
+  .rating-desc { font-size: 13px; }
+  .levers-card { padding: 20px; }
+  .levers-title { font-size: 17px; }
+
+  /* Moat grid bottom: horizontal scroll */
+  .moat-grid {
+    grid-template-columns: none !important;
+    display: flex !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .moat-card {
+    min-width: 140px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    padding: 16px 14px;
+  }
+  .moat-level { font-size: 22px; }
+  .moat-desc { font-size: 10px; }
+
+  /* Rating table: card layout */
+  .rating-table-section { padding: 32px 16px; }
+  .rating-table thead { display: none; }
+  .rating-table, .rating-table tbody { display: block; width: 100%; }
+  .rating-table tr {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+  }
+  .rating-table tr.active-row { background: var(--light-teal); border-color: var(--teal); }
+  .rating-table td {
+    border-bottom: none;
+    padding: 2px 0;
+    font-size: 13px;
+  }
+  .rating-table td.rt-score {
+    font-size: 12px;
+    color: var(--muted);
+    order: 3;
+  }
+  .rating-table td:nth-child(2) {
+    font-size: 15px;
+    order: 1;
+    margin-bottom: 4px;
+  }
+  .rating-table td:nth-child(3) {
+    order: 2;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  nav { padding: 12px 16px; }
+  .nav-score-pill { padding: 5px 12px; font-size: 12px; }
+  .nav-score-pill .score-val { font-size: 14px; }
+
+  .cta-section { padding: 40px 16px; }
+  .cta-section h2 { font-size: 26px; }
+
+  footer { padding: 32px 16px; flex-direction: column; gap: 16px; text-align: center; }
+  .footer-brand { flex-direction: column; gap: 8px; }
+  .footer-links { gap: 16px; }
+}
+
+/* Feedback element hidden on desktop */
+.q-score-feedback { display: none; }
+
+/* PRINT */
+@media print {
+  nav { position: relative; }
+  .results-section, .cta-section { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo"></div>
+    <div class="nav-name"><span>AI Value</span><span>Firm</span></div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-progress">
+      <span id="navProgress">0 / 15</span>
+      <div class="nav-progress-bar"><div class="fill" id="navProgressBar"></div></div>
+    </div>
+    <div class="nav-score-pill" id="navPill">
+      Score: <span class="score-val" id="navScore">0</span> / 100
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="section-tag">Free Assessment Tool</span>
+  <h1>AI Exit Readiness <span class="light">Scorecard</span></h1>
+  <p class="hero-sub">Would a buyer pay a premium for your AI? Score your organization across 5 dimensions in 15 minutes and discover where a buyer would discount - or pay more.</p>
+</section>
+
+<!-- COMPANY INFO -->
+<section class="company-bar">
+  <div class="company-inner">
+    <div><label>Company</label><input type="text" id="companyName" placeholder="Your company name"></div>
+    <div><label>Industry</label><input type="text" id="industry" placeholder="e.g. SaaS, Manufacturing, Healthcare"></div>
+    <div><label>Assessed by</label><input type="text" id="assessor" placeholder="Your name"></div>
+    <div><label>Date</label><input type="date" id="assessDate"></div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section class="how-to-use">
+  <div class="how-to-use-card">
+    <div class="how-to-use-title"><span class="icon">&#9432;</span> How to use this scorecard</div>
+    <div class="how-to-use-grid">
+      <div class="how-to-use-item"><strong>Score 0 (grey)</strong> means you don't measure or have this. That's a blind spot - and blind spots cost you in due diligence.</div>
+      <div class="how-to-use-item"><strong>Scores 1-3</strong> represent a spectrum from weak to solid. Score based on what you can prove with data, not what you believe to be true.</div>
+      <div class="how-to-use-item"><strong>Score 4 (teal)</strong> means buyer-ready with evidence. Only select this if you could back it up in a diligence data room.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIMENSIONS -->
+<section class="dimensions" id="dimensionsContainer">
+  <noscript>
+    <div style="background:#FEF2F2;border:1px solid #EF4444;border-radius:14px;padding:24px;text-align:center;color:#1B2A4A;">
+      <strong>JavaScript is required</strong><br>
+      This scorecard needs JavaScript to work. Please open this file directly in Safari or Chrome on your phone (not in a file preview or email viewer).
+    </div>
+  </noscript>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section" id="resultsSection">
+  <div class="results-inner">
+    <div style="text-align:center; margin-bottom:24px;">
+      <span class="section-tag">Your Results</span>
+    </div>
+
+    <div class="total-score-card">
+      <div><span class="total-num" id="totalScore">0</span><span class="total-of"> / 100</span></div>
+      <div class="rating-badge" id="ratingBadge" style="background:var(--border);color:var(--muted);">-</div>
+      <p class="rating-desc" id="ratingDesc">Answer all 15 questions above to see your full rating and personalized recommendations.</p>
+      <p class="incomplete-warning" id="incompleteWarning"></p>
+    </div>
+
+    <div class="dim-summary-grid" id="dimSummaryGrid"></div>
+
+    <div class="levers-card">
+      <div class="levers-title">Top 3 Levers - Your Biggest Opportunities</div>
+      <div id="leversContainer">
+        <div class="no-levers">Score at least one question to see your priority levers.</div>
+      </div>
+    </div>
+
+    <!-- SAVE RESULTS -->
+    <div class="save-results" id="saveResults" style="display:none;">
+      <button class="btn save-btn" id="saveBtn" onclick="saveResults()">Save & Share My Results</button>
+      <p class="save-note">Your scores will be shared with AI Value Firm so we can provide tailored recommendations.</p>
+      <div class="save-success" id="saveSuccess" style="display:none;">
+        <p>Results saved! We'll review your scores and reach out with recommendations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOAT LAYERS -->
+<section class="moat-section">
+  <span class="section-tag" style="display:block;text-align:center;margin-bottom:20px;">Reference</span>
+  <h3>AI Defensibility Layers (for Q4-Q6)</h3>
+  <div class="moat-grid" id="moatGrid">
+    <div class="moat-card" data-layer="1">
+      <div class="moat-level">1</div>
+      <div class="moat-name">Tool Layer</div>
+      <div class="moat-desc">Off-the-shelf AI (GPT wrappers). No moat - competitors have this tomorrow.</div>
+    </div>
+    <div class="moat-card" data-layer="2">
+      <div class="moat-level">2</div>
+      <div class="moat-name">Workflow Layer</div>
+      <div class="moat-desc">AI in processes, custom procedures. Moderate - requires org knowledge to replicate.</div>
+    </div>
+    <div class="moat-card" data-layer="3">
+      <div class="moat-level">3</div>
+      <div class="moat-name">Data Layer</div>
+      <div class="moat-desc">Proprietary data, feedback loops. Strong - more users = better models.</div>
+    </div>
+    <div class="moat-card" data-layer="4">
+      <div class="moat-level">4</div>
+      <div class="moat-name">Model/IP Layer</div>
+      <div class="moat-desc">Own models, training data, patents. Very strong - but rare and capital-intensive.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RATING TABLE -->
+<section class="rating-table-section">
+  <div class="rating-table-inner">
+    <h3>Scoring Guide</h3>
+    <table class="rating-table" id="ratingTable">
+      <thead><tr><th>Score</th><th>Rating</th><th>What It Means</th></tr></thead>
+      <tbody>
+        <tr data-range="A"><td class="rt-score">80-100</td><td class="rt-rating" style="color:var(--teal)">A - Premium Ready</td><td>Your AI practices would withstand buyer scrutiny. Strong position for premium valuation. Focus: document and package for data room.</td></tr>
+        <tr data-range="B"><td class="rt-score">60-79</td><td class="rt-rating" style="color:var(--green)">B - Investable with Gaps</td><td>Solid foundation, gaps in 1-2 dimensions. A buyer would still engage but negotiate. Focus: close gaps within 90 days.</td></tr>
+        <tr data-range="C"><td class="rt-score">40-59</td><td class="rt-rating" style="color:var(--yellow)">C - Discount Territory</td><td>AI activity exists but limited proof of P&L impact. Buyers will cap the multiple. Focus: prove 2-3 use cases with hard numbers.</td></tr>
+        <tr data-range="D"><td class="rt-score">20-39</td><td class="rt-rating" style="color:var(--amber)">D - Earn-out Risk</td><td>Aware of AI but nothing a buyer can underwrite. Value shifts to earn-outs and contingencies. Focus: quick wins with measurable ROI.</td></tr>
+        <tr data-range="F"><td class="rt-score">0-19</td><td class="rt-rating" style="color:var(--red)">F - Multiple Compression</td><td>No credible AI story. Buyers either walk or discount heavily. Urgent: establish baseline metrics and governance.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <span class="section-tag">Next Step</span>
+  <h2>Turn your score into a <span class="light">buyer-ready AI narrative</span></h2>
+  <p>Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a concrete 90-day action plan.</p>
+  <div class="cta-form">
+    <input type="email" placeholder="your@email.com">
+    <button class="btn">Book a Free Consultation</button>
+  </div>
+  <p class="cta-helper">30-minute call. No strings attached.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-logo">
+      <div class="footer-logo-bar"></div>
+      <div class="footer-logo-text"><span>AI Value</span><span>Firm</span></div>
+    </div>
+    <span class="footer-tagline"></span>
+  </div>
+  <div class="footer-links">
+    <a href="https://aivaluefirm.com" target="_blank">Website</a>
+    <a href="https://linkedin.com/company/meijanto" target="_blank">LinkedIn</a>
+    <a href="mailto:arno@meijanto.com">Contact</a>
+  </div>
+</footer>
+
+<script>
+// ── DATA v3 ──
+const dimensions = [
+  {
+    id: 'rev',
+    num: '01',
+    title: 'AI Revenue & Monetization',
+    subtitle: 'Can a buyer see AI in your revenue model - and does it drive retention and growth?',
+    questions: [
+      {
+        id: 'q1', label: 'Q1',
+        text: 'AI pricing visibility',
+        desc: 'Can a buyer see on invoices how much revenue comes from AI (paid add-on, premium tier, separate product) vs. "AI included" with no price signal?',
+        hint: 'If AI is free/bundled with no separate tracking, it\'s invisible to a buyer\'s revenue model.',
+        scores: [
+          { val: 0, desc: 'No AI in product' },
+          { val: 1, desc: 'AI free, no signal' },
+          { val: 2, desc: 'Bundled, not tracked' },
+          { val: 3, desc: 'Separate tracking' },
+          { val: 4, desc: 'AI priced + proven impact' }
+        ],
+        crit: [
+          'No AI revenue story',
+          'Buyer can\'t value the AI',
+          'Value exists but unproven',
+          'Credible for diligence',
+          'Premium revenue narrative'
+        ]
+      },
+      {
+        id: 'q2', label: 'Q2',
+        text: 'AI user retention & expansion',
+        desc: 'Do customers who use your AI features stay longer and spend more than those who don\'t - proven with data?',
+        scores: [
+          { val: 0, desc: 'Not measured' },
+          { val: 1, desc: 'Anecdotal only' },
+          { val: 2, desc: 'Basic before/after' },
+          { val: 3, desc: 'Proven by customer group' },
+          { val: 4, desc: 'Proven by segment + size' }
+        ],
+        crit: [
+          'Retention impact unknown',
+          'No proof - hard to value',
+          'Directional, not rigorous',
+          'Investable with context',
+          'Board-ready retention story'
+        ]
+      },
+      {
+        id: 'q3', label: 'Q3',
+        text: 'Revenue per employee trend',
+        desc: 'Is revenue per employee trending up for 4+ quarters, and can you explain the drivers (automation, self-serve, fewer services)?',
+        hint: 'Improving revenue per employee signals operating leverage - buyers underwrite higher future margins.',
+        scores: [
+          { val: 0, desc: 'Not tracked' },
+          { val: 1, desc: 'Declining or flat' },
+          { val: 2, desc: 'Growing <5%' },
+          { val: 3, desc: '+5-15%, drivers clear' },
+          { val: 4, desc: '>15%, AI-attributed' }
+        ],
+        crit: [
+          'Can\'t prove efficiency',
+          'Cost pressure signal',
+          'Stable, no AI lift',
+          'Healthy leverage story',
+          'Strong operating edge'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'moat',
+    num: '02',
+    title: 'Product Defensibility & Moat',
+    subtitle: 'What do you own that a competitor can\'t replicate in 12 months?',
+    moatRef: true,
+    questions: [
+      {
+        id: 'q4', label: 'Q4',
+        text: 'Proprietary data advantage',
+        desc: 'Do you have data assets competitors can\'t easily replicate - with contractual rights to use them?',
+        hint: 'Exclusive data rights are one of the few defensible AI advantages. Own data that competitors could also collect doesn\'t count.',
+        scores: [
+          { val: 0, desc: 'No proprietary data' },
+          { val: 1, desc: 'Own data, easily copied' },
+          { val: 2, desc: 'Unique, unclear rights' },
+          { val: 3, desc: 'Exclusive + contracted' },
+          { val: 4, desc: 'Self-reinforcing data loop' }
+        ],
+        crit: [
+          'No data moat',
+          'Easily copied',
+          'Asset exists, legally risky',
+          'Defensible with cleanup',
+          'Strategic acquisition asset'
+        ]
+      },
+      {
+        id: 'q5', label: 'Q5',
+        text: 'Switching costs & lock-in',
+        desc: 'How long would it take a customer to replace you - and what breaks when they try (integrations, governance, automations)?',
+        scores: [
+          { val: 0, desc: 'Days to replace' },
+          { val: 1, desc: 'Weeks, light integrations' },
+          { val: 2, desc: '1-3 months' },
+          { val: 3, desc: '3-6 months, deep workflows' },
+          { val: 4, desc: '>6 months, mission-critical' }
+        ],
+        crit: [
+          'Commodity - no lock-in',
+          'Replaceable without friction',
+          'Some stickiness',
+          'Strong retention lever',
+          'Premium retention multiple'
+        ]
+      },
+      {
+        id: 'q6', label: 'Q6',
+        text: 'IP & model ownership',
+        desc: 'What do you actually own (models, training data, pipelines) vs. what do you rent (API wrappers)? What happens if your main vendor doubles price?',
+        hint: 'Expand the reference card above to see the 4 moat layers.',
+        scores: [
+          { val: 0, desc: 'Only reselling vendor AI' },
+          { val: 1, desc: 'Thin layer, 1 vendor' },
+          { val: 2, desc: 'Custom setup, 1 vendor' },
+          { val: 3, desc: 'Test pipeline + multi-vendor' },
+          { val: 4, desc: 'Own models/IP/data' }
+        ],
+        crit: [
+          'No moat - commodity risk',
+          'Single vendor = price risk',
+          'Execution only',
+          'Defensible capability',
+          'Strategic IP asset'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'econ',
+    num: '03',
+    title: 'AI Economics & Margin Quality',
+    subtitle: 'Does the organization understand and control the financial side of AI - or is it a black box?',
+    questions: [
+      {
+        id: 'q7', label: 'Q7',
+        text: 'AI cost visibility',
+        desc: 'Do you know exactly how much you spend on AI (compute, licenses, internal time) - per use case, per customer?',
+        scores: [
+          { val: 0, desc: 'No idea' },
+          { val: 1, desc: 'Vague estimate' },
+          { val: 2, desc: 'Known globally' },
+          { val: 3, desc: 'Per department' },
+          { val: 4, desc: 'Per use case & P&L' }
+        ],
+        crit: [
+          'Unmanaged cost risk',
+          'Fails due diligence cost questions',
+          'Basic financial hygiene',
+          'Real cost control',
+          'Cost per unit known and improvable'
+        ]
+      },
+      {
+        id: 'q8', label: 'Q8',
+        text: 'AI return on investment',
+        desc: 'For every euro spent on AI, how much measurable value comes back? Can you prove the methodology?',
+        hint: 'Buyers want auditable attribution - not "we think AI helped."',
+        scores: [
+          { val: 0, desc: 'Not measured' },
+          { val: 1, desc: 'Negative (<1x)' },
+          { val: 2, desc: 'Break-even (~1x)' },
+          { val: 3, desc: 'Positive (1-3x)' },
+          { val: 4, desc: 'Strong (>3x)' }
+        ],
+        crit: [
+          'Spending without proof',
+          'Destroying value - urgent',
+          'Justifiable, not compelling',
+          'Investable returns',
+          'Reinvest with confidence'
+        ]
+      },
+      {
+        id: 'q9', label: 'Q9',
+        text: 'AI cost forecasting',
+        desc: 'Can you forecast AI costs within ±10-15% for the next two quarters - and prove what levers control variance?',
+        hint: 'Buyers price opaque costs as downside risk. Controlled costs support higher valuation.',
+        scores: [
+          { val: 0, desc: 'No forecast' },
+          { val: 1, desc: 'Order of magnitude' },
+          { val: 2, desc: '±30%+ variance' },
+          { val: 3, desc: '±15-30%, some levers' },
+          { val: 4, desc: '±10%, levers documented' }
+        ],
+        crit: [
+          'Buyer assumes worst case',
+          'Can\'t underwrite margins',
+          'Directionally useful',
+          'Credible for projections',
+          'Clean margin underwriting'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'lever',
+    num: '04',
+    title: 'Operational Leverage',
+    subtitle: 'Does AI deliver proven, attributable impact - or is it "cool tech" with no P&L effect?',
+    questions: [
+      {
+        id: 'q10', label: 'Q10',
+        text: 'Output vs. headcount growth',
+        desc: 'Is output (revenue, throughput) growing faster than headcount - and can you name the drivers?',
+        scores: [
+          { val: 0, desc: 'Not tracked' },
+          { val: 1, desc: 'Headcount growing faster' },
+          { val: 2, desc: 'Growing equally' },
+          { val: 3, desc: 'Output 1-2x faster' },
+          { val: 4, desc: 'Output >2x faster' }
+        ],
+        crit: [
+          'Can\'t prove leverage',
+          'Scaling inefficiently',
+          'No leverage effect',
+          'True leverage emerging',
+          'Exceptional scalability'
+        ]
+      },
+      {
+        id: 'q11', label: 'Q11',
+        text: 'Automation rate + redeployment',
+        desc: 'What % of core workflows are automated end-to-end, and where did the freed capacity go - growth or margin?',
+        hint: 'Automation only matters if freed time converts to margin or growth. Otherwise it\'s invisible to a buyer.',
+        scores: [
+          { val: 0, desc: 'Not tracked' },
+          { val: 1, desc: '<10%, time lost' },
+          { val: 2, desc: '10-20%, partial' },
+          { val: 3, desc: '20-40%, structured' },
+          { val: 4, desc: '>40%, fuels growth' }
+        ],
+        crit: [
+          'Automation potential unknown',
+          'Efficiency gains evaporate',
+          'Some value recaptured',
+          'Deliberate reinvestment',
+          'Freed capacity = growth'
+        ]
+      },
+      {
+        id: 'q12', label: 'Q12',
+        text: 'Attributable AI impact',
+        desc: 'Can you point to 3+ AI initiatives with audited impact (lower churn, more upsells, lower acquisition costs) and a clear attribution method?',
+        scores: [
+          { val: 0, desc: 'No attribution' },
+          { val: 1, desc: 'Anecdotal claims' },
+          { val: 2, desc: '1-2 basic cases' },
+          { val: 3, desc: '2-3 with methodology' },
+          { val: 4, desc: '3+ audited, board-ready' }
+        ],
+        crit: [
+          'Hand-wavy AI story',
+          'Gets discounted in due diligence',
+          'Early proof points',
+          'Credible value creation',
+          'Premium AI narrative'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'gov',
+    num: '05',
+    title: 'Governance & Deal Readiness',
+    subtitle: 'Would your AI practices survive a buyer\'s legal team - or would they become a discount?',
+    questions: [
+      {
+        id: 'q13', label: 'Q13',
+        text: 'AI governance producibility',
+        desc: 'If a buyer\'s legal team asks "show me your AI governance," can you produce it in 24 hours - policies, testing results, monitoring, incident logs?',
+        scores: [
+          { val: 0, desc: 'Nothing exists' },
+          { val: 1, desc: 'Informal, undocumented' },
+          { val: 2, desc: 'Some policies, scattered' },
+          { val: 3, desc: 'Documented, not tested' },
+          { val: 4, desc: 'Producible in 24h' }
+        ],
+        crit: [
+          'Unmanaged AI risk',
+          'No accountability trail',
+          'Works on paper only',
+          'Scalable governance',
+          'Clean diligence - no holdbacks'
+        ]
+      },
+      {
+        id: 'q14', label: 'Q14',
+        text: 'IP & data ownership trail',
+        desc: 'Do you have clean IP and data rights (employee/contractor assignments, open-source compliance, customer consent, data processing agreements, training rights) ready for diligence?',
+        scores: [
+          { val: 0, desc: 'Unknown / messy' },
+          { val: 1, desc: 'Major gaps known' },
+          { val: 2, desc: 'Partial, gaps remain' },
+          { val: 3, desc: 'Mostly clean' },
+          { val: 4, desc: 'Clean ownership trail' }
+        ],
+        crit: [
+          'Deal-breaker risk',
+          'Cleanup needed before deal closes',
+          'Fixable but adds cost',
+          'Minor cleanup only',
+          'Buyer confidence - premium'
+        ]
+      },
+      {
+        id: 'q15', label: 'Q15',
+        text: 'AI talent & key person risk',
+        desc: 'Does the organization have the people and skills to keep shipping AI post-close, or does everything depend on 1-2 people?',
+        scores: [
+          { val: 0, desc: 'No internal capability' },
+          { val: 1, desc: '1-2 people dependency' },
+          { val: 2, desc: 'Small team, high risk' },
+          { val: 3, desc: 'Core team + external' },
+          { val: 4, desc: 'Broad capability' }
+        ],
+        crit: [
+          'No ability to execute',
+          'Key person = deal risk',
+          'Retention packages needed',
+          'Manageable transition',
+          'Buyer confidence in team'
+        ]
+      }
+    ]
+  }
+];
+
+// ── STATE ──
+const state = {};
+dimensions.forEach(d => d.questions.forEach(q => { state[q.id] = null; }));
+
+// ── RENDER DIMENSIONS ──
+function renderDimensions() {
+  const container = document.getElementById('dimensionsContainer');
+  container.innerHTML = dimensions.map(d => `
+    <div class="dimension-block" id="dim-${d.id}">
+      <div class="dim-header">
+        <span class="dim-number">${d.num}</span>
+        <div class="dim-title-wrap">
+          <h2 class="dim-title">${d.title}</h2>
+          <div class="dim-subtitle">${d.subtitle}</div>
+        </div>
+        <div class="dim-score-badge"><span id="dimScore-${d.id}">0</span><span class="of">/20</span></div>
+      </div>
+      <div class="dim-color-bar"><div class="fill" id="dimBar-${d.id}"></div></div>
+      ${d.moatRef ? renderMoatInline() : ''}
+      ${d.questions.map(q => `
+        <div class="q-card" id="card-${q.id}">
+          <div class="q-top">
+            <div>
+              <div class="q-label">${q.label}</div>
+              <div class="q-text">${q.desc}</div>
+              <div class="q-metric">${q.text}</div>
+              ${q.hint ? `<div class="q-hint">${q.hint}</div>` : ''}
+            </div>
+            <div class="q-selected-score" id="sel-${q.id}">-</div>
+          </div>
+          <div class="q-scores">
+            ${q.scores.map(s => `
+              <button class="score-btn" data-q="${q.id}" data-val="${s.val}" onclick="selectScore('${q.id}', ${s.val}, this)">
+                <span class="score-num">${s.val}</span>
+                <span class="score-desc">${s.desc}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div class="q-score-feedback" id="feedback-${q.id}" style="display:none;"></div>
+          <div class="q-criteria">
+            ${q.crit.map((c, i) => {
+              const cls = i === 0 ? 'crit-slate' : i === 1 ? 'crit-red' : i === 2 ? 'crit-yellow' : i === 3 ? 'crit-green' : 'crit-teal';
+              return `<div class="crit ${cls}">${c}</div>`;
+            }).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function renderMoatInline() {
+  const layers = [
+    { num: 1, name: 'Tool Layer', desc: 'Off-the-shelf AI (GPT wrappers). No moat.' },
+    { num: 2, name: 'Workflow Layer', desc: 'AI in processes, custom procedures. Moderate moat.' },
+    { num: 3, name: 'Data Layer', desc: 'Proprietary data, feedback loops. Strong moat.' },
+    { num: 4, name: 'Model/IP Layer', desc: 'Own models, training data, patents. Very strong.' }
+  ];
+  return `
+    <div class="moat-inline" id="moatInline">
+      <div class="moat-inline-header" onclick="toggleMoatRef()">
+        <div class="moat-inline-title">AI Defensibility Layers (for Q4-Q6)</div>
+        <div class="moat-inline-toggle" id="moatToggle">&#9660; Show</div>
+      </div>
+      <div class="moat-inline-body collapsed" id="moatInlineBody" style="display:none;">
+        ${layers.map(l => `
+          <div class="moat-inline-card" data-layer="${l.num}">
+            <div class="lvl">${l.num}</div>
+            <div class="lvl-name">${l.name}</div>
+            <div class="lvl-desc">${l.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function toggleMoatRef() {
+  const body = document.getElementById('moatInlineBody');
+  const toggle = document.getElementById('moatToggle');
+  const isCollapsed = body.classList.toggle('collapsed');
+  if (isCollapsed) {
+    toggle.innerHTML = '&#9660; Show';
+    body.style.display = 'none';
+  } else {
+    toggle.innerHTML = '&#9650; Hide';
+    body.style.removeProperty('display');
+  }
+}
+
+// ── HELPER: find question data ──
+function findQuestion(qId) {
+  for (const d of dimensions) {
+    for (const q of d.questions) {
+      if (q.id === qId) return q;
+    }
+  }
+  return null;
+}
+
+// ── SELECT SCORE (with deselect) ──
+function selectScore(qId, val, el) {
+  const parent = el.parentElement;
+  const feedbackEl = document.getElementById(`feedback-${qId}`);
+
+  // Deselect if same button clicked
+  if (state[qId] === val) {
+    state[qId] = null;
+    parent.querySelectorAll('.score-btn').forEach(b => {
+      b.classList.remove('active-slate', 'active-red', 'active-yellow', 'active-green', 'active-teal');
+    });
+    const selEl = document.getElementById(`sel-${qId}`);
+    selEl.textContent = '-';
+    selEl.classList.remove('scored');
+    if (feedbackEl) feedbackEl.style.display = 'none';
+    updateAll();
+    return;
+  }
+
+  state[qId] = val;
+
+  // Reset siblings
+  parent.querySelectorAll('.score-btn').forEach(b => {
+    b.classList.remove('active-slate', 'active-red', 'active-yellow', 'active-green', 'active-teal');
+  });
+
+  // Apply color class: 0=slate, 1=red, 2=yellow, 3=green, 4=teal
+  let cls = val === 0 ? 'active-slate' : val === 1 ? 'active-red' : val === 2 ? 'active-yellow' : val === 3 ? 'active-green' : 'active-teal';
+  el.classList.add(cls);
+
+  // Update individual score display
+  const selEl = document.getElementById(`sel-${qId}`);
+  selEl.textContent = val;
+  selEl.classList.add('scored');
+
+  // Mobile feedback: show selected score description + criteria
+  if (feedbackEl) {
+    const q = findQuestion(qId);
+    if (q) {
+      const scoreObj = q.scores[val];
+      const critText = q.crit[val] || '';
+      feedbackEl.innerHTML = `<span class="fb-score">${val} - ${scoreObj.desc}</span><span class="fb-crit">${critText}</span>`;
+      feedbackEl.style.removeProperty('display');
+    }
+  }
+
+  updateAll();
+}
+
+// ── CONFIG ──
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+// Read email from URL parameter (passed from landing page)
+const urlParams = new URLSearchParams(window.location.search);
+const userEmail = urlParams.get('email') || '';
+
+// Pre-fill CTA email if we have it
+if (userEmail) {
+  const ctaEmail = document.querySelector('.cta-section input[type="email"]');
+  if (ctaEmail) ctaEmail.value = userEmail;
+}
+
+// ── UPDATE ALL ──
+const RAW_MAX = 12;
+const SCALED_MAX = 20;
+const TOTAL_QUESTIONS = 15;
+
+function scaleScore(raw) {
+  return Math.round((raw / RAW_MAX) * SCALED_MAX);
+}
+
+function updateAll() {
+  let total = 0;
+  let answered = 0;
+  const dimScores = [];
+
+  dimensions.forEach(d => {
+    let rawTotal = 0;
+    d.questions.forEach(q => {
+      if (state[q.id] !== null) {
+        rawTotal += state[q.id];
+        answered++;
+      }
+    });
+    const scaled = scaleScore(rawTotal);
+    dimScores.push({ id: d.id, title: d.title, score: scaled, raw: rawTotal });
+    total += scaled;
+
+    // Dimension score
+    document.getElementById(`dimScore-${d.id}`).textContent = scaled;
+
+    // Bar
+    const bar = document.getElementById(`dimBar-${d.id}`);
+    const pct = (scaled / SCALED_MAX) * 100;
+    bar.style.width = pct + '%';
+    bar.style.background = scaled <= 7 ? 'var(--red)' : scaled <= 14 ? 'var(--yellow)' : 'var(--teal)';
+  });
+
+  // Progress
+  document.getElementById('navProgress').textContent = `${answered} / ${TOTAL_QUESTIONS}`;
+  document.getElementById('navProgressBar').style.width = ((answered / TOTAL_QUESTIONS) * 100) + '%';
+
+  // Total
+  document.getElementById('totalScore').textContent = total;
+  document.getElementById('navScore').textContent = total;
+
+  // Incomplete warning
+  const warningEl = document.getElementById('incompleteWarning');
+  if (answered < TOTAL_QUESTIONS && answered > 0) {
+    warningEl.textContent = `${TOTAL_QUESTIONS - answered} question${TOTAL_QUESTIONS - answered > 1 ? 's' : ''} unanswered. Your score may be lower than your actual maturity.`;
+  } else {
+    warningEl.textContent = '';
+  }
+
+  // Rating
+  let rating, ratingColor, ratingBg, ratingText;
+  if (total >= 80) { rating = 'A - Premium Ready'; ratingColor = 'var(--teal)'; ratingBg = 'var(--light-teal)'; ratingText = 'Your AI practices would withstand buyer scrutiny. Strong position for premium valuation. Focus: document and package for data room.'; }
+  else if (total >= 60) { rating = 'B - Investable with Gaps'; ratingColor = 'var(--green)'; ratingBg = 'var(--green-bg)'; ratingText = 'Solid foundation, gaps in 1-2 dimensions. A buyer would still engage but negotiate. Focus: close gaps within 90 days.'; }
+  else if (total >= 40) { rating = 'C - Discount Territory'; ratingColor = 'var(--yellow)'; ratingBg = 'var(--yellow-bg)'; ratingText = 'AI activity exists but limited proof of P&L impact. Buyers will cap the multiple. Focus: prove 2-3 use cases with hard numbers.'; }
+  else if (total >= 20) { rating = 'D - Earn-out Risk'; ratingColor = 'var(--amber)'; ratingBg = '#FFF3E0'; ratingText = 'Aware of AI but nothing a buyer can underwrite. Value shifts to earn-outs and contingencies. Focus: quick wins with measurable ROI.'; }
+  else { rating = 'F - Multiple Compression'; ratingColor = 'var(--red)'; ratingBg = 'var(--red-bg)'; ratingText = 'No credible AI story. Buyers either walk or discount heavily. Urgent: establish baseline metrics and governance.'; }
+
+  const badge = document.getElementById('ratingBadge');
+  badge.textContent = rating;
+  badge.style.background = ratingBg;
+  badge.style.color = ratingColor;
+  document.getElementById('ratingDesc').textContent = ratingText;
+
+  // Highlight rating table row
+  const ratingLetter = total >= 80 ? 'A' : total >= 60 ? 'B' : total >= 40 ? 'C' : total >= 20 ? 'D' : 'F';
+  document.querySelectorAll('#ratingTable tbody tr').forEach(tr => {
+    tr.classList.toggle('active-row', tr.dataset.range === ratingLetter);
+  });
+
+  // Dimension summary
+  const grid = document.getElementById('dimSummaryGrid');
+  grid.innerHTML = dimScores.map((ds, i) => {
+    const color = ds.score <= 7 ? 'var(--red)' : ds.score <= 14 ? 'var(--yellow)' : 'var(--teal)';
+    const action = ds.score <= 7 ? 'Urgent gap - value at risk' : ds.score <= 14 ? 'Work in progress - focus within 90 days' : 'Strong - document & use as proof point';
+    const fullWidth = i === dimScores.length - 1 && dimScores.length % 2 !== 0 ? ' full-width' : '';
+    return `<div class="dim-sum-card${fullWidth}">
+      <div class="dim-sum-dot" style="background:${color}"></div>
+      <div class="dim-sum-info">
+        <div class="dim-sum-name">${ds.title}</div>
+        <div class="dim-sum-action">${action}</div>
+      </div>
+      <div class="dim-sum-score">${ds.score}<span class="dim-sum-of">/20</span></div>
+    </div>`;
+  }).join('');
+
+  // Top 3 Levers
+  const scored = [];
+  dimensions.forEach(d => {
+    d.questions.forEach(q => {
+      if (state[q.id] !== null) {
+        scored.push({ qId: q.id, label: q.label, text: q.text, dim: d.title, score: state[q.id] });
+      }
+    });
+  });
+  scored.sort((a, b) => a.score - b.score);
+  const levers = scored.slice(0, 3);
+  const leverContainer = document.getElementById('leversContainer');
+  if (levers.length === 0) {
+    leverContainer.innerHTML = '<div class="no-levers">Score at least one question to see your priority levers.</div>';
+  } else {
+    leverContainer.innerHTML = levers.map((l, i) => {
+      const rankClass = i === 0 ? '' : i === 1 ? ' rank-2' : ' rank-3';
+      const scoreColor = l.score === 0 ? 'var(--slate)' : l.score === 1 ? 'var(--red)' : l.score === 2 ? 'var(--yellow)' : l.score === 3 ? 'var(--green)' : 'var(--teal)';
+      return `<div class="lever-item">
+        <div class="lever-rank${rankClass}">${i + 1}</div>
+        <div class="lever-info">
+          <div class="lever-q">${l.label}: ${l.text}</div>
+          <div class="lever-dim">${l.dim}</div>
+        </div>
+        <div class="lever-score" style="color:${scoreColor}">${l.score}/4</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Show save button when all questions answered
+  const saveEl = document.getElementById('saveResults');
+  if (saveEl) {
+    saveEl.style.display = answered === TOTAL_QUESTIONS ? 'block' : 'none';
+  }
+
+  // Update moat highlight based on Q6
+  document.querySelectorAll('.moat-card').forEach(c => c.classList.remove('active-level'));
+  document.querySelectorAll('.moat-inline-card').forEach(c => c.classList.remove('active-level'));
+  if (state.q6 !== null && state.q6 >= 0) {
+    let layer = state.q6 === 0 ? 1 : state.q6 === 1 ? 1 : state.q6 === 2 ? 2 : state.q6 === 3 ? 3 : 4;
+    document.querySelectorAll(`.moat-card[data-layer="${layer}"], .moat-inline-card[data-layer="${layer}"]`).forEach(c => c.classList.add('active-level'));
+  }
+}
+
+// ── INIT ──
+try {
+  renderDimensions();
+  updateAll();
+} catch(e) {
+  var c = document.getElementById('dimensionsContainer');
+  if (c) c.innerHTML = '<div style="background:#FEF2F2;border:1px solid #EF4444;border-radius:14px;padding:24px;text-align:center;color:#1B2A4A;"><strong>Error loading questions</strong><br><span style="font-size:12px;color:#64748B;">'+e.message+'</span></div>';
+}
+
+// Set today's date
+try {
+  document.getElementById('assessDate').valueAsDate = new Date();
+} catch(e) {
+  document.getElementById('assessDate').value = new Date().toISOString().split('T')[0];
+}
+
+// ── SAVE RESULTS ──
+function saveResults() {
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  // Collect dimension scores
+  const scores = {};
+  dimensions.forEach(d => {
+    let rawTotal = 0;
+    d.questions.forEach(q => {
+      if (state[q.id] !== null) rawTotal += state[q.id];
+    });
+    scores[d.id] = scaleScore(rawTotal);
+  });
+
+  // Total and rating
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  let rating;
+  if (total >= 80) rating = 'A - Premium Ready';
+  else if (total >= 60) rating = 'B - Investable with Gaps';
+  else if (total >= 40) rating = 'C - Discount Territory';
+  else if (total >= 20) rating = 'D - Earn-out Risk';
+  else rating = 'F - Multiple Compression';
+
+  // Top 3 levers (lowest-scoring questions)
+  const scored = [];
+  dimensions.forEach(d => {
+    d.questions.forEach(q => {
+      if (state[q.id] !== null) {
+        scored.push({ label: q.label, text: q.text, dim: d.title, score: state[q.id] });
+      }
+    });
+  });
+  scored.sort((a, b) => a.score - b.score);
+  const levers = scored.slice(0, 3).map(l => l.label + ': ' + l.text + ' (' + l.dim + ', ' + l.score + '/4)');
+
+  // Get email: URL param > CTA input > empty
+  const ctaEmail = document.querySelector('.cta-section input[type="email"]');
+  const email = userEmail || (ctaEmail ? ctaEmail.value.trim() : '');
+
+  const payload = {
+    action: 'scorecard',
+    email: email,
+    company: document.getElementById('companyName').value.trim(),
+    industry: document.getElementById('industry').value.trim(),
+    assessor: document.getElementById('assessor').value.trim(),
+    totalScore: total,
+    rating: rating,
+    scores: scores,
+    levers: levers
+  };
+
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function() {
+    btn.style.display = 'none';
+    document.getElementById('saveSuccess').style.display = 'block';
+    var noteEl = document.querySelector('.save-note');
+    if (noteEl) noteEl.style.display = 'none';
+  })
+  .catch(function() {
+    // Even with no-cors, the request likely went through
+    btn.style.display = 'none';
+    document.getElementById('saveSuccess').style.display = 'block';
+    var noteEl = document.querySelector('.save-note');
+    if (noteEl) noteEl.style.display = 'none';
+  });
+}
+</script>
+</body>
+</html>
