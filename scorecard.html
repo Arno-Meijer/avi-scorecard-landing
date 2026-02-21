@@ -1030,7 +1030,7 @@ footer {
       <span id="navProgress">0 / 15</span>
       <div class="nav-progress-bar"><div class="fill" id="navProgressBar"></div></div>
     </div>
-    <div class="nav-score-pill" id="navPill">
+    <div class="nav-score-pill" id="navPill" style="display:none;">
       Score: <span class="score-val" id="navScore">0</span> / 100
     </div>
   </div>
@@ -1113,21 +1113,20 @@ footer {
       <span class="section-tag">Your Results</span>
     </div>
 
-    <div class="total-score-card">
-      <div><span class="total-num" id="totalScore">0</span><span class="total-of"> / 100</span></div>
-      <div class="rating-badge" id="ratingBadge" style="background:var(--border);color:var(--muted);">-</div>
-      <p class="rating-desc" id="ratingDesc">Answer all 15 questions above to see your full rating and personalized recommendations.</p>
-      <p class="incomplete-warning" id="incompleteWarning"></p>
-    </div>
-
     <!-- SHOW RESULTS GATE -->
     <div class="show-results-gate" id="showResultsGate" style="display:none;">
       <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Results & Recommendations</button>
       <p class="gate-note">Your scores will be saved and shared with AI Value Firm for a personalized recommendation.</p>
     </div>
 
-    <!-- DETAILED RESULTS (hidden until gate is clicked) -->
+    <!-- ALL RESULTS (hidden until gate is clicked) -->
     <div id="detailedResults" style="display:none;">
+      <div class="total-score-card">
+        <div><span class="total-num" id="totalScore">0</span><span class="total-of"> / 100</span></div>
+        <div class="rating-badge" id="ratingBadge" style="background:var(--border);color:var(--muted);">-</div>
+        <p class="rating-desc" id="ratingDesc">Answer all 15 questions above to see your full rating and personalized recommendations.</p>
+        <p class="incomplete-warning" id="incompleteWarning"></p>
+      </div>
       <div class="dim-summary-grid" id="dimSummaryGrid"></div>
 
       <div class="levers-card">
@@ -1169,12 +1168,12 @@ footer {
       </div>
 
       <!-- NEXT STEP CTA -->
-      <div class="cta-section" style="padding:48px 0 0;">
+      <div class="cta-section" style="padding:48px 0 0;background:#FFFFFF;">
         <span class="section-tag">Next Step</span>
         <h2>Turn your score into a <span class="light">buyer-ready AI narrative</span></h2>
         <p>Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a concrete 90-day action plan.</p>
         <a href="#" class="btn book-call-btn" style="display:inline-block;text-decoration:none;margin-top:20px;">Book Your Exit Readiness Review</a>
-        <p class="cta-helper">25-minute call. No strings attached.</p>
+        <p class="cta-helper">30-minute call. No strings attached.</p>
       </div>
     </div>
   </div>
@@ -2007,7 +2006,9 @@ function revealResults() {
   setTimeout(function() {
     document.getElementById('showResultsGate').style.display = 'none';
     document.getElementById('detailedResults').style.display = 'block';
-    // Scroll to the detailed results
+    // Show nav score pill now that results are revealed
+    document.getElementById('navPill').style.display = '';
+    // Scroll to the results
     document.getElementById('detailedResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     // Tracking event: tool completed
