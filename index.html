@@ -783,31 +783,43 @@ footer {
 })();
 </script>
 
+<!-- Hidden iframe for form submissions -->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
 <!-- EMAIL CAPTURE -->
 <script>
-// Replace this URL after deploying your Google Apps Script
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkW_tpxAljdAUC12t_74uLv261YkMUVTqB90VXS-w7XVSebXCuvnlz8aWbw2LKDDRs/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIvsh64FyXFt0l1ICM0doObETZfedwtpvlLszt37T5oePk2RLSDLiPMGCtnkHZBetz/exec';
 
 function handleEmailSubmit(e, form) {
   e.preventDefault();
-  const input = form.querySelector('input[type="email"]');
-  const btn = form.querySelector('button');
-  const email = input.value.trim();
+  var input = form.querySelector('input[type="email"]');
+  var btn = form.querySelector('button');
+  var email = input.value.trim();
 
   if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return false;
 
-  // Disable button, show loading
   btn.disabled = true;
   btn.textContent = 'Sending...';
 
-  fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'landing', email: email, source: 'landing-page' })
-  })
-  .then(function() {
-    // Show success state
+  // Send data via hidden form + iframe (bypasses CORS)
+  var hiddenForm = document.createElement('form');
+  hiddenForm.method = 'POST';
+  hiddenForm.action = GOOGLE_SCRIPT_URL;
+  hiddenForm.target = 'hidden_iframe';
+  hiddenForm.style.display = 'none';
+
+  var payloadInput = document.createElement('input');
+  payloadInput.type = 'hidden';
+  payloadInput.name = 'payload';
+  payloadInput.value = JSON.stringify({ action: 'landing', email: email, source: 'landing-page' });
+  hiddenForm.appendChild(payloadInput);
+
+  document.body.appendChild(hiddenForm);
+  hiddenForm.submit();
+  document.body.removeChild(hiddenForm);
+
+  // Show success state immediately (fire-and-forget)
+  setTimeout(function() {
     var parent = form.parentElement;
     form.style.display = 'none';
     var note = parent.querySelector('.cta-note') || parent.querySelector('.cta-note-bottom');
@@ -819,13 +831,7 @@ function handleEmailSubmit(e, form) {
       var link = success.querySelector('.scorecard-link');
       if (link) link.href = 'scorecard.html?email=' + encodeURIComponent(email);
     }
-  })
-  .catch(function() {
-    // On error, still show the scorecard (don't block the user)
-    btn.textContent = 'Download Scorecard';
-    btn.disabled = false;
-    window.location.href = 'scorecard.html?email=' + encodeURIComponent(email);
-  });
+  }, 500);
 
   return false;
 }
