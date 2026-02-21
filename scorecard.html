@@ -1222,7 +1222,7 @@ footer {
 </footer>
 
 <script>
-// ── DATA v3 ──
+// -- DATA v3 --
 const dimensions = [
   {
     id: 'rev',
@@ -1559,11 +1559,11 @@ const dimensions = [
   }
 ];
 
-// ── STATE ──
+// -- STATE --
 const state = {};
 dimensions.forEach(d => d.questions.forEach(q => { state[q.id] = null; }));
 
-// ── RENDER DIMENSIONS ──
+// -- RENDER DIMENSIONS --
 function renderDimensions() {
   const container = document.getElementById('dimensionsContainer');
   container.innerHTML = dimensions.map(d => `
@@ -1649,7 +1649,7 @@ function toggleMoatRef() {
   }
 }
 
-// ── HELPER: find question data ──
+// -- HELPER: find question data --
 function findQuestion(qId) {
   for (const d of dimensions) {
     for (const q of d.questions) {
@@ -1659,7 +1659,7 @@ function findQuestion(qId) {
   return null;
 }
 
-// ── SELECT SCORE (with deselect) ──
+// -- SELECT SCORE (with deselect) --
 function selectScore(qId, val, el) {
   const parent = el.parentElement;
   const feedbackEl = document.getElementById(`feedback-${qId}`);
@@ -1708,9 +1708,8 @@ function selectScore(qId, val, el) {
   updateAll();
 }
 
-// ── CONFIG ──
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec
-';
+// -- CONFIG --
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec';
 
 // Read email from URL parameter (passed from landing page)
 const urlParams = new URLSearchParams(window.location.search);
@@ -1722,7 +1721,7 @@ if (userEmail) {
   if (ctaEmail) ctaEmail.value = userEmail;
 }
 
-// ── UPDATE ALL ──
+// -- UPDATE ALL --
 const RAW_MAX = 12;
 const SCALED_MAX = 20;
 const TOTAL_QUESTIONS = 15;
@@ -1893,7 +1892,7 @@ function updateAll() {
   }
 }
 
-// ── INIT ──
+// -- INIT --
 try {
   renderDimensions();
   updateAll();
@@ -1909,7 +1908,7 @@ try {
   document.getElementById('assessDate').value = new Date().toISOString().split('T')[0];
 }
 
-// ── SAVE RESULTS ──
+// -- SAVE RESULTS --
 function saveResults() {
   const btn = document.getElementById('saveBtn');
   btn.disabled = true;
