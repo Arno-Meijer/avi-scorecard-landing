@@ -1715,15 +1715,20 @@ function selectScore(qId, val, el) {
 }
 
 // -- CONFIG --
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec';
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec';
 
-// Read email from URL parameter (passed from landing page)
-const urlParams = new URLSearchParams(window.location.search);
-const userEmail = urlParams.get('email') || '';
+// Read URL parameters (email + UTM from landing page)
+var urlParams = new URLSearchParams(window.location.search);
+var userEmail = urlParams.get('email') || '';
+var utmParams = {
+  utm_source: urlParams.get('utm_source') || '',
+  utm_medium: urlParams.get('utm_medium') || '',
+  utm_campaign: urlParams.get('utm_campaign') || ''
+};
 
 // Pre-fill CTA email if we have it
 if (userEmail) {
-  const ctaEmail = document.querySelector('.cta-section input[type="email"]');
+  var ctaEmail = document.querySelector('.cta-section input[type="email"]');
   if (ctaEmail) ctaEmail.value = userEmail;
 }
 
@@ -1931,14 +1936,14 @@ function revealResults() {
     scores[d.id] = scaleScore(rawTotal);
   });
 
-  // Total and rating
+  // Total and rating + segment letter
   var total = Object.values(scores).reduce(function(a, b) { return a + b; }, 0);
-  var rating;
-  if (total >= 80) rating = 'A - Premium Ready';
-  else if (total >= 60) rating = 'B - Investable with Gaps';
-  else if (total >= 40) rating = 'C - Discount Territory';
-  else if (total >= 20) rating = 'D - Earn-out Risk';
-  else rating = 'F - Multiple Compression';
+  var rating, segment;
+  if (total >= 80) { rating = 'A - Premium Ready'; segment = 'A'; }
+  else if (total >= 60) { rating = 'B - Investable with Gaps'; segment = 'B'; }
+  else if (total >= 40) { rating = 'C - Discount Territory'; segment = 'C'; }
+  else if (total >= 20) { rating = 'D - Earn-out Risk'; segment = 'D'; }
+  else { rating = 'F - Multiple Compression'; segment = 'F'; }
 
   // Top 3 levers (lowest-scoring questions)
   var scored = [];
@@ -1950,14 +1955,15 @@ function revealResults() {
     });
   });
   scored.sort(function(a, b) { return a.score - b.score; });
-  var levers = scored.slice(0, 3).map(function(l) { return l.label + ': ' + l.text + ' (' + l.dim + ', ' + l.score + '/4)'; });
+  var topRisks = scored.slice(0, 3).map(function(l) { return l.label + ': ' + l.text + ' (' + l.dim + ', ' + l.score + '/4)'; });
 
   // Get email: URL param > CTA input > empty
-  var ctaEmail = document.querySelector('.cta-section input[type="email"]');
-  var email = userEmail || (ctaEmail ? ctaEmail.value.trim() : '');
+  var ctaEmailEl = document.querySelector('.cta-section input[type="email"]');
+  var email = userEmail || (ctaEmailEl ? ctaEmailEl.value.trim() : '');
 
   var payload = {
     action: 'scorecard',
+    lead_source: 'Exit Tool',
     email: email,
     company: document.getElementById('companyName').value.trim(),
     industry: document.getElementById('industry').value.trim(),
@@ -1965,16 +1971,28 @@ function revealResults() {
     revenue: document.getElementById('revenue').value || '',
     exitHorizon: document.getElementById('exitHorizon').value || '',
     assessor: document.getElementById('assessor').value.trim(),
-    totalScore: total,
+    // Scores - flat for easy CRM mapping
+    exit_score: total,
+    segment: segment,
     rating: rating,
-    scores: scores,
-    levers: levers
+    pillar_revenue: scores.rev || 0,
+    pillar_moat: scores.moat || 0,
+    pillar_economics: scores.econ || 0,
+    pillar_leverage: scores.lever || 0,
+    pillar_governance: scores.gov || 0,
+    top_risks: topRisks,
+    // UTM tracking
+    utm_source: utmParams.utm_source,
+    utm_medium: utmParams.utm_medium,
+    utm_campaign: utmParams.utm_campaign,
+    landing_url: document.referrer || '',
+    assessment_date: new Date().toISOString()
   };
 
   // Send data via hidden form + iframe (bypasses CORS)
   var hiddenForm = document.createElement('form');
   hiddenForm.method = 'POST';
-  hiddenForm.action = GOOGLE_SCRIPT_URL;
+  hiddenForm.action = WEBHOOK_URL;
   hiddenForm.target = 'hidden_iframe';
   hiddenForm.style.display = 'none';
 
@@ -1994,8 +2012,33 @@ function revealResults() {
     document.getElementById('detailedResults').style.display = 'block';
     // Scroll to the detailed results
     document.getElementById('detailedResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Tracking event: tool completed
+    trackEvent('tool_completed', { exit_score: total, segment: segment });
   }, 600);
 }
+
+// -- TRACKING EVENTS --
+function trackEvent(eventName, data) {
+  // Google Analytics 4 (if loaded)
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, data);
+  }
+  // Generic dataLayer push (GTM compatible)
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: eventName, ...data });
+}
+
+// Track Calendly / booking CTA clicks
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('.book-call-btn');
+  if (link) {
+    trackEvent('book_call_clicked', {
+      exit_score: document.getElementById('totalScore').textContent,
+      source: 'scorecard_results'
+    });
+  }
+});
 </script>
 </body>
 </html>
