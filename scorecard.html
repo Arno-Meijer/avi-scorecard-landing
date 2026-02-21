@@ -173,7 +173,27 @@ h1 .light { color: var(--teal); }
 .company-inner input[type="date"] {
   min-height: 44px;
 }
-.company-inner input:focus { border-color: var(--teal); }
+.company-inner input:focus, .company-inner select:focus { border-color: var(--teal); }
+.company-inner select {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  background: var(--white);
+  outline: none;
+  transition: border 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+.company-inner select:invalid, .company-inner select option[value=""] { color: var(--muted); }
 
 /* HOW TO USE */
 .how-to-use {
@@ -778,8 +798,9 @@ footer {
   .hero-sub { font-size: 15px; }
   .dimensions { padding: 24px 16px; }
   .company-bar { padding: 24px 16px; overflow-x: hidden; }
-  .company-inner input { padding: 10px 16px; font-size: 16px; } /* 16px prevents iOS zoom on focus */
+  .company-inner input, .company-inner select { padding: 10px 16px; font-size: 16px; } /* 16px prevents iOS zoom on focus */
   .company-inner input[type="date"] { -webkit-appearance: none; appearance: none; }
+  .company-inner select { background-position: right 12px center; }
   .how-to-use { padding: 24px 16px 0; }
   .how-to-use-card { padding: 16px; }
 
@@ -982,6 +1003,37 @@ footer {
   <div class="company-inner">
     <div><label>Company</label><input type="text" id="companyName" placeholder="Your company name"></div>
     <div><label>Industry</label><input type="text" id="industry" placeholder="e.g. SaaS, Manufacturing, Healthcare"></div>
+    <div><label>Your Role</label>
+      <select id="role">
+        <option value="" disabled selected>Select your role</option>
+        <option value="CEO / Founder">CEO / Founder</option>
+        <option value="CFO / Finance">CFO / Finance</option>
+        <option value="CTO / Tech">CTO / Tech</option>
+        <option value="COO / Operations">COO / Operations</option>
+        <option value="Operating Partner (PE)">Operating Partner (PE)</option>
+        <option value="Board / Advisor">Board / Advisor</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div><label>Annual Revenue</label>
+      <select id="revenue">
+        <option value="" disabled selected>Select range</option>
+        <option value="< €1M">&lt; €1M</option>
+        <option value="€1M – €5M">€1M – €5M</option>
+        <option value="€5M – €20M">€5M – €20M</option>
+        <option value="€20M – €50M">€20M – €50M</option>
+        <option value="€50M+">€50M+</option>
+      </select>
+    </div>
+    <div><label>Exit / Funding Horizon</label>
+      <select id="exitHorizon">
+        <option value="" disabled selected>Select timeframe</option>
+        <option value="0 – 12 months">0 – 12 months</option>
+        <option value="12 – 24 months">12 – 24 months</option>
+        <option value="24+ months">24+ months</option>
+        <option value="No specific timeline">No specific timeline</option>
+      </select>
+    </div>
     <div><label>Assessed by</label><input type="text" id="assessor" placeholder="Your name"></div>
     <div><label>Date</label><input type="date" id="assessDate"></div>
   </div>
@@ -1604,7 +1656,7 @@ function selectScore(qId, val, el) {
 }
 
 // ── CONFIG ──
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIvsh64FyXFt0l1ICM0doObETZfedwtpvlLszt37T5oePk2RLSDLiPMGCtnkHZBetz/exec';
+const GOOGLE_SCRIPT_URL = '[https://script.google.com/macros/s/AKfycbyIvsh64FyXFt0l1ICM0doObETZfedwtpvlLszt37T5oePk2RLSDLiPMGCtnkHZBetz/exec](https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec)';
 
 // Read email from URL parameter (passed from landing page)
 const urlParams = new URLSearchParams(window.location.search);
@@ -1810,6 +1862,9 @@ function saveResults() {
     email: email,
     company: document.getElementById('companyName').value.trim(),
     industry: document.getElementById('industry').value.trim(),
+    role: document.getElementById('role').value || '',
+    revenue: document.getElementById('revenue').value || '',
+    exitHorizon: document.getElementById('exitHorizon').value || '',
     assessor: document.getElementById('assessor').value.trim(),
     totalScore: total,
     rating: rating,
