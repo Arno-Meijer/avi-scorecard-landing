@@ -110,6 +110,18 @@ nav {
 }
 .cta-box button:hover { background: #111827; transform: translateY(-1px); }
 .cta-note { width: 100%; text-align: center; font-size: 12px; color: var(--body-text); margin-top: 8px; }
+.cta-success {
+  margin-top: 20px; padding: 20px 28px; background: #EEFFF4; border: 1px solid #BBF7D0;
+  border-radius: var(--radius); text-align: center;
+}
+.cta-success p { font-size: 14px; color: var(--navy); margin-bottom: 12px; font-weight: 500; }
+.scorecard-link {
+  display: inline-block; background: var(--teal); color: var(--white); font-weight: 700;
+  font-size: 15px; padding: 12px 32px; border-radius: var(--radius-pill);
+  text-decoration: none; transition: all 0.2s;
+}
+.scorecard-link:hover { background: #009BB8; transform: translateY(-1px); }
+.cta-box button:disabled { opacity: 0.6; cursor: wait; }
 
 /* ===== SECTIONS ===== */
 section { padding: 96px 40px; max-width: 1000px; margin: 0 auto; }
@@ -466,11 +478,15 @@ footer {
         <div class="hero-stat-label">To complete</div>
       </div>
     </div>
-    <div class="cta-box">
-      <input type="email" placeholder="Your work email">
-      <button>Download Scorecard</button>
+    <form class="cta-box" onsubmit="return handleEmailSubmit(event, this)">
+      <input type="email" placeholder="Your work email" required>
+      <button type="submit">Download Scorecard</button>
+    </form>
+    <div class="cta-note">Free HTML scorecard + scoring guide. No spam, unsubscribe anytime.</div>
+    <div class="cta-success" style="display:none;">
+      <p>Check your inbox! Or start scoring right now:</p>
+      <a href="#" class="scorecard-link">Open the Scorecard &rarr;</a>
     </div>
-    <div class="cta-note">Free scorecard + scoring guide. No spam, unsubscribe anytime.</div>
   </div>
 </div>
 
@@ -623,11 +639,15 @@ footer {
   <div class="bottom-cta-inner">
     <h2>Stop guessing. <br>Start <span class="teal">measuring</span>.</h2>
     <p>Get the AI Exit Readiness Scorecard and find out in 15 minutes whether a buyer would pay a premium for your AI - or discount it.</p>
-    <div class="cta-box">
-      <input type="email" placeholder="Your work email">
-      <button>Download Scorecard</button>
+    <form class="cta-box" onsubmit="return handleEmailSubmit(event, this)">
+      <input type="email" placeholder="Your work email" required>
+      <button type="submit">Download Scorecard</button>
+    </form>
+    <p class="cta-note-bottom" style="font-size:12px;color:var(--body-text);margin-top:12px;">Free HTML scorecard with scoring guide. No spam.</p>
+    <div class="cta-success" style="display:none;">
+      <p>Check your inbox! Or start scoring right now:</p>
+      <a href="#" class="scorecard-link">Open the Scorecard &rarr;</a>
     </div>
-    <p style="font-size:12px;color:var(--body-text);margin-top:12px;">Free scorecard with scoring guide. No spam.</p>
   </div>
 </div>
 
@@ -761,6 +781,54 @@ footer {
   }
   requestAnimationFrame(render);
 })();
+</script>
+
+<!-- EMAIL CAPTURE -->
+<script>
+// Replace this URL after deploying your Google Apps Script
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+function handleEmailSubmit(e, form) {
+  e.preventDefault();
+  const input = form.querySelector('input[type="email"]');
+  const btn = form.querySelector('button');
+  const email = input.value.trim();
+
+  if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return false;
+
+  // Disable button, show loading
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'landing', email: email, source: 'landing-page' })
+  })
+  .then(function() {
+    // Show success state
+    var parent = form.parentElement;
+    form.style.display = 'none';
+    var note = parent.querySelector('.cta-note') || parent.querySelector('.cta-note-bottom');
+    if (note) note.style.display = 'none';
+
+    var success = parent.querySelector('.cta-success');
+    if (success) {
+      success.style.display = 'block';
+      var link = success.querySelector('.scorecard-link');
+      if (link) link.href = 'scorecard.html?email=' + encodeURIComponent(email);
+    }
+  })
+  .catch(function() {
+    // On error, still show the scorecard (don't block the user)
+    btn.textContent = 'Download Scorecard';
+    btn.disabled = false;
+    window.location.href = 'scorecard.html?email=' + encodeURIComponent(email);
+  });
+
+  return false;
+}
 </script>
 </body>
 </html>
