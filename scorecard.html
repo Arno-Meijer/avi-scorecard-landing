@@ -558,6 +558,43 @@ h2.dim-title {
   padding: 36px;
   margin-bottom: 32px;
 }
+.buyer-insights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.insight-card {
+  border-radius: var(--radius);
+  padding: 28px;
+  position: relative;
+}
+.objection-card {
+  background: #FFF8F0;
+  border: 1px solid #FDDCAB;
+}
+.fix-card {
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+}
+.insight-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.insight-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.insight-text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--navy);
+  font-weight: 500;
+}
 .save-results {
   text-align: center; padding: 32px 0 0;
   border-top: 1px solid var(--border); margin-top: 12px;
@@ -893,6 +930,8 @@ footer {
   .rating-badge { font-size: 14px; padding: 8px 20px; }
   .rating-desc { font-size: 13px; }
   .levers-card { padding: 20px; }
+  .buyer-insights { grid-template-columns: 1fr; }
+  .insight-card { padding: 20px; }
   .levers-title { font-size: 17px; }
 
   /* Moat grid bottom: horizontal scroll */
@@ -1081,6 +1120,20 @@ footer {
       <div class="levers-title">Top 3 Levers - Your Biggest Opportunities</div>
       <div id="leversContainer">
         <div class="no-levers">Score at least one question to see your priority levers.</div>
+      </div>
+    </div>
+
+    <!-- BUYER INSIGHTS -->
+    <div class="buyer-insights" id="buyerInsights" style="display:none;">
+      <div class="insight-card objection-card">
+        <div class="insight-icon">&#9888;</div>
+        <div class="insight-label">Biggest Buyer Objection</div>
+        <div class="insight-text" id="buyerObjection"></div>
+      </div>
+      <div class="insight-card fix-card">
+        <div class="insight-icon">&#9889;</div>
+        <div class="insight-label">Fix in 30 Days</div>
+        <div class="insight-text" id="fixIn30"></div>
       </div>
     </div>
 
@@ -1656,7 +1709,7 @@ function selectScore(qId, val, el) {
 }
 
 // ── CONFIG ──
-const GOOGLE_SCRIPT_URL = '[https://script.google.com/macros/s/AKfycbyIvsh64FyXFt0l1ICM0doObETZfedwtpvlLszt37T5oePk2RLSDLiPMGCtnkHZBetz/exec](https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec)';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSYRqYFpoZTnTngd0J6yKpg9W27tXJofjJaroADbM5AQzUQ8rs3zsXKC6BqNFcm9jn/exec';
 
 // Read email from URL parameter (passed from landing page)
 const urlParams = new URLSearchParams(window.location.search);
@@ -1783,6 +1836,45 @@ function updateAll() {
         <div class="lever-score" style="color:${scoreColor}">${l.score}/4</div>
       </div>`;
     }).join('');
+  }
+
+  // Buyer insights (show when all answered)
+  const insightsEl = document.getElementById('buyerInsights');
+  if (insightsEl) {
+    insightsEl.style.display = answered === TOTAL_QUESTIONS ? 'grid' : 'none';
+    if (answered === TOTAL_QUESTIONS) {
+      // Buyer Objection — based on weakest dimension
+      const weakest = [...dimScores].sort((a, b) => a.score - b.score)[0];
+      const objections = {
+        rev: '"We can\'t see AI in your revenue model." Buyers will question whether AI is a feature or a business. Without visible AI pricing or retention data, they\'ll discount the AI narrative entirely.',
+        moat: '"Any competitor could replicate this in 6 months." Without proprietary data, switching costs, or owned IP, a buyer sees no defensible moat — and no reason to pay a premium.',
+        econ: '"Your AI costs are a black box." If you can\'t show unit economics, ROI per use case, or cost forecasts, buyers assume AI is burning cash — and they\'ll price that risk into the deal.',
+        lever: '"Where\'s the leverage?" If headcount grows at the same rate as output, AI isn\'t creating operational leverage. Buyers want to see more output per person, not more people.',
+        gov: '"This won\'t survive due diligence." Without governance documentation, IP trails, and key-person risk mitigation, a buyer\'s legal team will flag your AI as a liability, not an asset.'
+      };
+      document.getElementById('buyerObjection').textContent = objections[weakest.id] || '';
+
+      // Fix in 30 Days — based on top lever (lowest-scoring question)
+      const fixes = {
+        q1: 'Create a separate AI pricing tier or add-on. Even a simple "AI-powered" line item on invoices makes AI revenue visible to buyers within one billing cycle.',
+        q2: 'Run a cohort analysis: AI users vs. non-AI users on retention and expansion. If the data shows uplift, you have a buyer-ready proof point. If not, you know where to focus.',
+        q3: 'Calculate revenue per employee for the last 4 quarters. If AI is working, this ratio should be climbing. Package this as a one-slide trend for your data room.',
+        q4: 'Audit your data assets: what proprietary data do you collect that competitors don\'t? Document data sources, volume, and refresh rate. This is the foundation of a moat argument.',
+        q5: 'Map your top 10 customers\' switching costs. How deeply is your AI embedded in their workflows? Document integration points, custom configurations, and training investments.',
+        q6: 'Catalogue all AI-related IP: models, training data, algorithms, patents. Even if you don\'t have patents, documenting unique approaches creates a defensibility narrative.',
+        q7: 'Set up cost tracking per AI use case — API calls, compute, storage. A simple spreadsheet that maps costs to revenue impact transforms your AI from "expense" to "investment".',
+        q8: 'Pick your best AI use case and calculate ROI: cost of AI vs. revenue generated or cost saved. One proven use case with hard numbers is worth more than ten anecdotes.',
+        q9: 'Build a 12-month AI cost forecast with 3 scenarios (current, moderate growth, aggressive). Buyers need to see you understand and can predict your AI economics.',
+        q10: 'Document output metrics (deals processed, tickets resolved, content produced) alongside headcount for the last 4 quarters. Show the divergence — that\'s your leverage story.',
+        q11: 'Identify the top 3 manual tasks your team still does that AI could automate. Estimate hours saved and create a 30-day pilot plan. Quick wins build the automation narrative.',
+        q12: 'Pick one business metric that improved since AI adoption (speed, accuracy, cost, revenue). Isolate the AI contribution and document the methodology. One solid attribution beats vague claims.',
+        q13: 'Create a one-page AI governance document: what AI you use, who owns it, what data it touches, what controls exist. This alone puts you ahead of 80% of companies in DD.',
+        q14: 'Audit your AI vendor contracts and employee IP agreements. Ensure you own the outputs, training data rights are clear, and there are no surprise clauses. Fix gaps now, not in the data room.',
+        q15: 'Document which team members are critical to your AI operations. Create cross-training plans and runbooks so AI knowledge isn\'t locked in one or two heads.'
+      };
+      const topLever = levers[0];
+      document.getElementById('fixIn30').textContent = topLever ? (fixes[topLever.qId] || '') : '';
+    }
   }
 
   // Show save button when all questions answered
