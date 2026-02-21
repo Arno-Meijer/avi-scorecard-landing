@@ -610,6 +610,10 @@ h2.dim-title {
 .gate-btn:hover { background: #009BB8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4); }
 .gate-btn:disabled { opacity: 0.6; cursor: wait; box-shadow: none; }
 .gate-note { font-size: 12px; color: var(--body-text); margin-top: 14px; }
+.gate-missing {
+  font-size: 13px; color: var(--amber); font-weight: 500;
+  margin-bottom: 16px; line-height: 1.5;
+}
 /* Detailed results fade-in */
 #detailedResults {
   animation: fadeInResults 0.5s ease-out;
@@ -1107,16 +1111,13 @@ footer {
 </section>
 
 <!-- RESULTS -->
-<section class="results-section" id="resultsSection">
+<section class="results-section" id="resultsSection" style="display:none;">
   <div class="results-inner">
-    <div style="text-align:center; margin-bottom:24px;">
-      <span class="section-tag">Your Results</span>
-    </div>
-
     <!-- SHOW RESULTS GATE -->
     <div class="show-results-gate" id="showResultsGate" style="display:none;">
+      <p class="gate-missing" id="gateMissing" style="display:none;"></p>
       <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Results & Recommendations</button>
-      <p class="gate-note">Your scores will be saved and shared with AI Value Firm for a personalized recommendation.</p>
+      <p class="gate-note">See where a buyer would challenge your AI story.</p>
     </div>
 
     <!-- ALL RESULTS (hidden until gate is clicked) -->
@@ -1168,7 +1169,7 @@ footer {
       </div>
 
       <!-- NEXT STEP CTA -->
-      <div class="cta-section" style="padding:48px 0 0;background:#FFFFFF;">
+      <div class="cta-section" style="padding:48px 32px 48px;background:#FFFFFF;border-radius:var(--radius);margin-top:64px;">
         <span class="section-tag">Next Step</span>
         <h2>Turn your score into a <span class="light">buyer-ready AI narrative</span></h2>
         <p>Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a concrete 90-day action plan.</p>
@@ -1884,11 +1885,18 @@ function updateAll() {
     }
   }
 
-  // Show results gate when all questions answered (only if not already revealed)
+  // Show results section + gate when all questions answered (only if not already revealed)
+  const resultsSection = document.getElementById('resultsSection');
   const gateEl = document.getElementById('showResultsGate');
   const detailedEl = document.getElementById('detailedResults');
   if (gateEl && detailedEl && detailedEl.style.display === 'none') {
-    gateEl.style.display = answered === TOTAL_QUESTIONS ? 'block' : 'none';
+    const allAnswered = answered === TOTAL_QUESTIONS;
+    resultsSection.style.display = allAnswered ? '' : 'none';
+    gateEl.style.display = allAnswered ? 'block' : 'none';
+    // Clear any previous missing-fields message when gate first appears
+    if (allAnswered) {
+      document.getElementById('gateMissing').style.display = 'none';
+    }
   }
 
   // Update moat highlight based on Q6
@@ -1899,6 +1907,19 @@ function updateAll() {
     document.querySelectorAll(`.moat-card[data-layer="${layer}"], .moat-inline-card[data-layer="${layer}"]`).forEach(c => c.classList.add('active-level'));
   }
 }
+
+// -- LISTEN TO QUALIFICATION FIELDS (clear missing-message on edit) --
+['companyName','industry','role','revenue','exitHorizon','assessor'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    ['input','change','blur'].forEach(function(evt) {
+      el.addEventListener(evt, function() {
+        var msg = document.getElementById('gateMissing');
+        if (msg) msg.style.display = 'none';
+      });
+    });
+  }
+});
 
 // -- INIT --
 try {
@@ -1918,6 +1939,38 @@ try {
 
 // -- REVEAL RESULTS (save data + show detailed results) --
 function revealResults() {
+  // Check if field is truly empty (handles browser autofill)
+  function isFieldEmpty(el) {
+    if (!el) return true;
+    if (el.value && el.value.trim() !== '') return false;
+    // Chrome/Safari autofill: field looks filled but .value is empty
+    try { if (el.matches(':-webkit-autofill')) return false; } catch(e) {}
+    try { if (el.matches(':autofill')) return false; } catch(e) {}
+    return true;
+  }
+
+  // Validate required fields at click time
+  var requiredFields = [
+    { id: 'companyName', label: 'Company' },
+    { id: 'industry', label: 'Industry' },
+    { id: 'role', label: 'Role' },
+    { id: 'revenue', label: 'Annual Revenue' },
+    { id: 'exitHorizon', label: 'Exit / Funding Horizon' },
+    { id: 'assessor', label: 'Your name' }
+  ];
+  var missing = requiredFields.filter(function(f) {
+    return isFieldEmpty(document.getElementById(f.id));
+  });
+  if (missing.length > 0) {
+    var missingEl = document.getElementById('gateMissing');
+    missingEl.textContent = 'Please complete: ' + missing.map(function(f) { return f.label; }).join(', ');
+    missingEl.style.display = 'block';
+    // Scroll to the first missing field
+    var firstMissing = document.getElementById(missing[0].id);
+    if (firstMissing) firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   var btn = document.getElementById('showResultsBtn');
   btn.disabled = true;
   btn.textContent = 'Saving...';
