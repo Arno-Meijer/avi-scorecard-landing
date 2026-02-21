@@ -2038,35 +2038,55 @@ function revealResults() {
     assessment_date: new Date().toISOString()
   };
 
-  // Send data via hidden form + iframe (bypasses CORS)
+  // Send data and then reveal results
+  function showResults() {
+    document.getElementById('showResultsGate').style.display = 'none';
+    document.getElementById('detailedResults').style.display = 'block';
+    document.getElementById('navPill').style.display = '';
+    document.getElementById('detailedResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    trackEvent('tool_completed', { exit_score: total, segment: segment });
+  }
+
+  // Try fetch first (works on all modern mobile browsers)
+  var payloadStr = JSON.stringify(payload);
+  if (typeof fetch === 'function') {
+    var formBody = 'payload=' + encodeURIComponent(payloadStr);
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formBody
+    }).then(function() {
+      showResults();
+    }).catch(function() {
+      // Fetch failed, try iframe fallback then show anyway
+      sendViaIframe(payloadStr);
+      setTimeout(showResults, 800);
+    });
+  } else {
+    // Old browser: iframe fallback
+    sendViaIframe(payloadStr);
+    setTimeout(showResults, 800);
+  }
+}
+
+function sendViaIframe(payloadStr) {
   var hiddenForm = document.createElement('form');
   hiddenForm.method = 'POST';
   hiddenForm.action = WEBHOOK_URL;
   hiddenForm.target = 'hidden_iframe';
   hiddenForm.style.display = 'none';
-
   var payloadInput = document.createElement('input');
   payloadInput.type = 'hidden';
   payloadInput.name = 'payload';
-  payloadInput.value = JSON.stringify(payload);
+  payloadInput.value = payloadStr;
   hiddenForm.appendChild(payloadInput);
-
   document.body.appendChild(hiddenForm);
   hiddenForm.submit();
-  document.body.removeChild(hiddenForm);
-
-  // Hide gate, show detailed results
+  // Keep form in DOM longer for mobile browsers
   setTimeout(function() {
-    document.getElementById('showResultsGate').style.display = 'none';
-    document.getElementById('detailedResults').style.display = 'block';
-    // Show nav score pill now that results are revealed
-    document.getElementById('navPill').style.display = '';
-    // Scroll to the results
-    document.getElementById('detailedResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    // Tracking event: tool completed
-    trackEvent('tool_completed', { exit_score: total, segment: segment });
-  }, 600);
+    if (hiddenForm.parentNode) hiddenForm.parentNode.removeChild(hiddenForm);
+  }, 3000);
 }
 
 // -- TRACKING EVENTS --
