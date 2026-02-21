@@ -595,24 +595,29 @@ h2.dim-title {
   color: var(--navy);
   font-weight: 500;
 }
-.save-results {
-  text-align: center; padding: 32px 0 0;
+/* Show Results Gate */
+.show-results-gate {
+  text-align: center; padding: 40px 0 8px;
   border-top: 1px solid var(--border); margin-top: 12px;
 }
-.save-btn {
+.gate-btn {
   background: var(--teal); color: var(--white); font-weight: 700;
-  font-size: 16px; padding: 16px 40px; border: none; cursor: pointer;
+  font-size: 18px; padding: 20px 52px; border: none; cursor: pointer;
   border-radius: var(--radius-pill); transition: all 0.2s;
   font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 14px rgba(0, 180, 216, 0.3);
 }
-.save-btn:hover { background: #009BB8; transform: translateY(-1px); }
-.save-btn:disabled { opacity: 0.6; cursor: wait; }
-.save-note { font-size: 12px; color: var(--body-text); margin-top: 12px; }
-.save-success {
-  margin-top: 16px; padding: 16px 24px; background: #EEFFF4;
-  border: 1px solid #BBF7D0; border-radius: var(--radius);
+.gate-btn:hover { background: #009BB8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4); }
+.gate-btn:disabled { opacity: 0.6; cursor: wait; box-shadow: none; }
+.gate-note { font-size: 12px; color: var(--body-text); margin-top: 14px; }
+/* Detailed results fade-in */
+#detailedResults {
+  animation: fadeInResults 0.5s ease-out;
 }
-.save-success p { font-size: 14px; color: var(--navy); font-weight: 500; }
+@keyframes fadeInResults {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .levers-title {
   font-size: 20px;
   font-weight: 800;
@@ -930,6 +935,7 @@ footer {
   .rating-badge { font-size: 14px; padding: 8px 20px; }
   .rating-desc { font-size: 13px; }
   .levers-card { padding: 20px; }
+  .gate-btn { font-size: 16px; padding: 18px 32px; }
   .buyer-insights { grid-template-columns: 1fr; }
   .insight-card { padding: 20px; }
   .levers-title { font-size: 17px; }
@@ -1114,35 +1120,35 @@ footer {
       <p class="incomplete-warning" id="incompleteWarning"></p>
     </div>
 
-    <div class="dim-summary-grid" id="dimSummaryGrid"></div>
-
-    <div class="levers-card">
-      <div class="levers-title">Top 3 Levers - Your Biggest Opportunities</div>
-      <div id="leversContainer">
-        <div class="no-levers">Score at least one question to see your priority levers.</div>
-      </div>
+    <!-- SHOW RESULTS GATE -->
+    <div class="show-results-gate" id="showResultsGate" style="display:none;">
+      <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Full Results</button>
+      <p class="gate-note">Your scores will be saved and shared with AI Value Firm for a personalized recommendation.</p>
     </div>
 
-    <!-- BUYER INSIGHTS -->
-    <div class="buyer-insights" id="buyerInsights" style="display:none;">
-      <div class="insight-card objection-card">
-        <div class="insight-icon">&#9888;</div>
-        <div class="insight-label">Biggest Buyer Objection</div>
-        <div class="insight-text" id="buyerObjection"></div>
-      </div>
-      <div class="insight-card fix-card">
-        <div class="insight-icon">&#9889;</div>
-        <div class="insight-label">Fix in 30 Days</div>
-        <div class="insight-text" id="fixIn30"></div>
-      </div>
-    </div>
+    <!-- DETAILED RESULTS (hidden until gate is clicked) -->
+    <div id="detailedResults" style="display:none;">
+      <div class="dim-summary-grid" id="dimSummaryGrid"></div>
 
-    <!-- SAVE RESULTS -->
-    <div class="save-results" id="saveResults" style="display:none;">
-      <button class="btn save-btn" id="saveBtn" onclick="saveResults()">Save & Share My Results</button>
-      <p class="save-note">Your scores will be shared with AI Value Firm so we can provide tailored recommendations.</p>
-      <div class="save-success" id="saveSuccess" style="display:none;">
-        <p>Results saved! We'll review your scores and reach out with recommendations.</p>
+      <div class="levers-card">
+        <div class="levers-title">Top 3 Levers - Your Biggest Opportunities</div>
+        <div id="leversContainer">
+          <div class="no-levers">Score at least one question to see your priority levers.</div>
+        </div>
+      </div>
+
+      <!-- BUYER INSIGHTS -->
+      <div class="buyer-insights" id="buyerInsights" style="display:none;">
+        <div class="insight-card objection-card">
+          <div class="insight-icon">&#9888;</div>
+          <div class="insight-label">Biggest Buyer Objection</div>
+          <div class="insight-text" id="buyerObjection"></div>
+        </div>
+        <div class="insight-card fix-card">
+          <div class="insight-icon">&#9889;</div>
+          <div class="insight-label">Fix in 30 Days</div>
+          <div class="insight-text" id="fixIn30"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1877,10 +1883,11 @@ function updateAll() {
     }
   }
 
-  // Show save button when all questions answered
-  const saveEl = document.getElementById('saveResults');
-  if (saveEl) {
-    saveEl.style.display = answered === TOTAL_QUESTIONS ? 'block' : 'none';
+  // Show results gate when all questions answered (only if not already revealed)
+  const gateEl = document.getElementById('showResultsGate');
+  const detailedEl = document.getElementById('detailedResults');
+  if (gateEl && detailedEl && detailedEl.style.display === 'none') {
+    gateEl.style.display = answered === TOTAL_QUESTIONS ? 'block' : 'none';
   }
 
   // Update moat highlight based on Q6
@@ -1908,25 +1915,25 @@ try {
   document.getElementById('assessDate').value = new Date().toISOString().split('T')[0];
 }
 
-// -- SAVE RESULTS --
-function saveResults() {
-  const btn = document.getElementById('saveBtn');
+// -- REVEAL RESULTS (save data + show detailed results) --
+function revealResults() {
+  var btn = document.getElementById('showResultsBtn');
   btn.disabled = true;
   btn.textContent = 'Saving...';
 
   // Collect dimension scores
-  const scores = {};
-  dimensions.forEach(d => {
-    let rawTotal = 0;
-    d.questions.forEach(q => {
+  var scores = {};
+  dimensions.forEach(function(d) {
+    var rawTotal = 0;
+    d.questions.forEach(function(q) {
       if (state[q.id] !== null) rawTotal += state[q.id];
     });
     scores[d.id] = scaleScore(rawTotal);
   });
 
   // Total and rating
-  const total = Object.values(scores).reduce((a, b) => a + b, 0);
-  let rating;
+  var total = Object.values(scores).reduce(function(a, b) { return a + b; }, 0);
+  var rating;
   if (total >= 80) rating = 'A - Premium Ready';
   else if (total >= 60) rating = 'B - Investable with Gaps';
   else if (total >= 40) rating = 'C - Discount Territory';
@@ -1934,22 +1941,22 @@ function saveResults() {
   else rating = 'F - Multiple Compression';
 
   // Top 3 levers (lowest-scoring questions)
-  const scored = [];
-  dimensions.forEach(d => {
-    d.questions.forEach(q => {
+  var scored = [];
+  dimensions.forEach(function(d) {
+    d.questions.forEach(function(q) {
       if (state[q.id] !== null) {
         scored.push({ label: q.label, text: q.text, dim: d.title, score: state[q.id] });
       }
     });
   });
-  scored.sort((a, b) => a.score - b.score);
-  const levers = scored.slice(0, 3).map(l => l.label + ': ' + l.text + ' (' + l.dim + ', ' + l.score + '/4)');
+  scored.sort(function(a, b) { return a.score - b.score; });
+  var levers = scored.slice(0, 3).map(function(l) { return l.label + ': ' + l.text + ' (' + l.dim + ', ' + l.score + '/4)'; });
 
   // Get email: URL param > CTA input > empty
-  const ctaEmail = document.querySelector('.cta-section input[type="email"]');
-  const email = userEmail || (ctaEmail ? ctaEmail.value.trim() : '');
+  var ctaEmail = document.querySelector('.cta-section input[type="email"]');
+  var email = userEmail || (ctaEmail ? ctaEmail.value.trim() : '');
 
-  const payload = {
+  var payload = {
     action: 'scorecard',
     email: email,
     company: document.getElementById('companyName').value.trim(),
@@ -1981,13 +1988,13 @@ function saveResults() {
   hiddenForm.submit();
   document.body.removeChild(hiddenForm);
 
-  // Show success state
+  // Hide gate, show detailed results
   setTimeout(function() {
-    btn.style.display = 'none';
-    document.getElementById('saveSuccess').style.display = 'block';
-    var noteEl = document.querySelector('.save-note');
-    if (noteEl) noteEl.style.display = 'none';
-  }, 500);
+    document.getElementById('showResultsGate').style.display = 'none';
+    document.getElementById('detailedResults').style.display = 'block';
+    // Scroll to the detailed results
+    document.getElementById('detailedResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 600);
 }
 </script>
 </body>
