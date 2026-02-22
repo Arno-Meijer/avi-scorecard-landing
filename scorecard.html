@@ -2038,8 +2038,14 @@ function revealResults() {
     assessment_date: new Date().toISOString()
   };
 
-  // Send data and then reveal results
+  // Send data via hidden form + iframe (only method that bypasses CORS with Google Apps Script)
+  var payloadStr = JSON.stringify(payload);
+  var iframe = document.getElementById('hidden_iframe');
+  var revealed = false;
+
   function showResults() {
+    if (revealed) return;
+    revealed = true;
     document.getElementById('showResultsGate').style.display = 'none';
     document.getElementById('detailedResults').style.display = 'block';
     document.getElementById('navPill').style.display = '';
@@ -2047,26 +2053,12 @@ function revealResults() {
     trackEvent('tool_completed', { exit_score: total, segment: segment });
   }
 
-  // Send data via sendBeacon (reliable on mobile, survives page events)
-  var payloadStr = JSON.stringify(payload);
-  var formBody = 'payload=' + encodeURIComponent(payloadStr);
-  var sent = false;
+  // Listen for iframe load (= Google received the data)
+  iframe.onload = function() { showResults(); };
 
-  if (navigator.sendBeacon) {
-    var blob = new Blob([formBody], { type: 'application/x-www-form-urlencoded' });
-    sent = navigator.sendBeacon(WEBHOOK_URL, blob);
-  }
+  // Safety timeout: show results after 2s even if iframe is slow
+  setTimeout(showResults, 2000);
 
-  // Fallback: iframe POST if sendBeacon unavailable or failed
-  if (!sent) {
-    sendViaIframe(payloadStr);
-  }
-
-  // Show results after short delay (sendBeacon continues in background)
-  setTimeout(showResults, 400);
-}
-
-function sendViaIframe(payloadStr) {
   var hiddenForm = document.createElement('form');
   hiddenForm.method = 'POST';
   hiddenForm.action = WEBHOOK_URL;
@@ -2079,10 +2071,7 @@ function sendViaIframe(payloadStr) {
   hiddenForm.appendChild(payloadInput);
   document.body.appendChild(hiddenForm);
   hiddenForm.submit();
-  // Keep form in DOM longer for mobile browsers
-  setTimeout(function() {
-    if (hiddenForm.parentNode) hiddenForm.parentNode.removeChild(hiddenForm);
-  }, 3000);
+  // Do NOT remove form — keep it alive until iframe loads
 }
 
 // -- TRACKING EVENTS --
