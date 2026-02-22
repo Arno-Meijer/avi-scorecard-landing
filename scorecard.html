@@ -2047,27 +2047,23 @@ function revealResults() {
     trackEvent('tool_completed', { exit_score: total, segment: segment });
   }
 
-  // Try fetch first (works on all modern mobile browsers)
+  // Send data via sendBeacon (reliable on mobile, survives page events)
   var payloadStr = JSON.stringify(payload);
-  if (typeof fetch === 'function') {
-    var formBody = 'payload=' + encodeURIComponent(payloadStr);
-    fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formBody
-    }).then(function() {
-      showResults();
-    }).catch(function() {
-      // Fetch failed, try iframe fallback then show anyway
-      sendViaIframe(payloadStr);
-      setTimeout(showResults, 800);
-    });
-  } else {
-    // Old browser: iframe fallback
-    sendViaIframe(payloadStr);
-    setTimeout(showResults, 800);
+  var formBody = 'payload=' + encodeURIComponent(payloadStr);
+  var sent = false;
+
+  if (navigator.sendBeacon) {
+    var blob = new Blob([formBody], { type: 'application/x-www-form-urlencoded' });
+    sent = navigator.sendBeacon(WEBHOOK_URL, blob);
   }
+
+  // Fallback: iframe POST if sendBeacon unavailable or failed
+  if (!sent) {
+    sendViaIframe(payloadStr);
+  }
+
+  // Show results after short delay (sendBeacon continues in background)
+  setTimeout(showResults, 400);
 }
 
 function sendViaIframe(payloadStr) {
