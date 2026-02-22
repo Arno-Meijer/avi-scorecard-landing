@@ -769,7 +769,7 @@ footer {
 
 <!-- EMAIL CAPTURE -->
 <script>
-var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwyjWyM6DMhE6Ruqg2RAXF1vjb2etY8jS1me5dLCln67aPB1TkbNtLz5ygXHn9SZXtZ/exec';
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzJ_l9Icvc_oWiJ2a8IF9o2B_9Y9EfUmz5oXPN3EkwZKHN1ELWitTA3QFNzHiDiQRTE/exec';
 
 // Collect UTM params once on page load
 var utmParams = (function() {
@@ -807,32 +807,19 @@ function handleEmailSubmit(e, form) {
     utm_term: utmParams.utm_term
   };
 
-  // Build redirect URL
-  var scorecardUrl = 'scorecard.html?email=' + encodeURIComponent(email);
+  // Build scorecard redirect URL (absolute so Google can redirect back)
+  var origin = window.location.origin + window.location.pathname.replace(/[^\/]*$/, '');
+  var scorecardUrl = origin + 'scorecard.html?email=' + encodeURIComponent(email);
   if (utmParams.utm_source) scorecardUrl += '&utm_source=' + encodeURIComponent(utmParams.utm_source);
   if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
   if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
 
-  // Send data via Image pixel GET request (works on ALL browsers including mobile)
-  // Mobile Safari/Chrome block cross-origin iframe form POSTs, but Image loads always work
+  // Navigate directly to Google Apps Script (100% reliable on all browsers)
+  // Script saves data, then redirects browser back to scorecard
   var payloadStr = JSON.stringify(payload);
-  var pixelUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
-  var redirected = false;
-
-  function doRedirect() {
-    if (!redirected) {
-      redirected = true;
-      window.location.href = scorecardUrl;
-    }
-  }
-
-  var img = new Image();
-  img.onload = doRedirect;
-  img.onerror = doRedirect; // Google returns JSON not image, so onerror fires but data IS sent
-  img.src = pixelUrl;
-
-  // Safety timeout: redirect after 2s even on slow connections
-  setTimeout(doRedirect, 2000);
+  window.location.href = WEBHOOK_URL +
+    '?payload=' + encodeURIComponent(payloadStr) +
+    '&redirect=' + encodeURIComponent(scorecardUrl);
 
   return false;
 }
