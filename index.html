@@ -814,19 +814,18 @@ function handleEmailSubmit(e, form) {
   if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
   if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
 
-  // Fire data to Google Sheets via hidden iframe (no visible redirect)
-  var payloadStr = JSON.stringify(payload);
-  var sendUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
-  var sendFrame = document.createElement('iframe');
-  sendFrame.style.display = 'none';
-  sendFrame.name = 'send_frame_' + Date.now();
-  sendFrame.src = sendUrl;
-  document.body.appendChild(sendFrame);
+  // Send data via same-origin API route (Vercel serverless proxy → Google Sheets)
+  // No CORS issues — works on all browsers including mobile Safari & Brave
+  fetch('/api/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(function() {}); // fire-and-forget
 
-  // Navigate to scorecard immediately (don't wait for iframe)
+  // Navigate to scorecard immediately
   setTimeout(function() {
     window.location.href = scorecardUrl;
-  }, 300);
+  }, 150);
 
   return false;
 }
