@@ -1712,7 +1712,7 @@ function selectScore(qId, val, el) {
 }
 
 // -- CONFIG --
-var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzRJpFmaVAu3a37W-wYlZUt7W5QA7_VLq37P5XyFucNN-EWOJW43ovxrsDx5poYPayY/exec';
+// Google Script URL is server-side only (in /api/submit.js)
 
 // Read URL parameters (email + UTM from landing page)
 var urlParams = new URLSearchParams(window.location.search);
@@ -2013,6 +2013,7 @@ function revealResults() {
   var payload = {
     action: 'scorecard',
     lead_source: 'Exit Tool',
+    submission_id: crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).substr(2, 9),
     email: email,
     company: document.getElementById('companyName').value.trim(),
     industry: document.getElementById('industry').value.trim(),
