@@ -14,7 +14,7 @@
 const https = require('https');
 const url = require('url');
 
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJ_l9Icvc_oWiJ2a8IF9o2B_9Y9EfUmz5oXPN3EkwZKHN1ELWitTA3QFNzHiDiQRTE/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRJpFmaVAu3a37W-wYlZUt7W5QA7_VLq37P5XyFucNN-EWOJW43ovxrsDx5poYPayY/exec';
 
 function httpsGet(targetUrl, maxRedirects) {
   if (maxRedirects === undefined) maxRedirects = 5;
