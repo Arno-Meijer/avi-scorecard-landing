@@ -2038,9 +2038,7 @@ function revealResults() {
     assessment_date: new Date().toISOString()
   };
 
-  // Send data via direct navigation in hidden window (100% reliable on all browsers)
-  var payloadStr = JSON.stringify(payload);
-  var sendUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
+  // Send data via same-origin API route (Vercel serverless proxy → Google Sheets)
   var revealed = false;
 
   function showResults() {
@@ -2053,20 +2051,19 @@ function revealResults() {
     trackEvent('tool_completed', { exit_score: total, segment: segment });
   }
 
-  // Open in hidden iframe via direct navigation (no form POST, just GET)
-  var sendFrame = document.createElement('iframe');
-  sendFrame.style.display = 'none';
-  sendFrame.src = sendUrl;
-  document.body.appendChild(sendFrame);
-
-  // Show results after short delay (don't wait for response)
-  setTimeout(function() {
+  fetch('/api/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function() {
     showResults();
-    // Clean up iframe after data is sent
-    setTimeout(function() {
-      if (sendFrame.parentNode) sendFrame.parentNode.removeChild(sendFrame);
-    }, 5000);
-  }, 800);
+  }).catch(function() {
+    // Show results even if save fails
+    showResults();
+  });
+
+  // Fallback: show results after 2s even if fetch hasn't resolved
+  setTimeout(function() { showResults(); }, 2000);
 }
 
 // -- TRACKING EVENTS --
