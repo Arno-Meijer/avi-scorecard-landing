@@ -813,27 +813,25 @@ function handleEmailSubmit(e, form) {
   if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
   if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
 
-  // Send data via fetch (form-encoded for Google Apps Script compatibility)
+  // Send data via sendBeacon (guaranteed delivery during page navigation)
   var payloadStr = JSON.stringify(payload);
   var formBody = 'payload=' + encodeURIComponent(payloadStr);
+  var sent = false;
 
-  if (typeof fetch === 'function') {
-    fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formBody
-    }).then(function() {
-      window.location.href = scorecardUrl;
-    }).catch(function() {
-      // Fetch failed, try iframe fallback then redirect anyway
-      sendViaIframe(payloadStr);
-      setTimeout(function() { window.location.href = scorecardUrl; }, 800);
-    });
-  } else {
-    sendViaIframe(payloadStr);
-    setTimeout(function() { window.location.href = scorecardUrl; }, 800);
+  if (navigator.sendBeacon) {
+    var blob = new Blob([formBody], { type: 'application/x-www-form-urlencoded' });
+    sent = navigator.sendBeacon(WEBHOOK_URL, blob);
   }
+
+  // Fallback: iframe POST if sendBeacon unavailable or failed
+  if (!sent) {
+    sendViaIframe(payloadStr);
+  }
+
+  // Redirect after short delay (sendBeacon continues in background)
+  setTimeout(function() {
+    window.location.href = scorecardUrl;
+  }, 300);
 
   return false;
 }
