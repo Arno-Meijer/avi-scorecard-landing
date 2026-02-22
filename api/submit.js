@@ -1,18 +1,23 @@
-// Vercel Serverless Function — secure proxy to Google Apps Script
+// Vercel Serverless Function — secure proxy to Google Apps Script + n8n
 // Security layers:
 //   1. Cloudflare Turnstile verification (bot protection) — landing page only
 //   2. In-memory rate limiting per IP (10 requests per minute)
 //   3. Input validation (email format, field lengths, allowed values)
 //   4. Duplicate prevention (submission_id)
 //   5. No PII in logs
+// Destinations:
+//   - Google Apps Script (Google Sheets logging)
+//   - n8n webhook (Pipedrive CRM + lead segmentation)
 
 const https = require('https');
 
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRJpFmaVAu3a37W-wYlZUt7W5QA7_VLq37P5XyFucNN-EWOJW43ovxrsDx5poYPayY/exec';
+const N8N_WEBHOOK_URL = 'https://dornovo.app.n8n.cloud/webhook/exit-tool/submit';
 
 // Turnstile secret key — set as Vercel environment variable
-// Get yours at: https://dash.cloudflare.com → Turnstile → Add site
 const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET_KEY || '';
+// n8n webhook secret — set as Vercel environment variable
+const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || '';
 
 // --- RATE LIMITING (in-memory, per serverless instance) ---
 // Note: Vercel serverless functions can have multiple instances,
@@ -189,6 +194,39 @@ function httpsGet(targetUrl, maxRedirects) {
   });
 }
 
+// --- N8N PAYLOAD ---
+// Christan has aligned n8n to accept our exact payload format
+// No transformation needed — we forward as-is
+
+// --- HTTPS POST to n8n webhook ---
+function httpsPost(targetUrl, data, headers) {
+  return new Promise(function(resolve, reject) {
+    var postBody = JSON.stringify(data);
+    var parsed = new URL(targetUrl);
+    var options = {
+      hostname: parsed.hostname,
+      path: parsed.pathname + parsed.search,
+      method: 'POST',
+      headers: Object.assign({
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postBody)
+      }, headers || {})
+    };
+
+    var req = https.request(options, function(response) {
+      var body = '';
+      response.on('data', function(chunk) { body += chunk; });
+      response.on('end', function() {
+        resolve({ statusCode: response.statusCode, body: body });
+      });
+    });
+    req.on('error', function(err) { resolve({ statusCode: 0, body: err.message }); });
+    req.setTimeout(10000, function() { req.destroy(); resolve({ statusCode: 0, body: 'timeout' }); });
+    req.write(postBody);
+    req.end();
+  });
+}
+
 // --- MAIN HANDLER ---
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -244,29 +282,54 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    // 5. Strip the turnstile token before forwarding (don't send to Google Sheets)
+    // 5. Strip the turnstile token before forwarding (don't send to Google Sheets or n8n)
     delete payload.turnstileToken;
-
-    // 6. Forward to Google Apps Script
-    var payloadStr = JSON.stringify(payload);
-    var targetUrl = GOOGLE_SCRIPT_URL + '?payload=' + encodeURIComponent(payloadStr);
 
     // Log only action type, no PII
     console.log('Forwarding:', payload.action, '| IP:', ip.substring(0, 10) + '...');
 
-    var response = await httpsGet(targetUrl);
+    // 6. Forward to BOTH Google Apps Script AND n8n (in parallel)
+    var googlePayloadStr = JSON.stringify(payload);
+    var googleTargetUrl = GOOGLE_SCRIPT_URL + '?payload=' + encodeURIComponent(googlePayloadStr);
 
-    var result;
-    try {
-      result = JSON.parse(response.body);
-    } catch (parseErr) {
-      if (response.body.indexOf('accounts.google.com') !== -1) {
-        console.error('ERROR: Google Sign-In page returned. Check Apps Script deployment: must be "Anyone" access.');
-        result = { status: 'error', message: 'Configuration error' };
-      } else {
-        result = { status: 'forwarded', httpStatus: response.statusCode };
-      }
+    // Forward same payload to n8n (Christan aligned to our format)
+    var n8nPayload = payload;
+    var n8nHeaders = {};
+    if (N8N_WEBHOOK_SECRET) {
+      n8nHeaders['X-Webhook-Secret'] = N8N_WEBHOOK_SECRET;
     }
+
+    // Fire both requests in parallel — don't let one block the other
+    var results = await Promise.allSettled([
+      httpsGet(googleTargetUrl),
+      httpsPost(N8N_WEBHOOK_URL, n8nPayload, n8nHeaders)
+    ]);
+
+    // Log results (no PII)
+    var googleResult = results[0];
+    var n8nResult = results[1];
+    console.log('Google Sheets:', googleResult.status === 'fulfilled' ? googleResult.value.statusCode : 'failed');
+    console.log('n8n:', n8nResult.status === 'fulfilled' ? n8nResult.value.statusCode : 'failed');
+
+    // Parse Google response for backward compatibility
+    var result;
+    if (googleResult.status === 'fulfilled') {
+      try {
+        result = JSON.parse(googleResult.value.body);
+      } catch (parseErr) {
+        if (googleResult.value.body.indexOf('accounts.google.com') !== -1) {
+          console.error('ERROR: Google Sign-In page returned. Check Apps Script deployment: must be "Anyone" access.');
+          result = { status: 'error', message: 'Configuration error' };
+        } else {
+          result = { status: 'forwarded', httpStatus: googleResult.value.statusCode };
+        }
+      }
+    } else {
+      result = { status: 'forwarded' };
+    }
+
+    // Add n8n status to response
+    result.n8n = n8nResult.status === 'fulfilled' ? n8nResult.value.statusCode : 'failed';
 
     return res.status(200).json(result);
   } catch (error) {
