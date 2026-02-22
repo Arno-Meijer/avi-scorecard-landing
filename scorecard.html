@@ -1712,7 +1712,7 @@ function selectScore(qId, val, el) {
 }
 
 // -- CONFIG --
-var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwyjWyM6DMhE6Ruqg2RAXF1vjb2etY8jS1me5dLCln67aPB1TkbNtLz5ygXHn9SZXtZ/exec';
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzJ_l9Icvc_oWiJ2a8IF9o2B_9Y9EfUmz5oXPN3EkwZKHN1ELWitTA3QFNzHiDiQRTE/exec';
 
 // Read URL parameters (email + UTM from landing page)
 var urlParams = new URLSearchParams(window.location.search);
@@ -2038,10 +2038,9 @@ function revealResults() {
     assessment_date: new Date().toISOString()
   };
 
-  // Send data via Image pixel GET request (works on ALL browsers including mobile)
-  // Mobile Safari/Chrome block cross-origin iframe form POSTs, but Image loads always work
+  // Send data via direct navigation in hidden window (100% reliable on all browsers)
   var payloadStr = JSON.stringify(payload);
-  var pixelUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
+  var sendUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
   var revealed = false;
 
   function showResults() {
@@ -2054,13 +2053,20 @@ function revealResults() {
     trackEvent('tool_completed', { exit_score: total, segment: segment });
   }
 
-  var img = new Image();
-  img.onload = showResults;
-  img.onerror = showResults; // Google returns JSON not image, so onerror fires but data IS sent
-  img.src = pixelUrl;
+  // Open in hidden iframe via direct navigation (no form POST, just GET)
+  var sendFrame = document.createElement('iframe');
+  sendFrame.style.display = 'none';
+  sendFrame.src = sendUrl;
+  document.body.appendChild(sendFrame);
 
-  // Safety timeout: show results after 2s even on slow connections
-  setTimeout(showResults, 2000);
+  // Show results after short delay (don't wait for response)
+  setTimeout(function() {
+    showResults();
+    // Clean up iframe after data is sent
+    setTimeout(function() {
+      if (sendFrame.parentNode) sendFrame.parentNode.removeChild(sendFrame);
+    }, 5000);
+  }, 800);
 }
 
 // -- TRACKING EVENTS --
