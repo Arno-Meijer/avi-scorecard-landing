@@ -1712,7 +1712,7 @@ function selectScore(qId, val, el) {
 }
 
 // -- CONFIG --
-var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyo7IMcYUGjN8WJ-IaxvMF7eZ7s-lbsNgEqTUZwbVVNYxARBc4jSkMM2bdqBekMmmH5/exec';
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwyjWyM6DMhE6Ruqg2RAXF1vjb2etY8jS1me5dLCln67aPB1TkbNtLz5ygXHn9SZXtZ/exec';
 
 // Read URL parameters (email + UTM from landing page)
 var urlParams = new URLSearchParams(window.location.search);
@@ -2038,9 +2038,10 @@ function revealResults() {
     assessment_date: new Date().toISOString()
   };
 
-  // Send data via hidden form + iframe (only method that bypasses CORS with Google Apps Script)
+  // Send data via Image pixel GET request (works on ALL browsers including mobile)
+  // Mobile Safari/Chrome block cross-origin iframe form POSTs, but Image loads always work
   var payloadStr = JSON.stringify(payload);
-  var iframe = document.getElementById('hidden_iframe');
+  var pixelUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
   var revealed = false;
 
   function showResults() {
@@ -2053,25 +2054,13 @@ function revealResults() {
     trackEvent('tool_completed', { exit_score: total, segment: segment });
   }
 
-  // Listen for iframe load (= Google received the data)
-  iframe.onload = function() { showResults(); };
+  var img = new Image();
+  img.onload = showResults;
+  img.onerror = showResults; // Google returns JSON not image, so onerror fires but data IS sent
+  img.src = pixelUrl;
 
-  // Safety timeout: show results after 2s even if iframe is slow
+  // Safety timeout: show results after 2s even on slow connections
   setTimeout(showResults, 2000);
-
-  var hiddenForm = document.createElement('form');
-  hiddenForm.method = 'POST';
-  hiddenForm.action = WEBHOOK_URL;
-  hiddenForm.target = 'hidden_iframe';
-  hiddenForm.style.display = 'none';
-  var payloadInput = document.createElement('input');
-  payloadInput.type = 'hidden';
-  payloadInput.name = 'payload';
-  payloadInput.value = payloadStr;
-  hiddenForm.appendChild(payloadInput);
-  document.body.appendChild(hiddenForm);
-  hiddenForm.submit();
-  // Do NOT remove form — keep it alive until iframe loads
 }
 
 // -- TRACKING EVENTS --
