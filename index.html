@@ -471,7 +471,7 @@ footer {
       <input type="email" placeholder="Your work email" required>
       <button type="submit">Start the Scorecard</button>
     </form>
-    <div class="cta-note">15 questions, 10 minutes. Free, no spam.</div>
+    <div class="cta-note">See how a buyer would score your AI. Free, instant results.</div>
   </div>
 </div>
 
@@ -813,30 +813,27 @@ function handleEmailSubmit(e, form) {
   if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
   if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
 
-  // Send data via sendBeacon (guaranteed delivery during page navigation)
+  // Send data via hidden form + iframe (only method that bypasses CORS with Google Apps Script)
   var payloadStr = JSON.stringify(payload);
-  var formBody = 'payload=' + encodeURIComponent(payloadStr);
-  var sent = false;
+  var iframe = document.getElementById('hidden_iframe');
+  var redirected = false;
 
-  if (navigator.sendBeacon) {
-    var blob = new Blob([formBody], { type: 'application/x-www-form-urlencoded' });
-    sent = navigator.sendBeacon(WEBHOOK_URL, blob);
-  }
+  // Listen for iframe load (= Google received the data)
+  iframe.onload = function() {
+    if (!redirected) {
+      redirected = true;
+      window.location.href = scorecardUrl;
+    }
+  };
 
-  // Fallback: iframe POST if sendBeacon unavailable or failed
-  if (!sent) {
-    sendViaIframe(payloadStr);
-  }
-
-  // Redirect after short delay (sendBeacon continues in background)
+  // Safety timeout: redirect after 2s even if iframe doesn't load (slow connection)
   setTimeout(function() {
-    window.location.href = scorecardUrl;
-  }, 300);
+    if (!redirected) {
+      redirected = true;
+      window.location.href = scorecardUrl;
+    }
+  }, 2000);
 
-  return false;
-}
-
-function sendViaIframe(payloadStr) {
   var hiddenForm = document.createElement('form');
   hiddenForm.method = 'POST';
   hiddenForm.action = WEBHOOK_URL;
@@ -849,9 +846,9 @@ function sendViaIframe(payloadStr) {
   hiddenForm.appendChild(payloadInput);
   document.body.appendChild(hiddenForm);
   hiddenForm.submit();
-  setTimeout(function() {
-    if (hiddenForm.parentNode) hiddenForm.parentNode.removeChild(hiddenForm);
-  }, 3000);
+  // Do NOT remove form — keep it alive until redirect happens
+
+  return false;
 }
 </script>
 </body>
