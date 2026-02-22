@@ -769,7 +769,7 @@ footer {
 
 <!-- EMAIL CAPTURE -->
 <script>
-var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyo7IMcYUGjN8WJ-IaxvMF7eZ7s-lbsNgEqTUZwbVVNYxARBc4jSkMM2bdqBekMmmH5/exec';
+var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwyjWyM6DMhE6Ruqg2RAXF1vjb2etY8jS1me5dLCln67aPB1TkbNtLz5ygXHn9SZXtZ/exec';
 
 // Collect UTM params once on page load
 var utmParams = (function() {
@@ -813,40 +813,26 @@ function handleEmailSubmit(e, form) {
   if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
   if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
 
-  // Send data via hidden form + iframe (only method that bypasses CORS with Google Apps Script)
+  // Send data via Image pixel GET request (works on ALL browsers including mobile)
+  // Mobile Safari/Chrome block cross-origin iframe form POSTs, but Image loads always work
   var payloadStr = JSON.stringify(payload);
-  var iframe = document.getElementById('hidden_iframe');
+  var pixelUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
   var redirected = false;
 
-  // Listen for iframe load (= Google received the data)
-  iframe.onload = function() {
+  function doRedirect() {
     if (!redirected) {
       redirected = true;
       window.location.href = scorecardUrl;
     }
-  };
+  }
 
-  // Safety timeout: redirect after 2s even if iframe doesn't load (slow connection)
-  setTimeout(function() {
-    if (!redirected) {
-      redirected = true;
-      window.location.href = scorecardUrl;
-    }
-  }, 2000);
+  var img = new Image();
+  img.onload = doRedirect;
+  img.onerror = doRedirect; // Google returns JSON not image, so onerror fires but data IS sent
+  img.src = pixelUrl;
 
-  var hiddenForm = document.createElement('form');
-  hiddenForm.method = 'POST';
-  hiddenForm.action = WEBHOOK_URL;
-  hiddenForm.target = 'hidden_iframe';
-  hiddenForm.style.display = 'none';
-  var payloadInput = document.createElement('input');
-  payloadInput.type = 'hidden';
-  payloadInput.name = 'payload';
-  payloadInput.value = payloadStr;
-  hiddenForm.appendChild(payloadInput);
-  document.body.appendChild(hiddenForm);
-  hiddenForm.submit();
-  // Do NOT remove form — keep it alive until redirect happens
+  // Safety timeout: redirect after 2s even on slow connections
+  setTimeout(doRedirect, 2000);
 
   return false;
 }
