@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Exit Readiness Scorecard | AI Value Firm</title>
+<title>AI Exit Readiness Scorecard - AI Value Firm</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --navy: #1B2A4A;
   --teal: #00B4D8;
   --light-teal: #E8F5F3;
-  --amber: #E8A838;
+  --amber: #F97316;
   --mid-navy: #2C3E6B;
   --bg: #FFFFFF;
   --light-blue: #EEF2FF;
@@ -18,422 +18,1010 @@
   --white: #FFFFFF;
   --muted: #94A3B8;
   --body-text: #64748B;
+  --border: #E2E8F0;
+  --indigo-border: #C7D2FE;
+  --red: #EF4444;
+  --red-bg: #FEF2F2;
+  --yellow: #F59E0B;
+  --yellow-bg: #FFFBEB;
+  --green: #22C55E;
+  --green-bg: #F0FDF4;
+  --slate: #94A3B8;
+  --slate-bg: #F8FAFC;
   --radius: 14px;
   --radius-pill: 100px;
-  --shadow: 0 2px 12px rgba(27,42,74,0.07);
-  --shadow-lg: 0 8px 32px rgba(27,42,74,0.10);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--dark-text);
   background: var(--bg);
-  -webkit-font-smoothing: antialiased;
+  color: var(--body-text);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-/* ===== NAV ===== */
+/* NAV */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid #F0F0F0;
-  padding: 0 40px; height: 64px;
-  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(27,42,74,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .nav-brand { display: flex; align-items: center; gap: 8px; }
 .nav-logo { width: 4px; height: 32px; background: var(--teal); border-radius: 2px; flex-shrink: 0; }
-.nav-name { font-weight: 800; font-size: 13px; color: var(--navy); line-height: 1.15; letter-spacing: 0.3px; }
+.nav-name { font-weight: 800; font-size: 13px; color: var(--navy); line-height: 1.15; }
 .nav-name span { display: block; }
-.nav-cta {
-  background: var(--navy); color: var(--white); font-weight: 700; font-size: 13px;
-  padding: 10px 28px; border: none; cursor: pointer; letter-spacing: 0.3px;
-  transition: all 0.2s; border-radius: var(--radius-pill);
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-progress {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.nav-cta:hover { background: #111827; transform: translateY(-1px); }
+.nav-progress-bar {
+  width: 80px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.nav-progress-bar .fill {
+  height: 100%;
+  background: var(--teal);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.nav-score-pill {
+  background: var(--light-blue);
+  border: 1px solid var(--indigo-border);
+  border-radius: var(--radius-pill);
+  padding: 6px 18px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+.nav-score-pill .score-val { font-weight: 800; font-size: 16px; }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero {
-  margin-top: 64px;
-  background: linear-gradient(to bottom, var(--white) 70%, #F9FAFB 100%);
-  padding: 100px 40px 80px; text-align: center;
-  position: relative; overflow: hidden;
+  text-align: center;
+  padding: 80px 24px 60px;
+  max-width: 760px;
+  margin: 0 auto;
 }
-.hero-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
-.hero-tag {
-  display: inline-block; background: #EEF2FF; color: var(--navy);
-  font-size: 12px; font-weight: 600; padding: 8px 20px;
-  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px;
-  border-radius: var(--radius-pill); border: 1px solid #C7D2FE;
-}
-.hero h1 {
-  font-size: clamp(36px, 5vw, 56px); font-weight: 800; line-height: 1.08;
-  color: var(--navy); margin-bottom: 20px;
-}
-.hero h1 .amber { color: var(--teal); font-weight: 800; }
-.hero-sub {
-  font-size: 17px; font-weight: 400; color: var(--body-text); line-height: 1.7;
-  max-width: 580px; margin: 0 auto 44px;
-}
-.hero-stats {
-  display: flex; gap: 16px; margin-bottom: 44px;
-  justify-content: center; flex-wrap: wrap;
-}
-.hero-stat {
-  display: flex; flex-direction: column; background: #F9FAFB;
-  padding: 18px 24px; border-radius: 12px; border: 1px solid #F0F0F0; min-width: 120px;
-}
-.hero-stat-num { font-size: 32px; font-weight: 800; color: var(--navy); line-height: 1; }
-.hero-stat-num span { font-size: 18px; color: var(--body-text); }
-.hero-stat-label {
-  font-size: 11px; font-weight: 500; color: var(--body-text); margin-top: 4px;
-  text-transform: uppercase; letter-spacing: 0.5px;
-}
-
-/* ===== CTA BOX ===== */
-.cta-box {
-  display: flex; align-items: center; gap: 12px;
-  flex-wrap: wrap; justify-content: center;
-}
-.cta-box input[type="email"] {
-  min-width: 280px; padding: 14px 20px; font-family: 'Inter', sans-serif;
-  font-size: 15px; border: 1px solid #E5E7EB; background: #F9FAFB;
-  color: var(--navy); outline: none; transition: border-color 0.2s;
-  border-radius: var(--radius-pill);
-}
-.cta-box input[type="email"]::placeholder { color: var(--muted); }
-.cta-box input[type="email"]:focus { border-color: var(--navy); }
-.cta-box button {
-  padding: 14px 36px; background: var(--navy); color: var(--white);
-  font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
-  border: none; cursor: pointer; letter-spacing: 0.3px; transition: all 0.2s;
-  white-space: nowrap; border-radius: var(--radius-pill);
-}
-.cta-box button:hover { background: #111827; transform: translateY(-1px); }
-.cta-note { width: 100%; text-align: center; font-size: 12px; color: var(--body-text); margin-top: 8px; }
-.cta-box button:disabled { opacity: 0.6; cursor: wait; }
-
-/* ===== SECTIONS ===== */
-section { padding: 96px 40px; max-width: 1000px; margin: 0 auto; }
 .section-tag {
-  display: inline-block; background: #EEF2FF; color: var(--navy);
-  font-size: 11px; font-weight: 700; padding: 6px 16px;
-  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px;
-  border-radius: var(--radius-pill); border: 1px solid #C7D2FE;
-}
-.section-title {
-  font-size: clamp(28px, 4vw, 44px); font-weight: 800;
-  color: var(--navy); line-height: 1.12; margin-bottom: 16px;
-}
-.section-title .light { color: var(--teal); font-weight: 800; }
-.section-desc {
-  font-size: 16px; color: var(--body-text); line-height: 1.7;
-  max-width: 600px; margin-bottom: 48px;
-}
-
-/* ===== WHAT YOU GET ===== */
-.benefits {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
-}
-.benefit {
-  padding: 36px; background: var(--white); border: 1px solid #F0F0F0;
-  border-radius: var(--radius); transition: transform 0.2s, box-shadow 0.2s;
-}
-.benefit:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.benefit-icon {
-  width: 48px; height: 48px; background: var(--navy);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 20px; font-size: 20px; border-radius: 12px;
-}
-.benefit h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-.benefit p { font-size: 14px; color: var(--body-text); line-height: 1.7; }
-
-/* ===== DIMENSIONS ===== */
-.dimensions-section { background: var(--light-blue); padding: 96px 40px; }
-.dimensions-inner { max-width: 1000px; margin: 0 auto; }
-.dimensions-grid {
-  display: grid; grid-template-columns: 1fr; gap: 1px;
-  background: #E0E4EB; border-radius: var(--radius); overflow: hidden;
-}
-.dimension {
-  background: var(--white); padding: 28px 32px;
-  display: grid; grid-template-columns: 48px 1fr auto;
-  align-items: center; gap: 20px; transition: all 0.2s;
-}
-.dimension:hover { background: #F8FAFF; }
-.dim-num { font-size: 28px; font-weight: 800; color: var(--teal); text-align: center; }
-.dim-content h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-.dim-content p { font-size: 13px; color: var(--body-text); line-height: 1.5; }
-.dim-tag {
-  font-size: 11px; font-weight: 600; color: var(--body-text);
-  background: #F3F4F6; padding: 6px 14px; white-space: nowrap;
+  background: var(--light-blue);
+  color: var(--navy);
+  border: 1px solid var(--indigo-border);
   border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+h1 {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.12;
+  margin-bottom: 20px;
+}
+h1 .light { color: var(--teal); }
+.hero-sub {
+  font-size: 17px;
+  color: var(--body-text);
+  max-width: 560px;
+  margin: 0 auto 32px;
+  line-height: 1.65;
 }
 
-/* ===== HOW IT WORKS ===== */
-.steps {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px; counter-reset: step;
+/* COMPANY INFO */
+.company-bar {
+  background: var(--light-blue);
+  padding: 40px 24px;
 }
-.step {
-  padding: 36px 28px; background: #F9FAFB; position: relative;
-  counter-increment: step; border-radius: var(--radius); overflow: hidden;
-  border: 1px solid #F0F0F0; transition: transform 0.2s, box-shadow 0.2s;
+.company-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
-.step:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.step::before {
-  content: counter(step); font-size: 56px; font-weight: 800;
-  color: rgba(27,42,74,0.05); position: absolute; top: 14px; right: 18px; line-height: 1;
+.company-inner label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
 }
-.step h3 {
-  font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px;
-  text-transform: uppercase; letter-spacing: 0.5px;
+.company-inner input {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  background: var(--white);
+  outline: none;
+  transition: border 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
 }
-.step p { font-size: 14px; color: var(--body-text); line-height: 1.7; }
+/* Fix date input on iOS */
+.company-inner input[type="date"] {
+  min-height: 44px;
+}
+.company-inner input:focus, .company-inner select:focus { border-color: var(--teal); }
+.company-inner select {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  background: var(--white);
+  outline: none;
+  transition: border 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394A3B8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+.company-inner select:invalid, .company-inner select option[value=""] { color: var(--muted); }
 
-/* ===== PORTFOLIO PREVIEW ===== */
-.portfolio-section { background: #F9FAFB; padding: 96px 40px; }
-.portfolio-preview {
-  background: var(--white); padding: 48px; overflow-x: auto;
-  border-radius: var(--radius); border: 1px solid #F0F0F0;
-  max-width: 1000px; margin: 0 auto;
+/* HOW TO USE */
+.how-to-use {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
 }
-.portfolio-preview h3 {
-  font-size: 13px; font-weight: 600; color: var(--navy);
-  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;
+.how-to-use-card {
+  background: var(--slate-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
 }
-.heatmap { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
-.heatmap th {
-  padding: 10px 14px; font-weight: 600; color: var(--body-text); text-align: center;
-  border-bottom: 1px solid #F0F0F0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+.how-to-use-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.heatmap th:first-child { text-align: left; }
-.heatmap td { padding: 10px 14px; text-align: center; border-bottom: 1px solid #F8F8F8; }
-.heatmap td:first-child { text-align: left; color: var(--navy); font-weight: 600; }
-.heatmap td:last-child { color: var(--navy); font-weight: 700; }
-.dot {
-  display: inline-block; width: 28px; height: 28px; line-height: 28px;
-  font-size: 14px; text-align: center; border-radius: 6px;
+.how-to-use-title .icon { font-size: 16px; }
+.how-to-use-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
-.dot-red { background: rgba(239,68,68,0.15); color: #EF4444; }
-.dot-yellow { background: rgba(234,179,8,0.15); color: #EAB308; }
-.dot-green { background: rgba(34,197,94,0.15); color: #22C55E; }
-
-
-/* ===== RATING SCALE ===== */
-.rating-scale {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
-  margin-top: 40px;
+.how-to-use-item {
+  font-size: 12px;
+  color: var(--body-text);
+  line-height: 1.5;
 }
-.rating-item {
-  padding: 20px 16px; text-align: center;
-  border-radius: var(--radius); border: 1px solid #F0F0F0; background: var(--white);
+.how-to-use-item strong { color: var(--navy); font-weight: 700; }
+
+/* SCORING SECTIONS */
+.dimensions { max-width: 860px; margin: 0 auto; padding: 40px 24px; }
+.dimension-block { margin-bottom: 48px; }
+.dim-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
-.rating-letter { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
-.rating-name { font-size: 11px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-.rating-range { font-size: 10px; color: var(--muted); }
-
-/* ===== WHO THIS IS FOR ===== */
-.who-cards {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px; margin-top: 40px;
+.dim-number {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1;
+  margin-right: 16px;
+  flex-shrink: 0;
 }
-.who-card {
-  padding: 36px; background: var(--navy); border-radius: var(--radius);
-  border: 1px solid var(--navy); transition: transform 0.2s;
+.dim-title-wrap { flex: 1; }
+h2.dim-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.25;
 }
-.who-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.who-card-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
-.who-card p { color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.7; }
-
-/* ===== BRIDGE SECTION ===== */
-.bridge-section { background: var(--light-blue); padding: 96px 40px; }
-.bridge-inner { max-width: 1000px; margin: 0 auto; }
-.bridge-cards {
-  display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; margin-top: 40px;
+.dim-subtitle {
+  font-size: 13px;
+  color: var(--body-text);
+  margin-top: 4px;
+  line-height: 1.5;
 }
-.bridge-card {
-  padding: 40px 32px; border-radius: var(--radius); border: 1px solid #F0F0F0;
-  display: flex; flex-direction: column;
+.dim-score-badge {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy);
+  min-width: 80px;
+  text-align: right;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 2px;
 }
-.bridge-card.scorecard-card { background: var(--white); }
-.bridge-card.service-card { background: var(--navy); color: var(--white); }
-.bridge-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
-.bridge-card.service-card h3 { color: var(--white); }
-.bridge-card p { font-size: 14px; line-height: 1.7; }
-.bridge-card.service-card p { color: rgba(255,255,255,0.75); }
-.bridge-card .card-label {
-  font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.5px; margin-bottom: 16px;
+.dim-score-badge .of { font-size: 14px; font-weight: 600; color: var(--muted); }
+.dim-color-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
 }
-.bridge-card.scorecard-card .card-label { color: var(--teal); }
-.bridge-card.service-card .card-label { color: var(--amber); }
-.bridge-arrow {
-  font-size: 32px; color: var(--teal); font-weight: 800; padding: 0 20px;
-  display: flex; align-items: center;
-}
-.bridge-features {
-  margin-top: 16px; padding: 0; list-style: none;
-}
-.bridge-features li {
-  font-size: 13px; color: var(--body-text); padding: 4px 0;
-  padding-left: 20px; position: relative;
-}
-.bridge-card.service-card .bridge-features li { color: rgba(255,255,255,0.75); }
-.bridge-features li::before {
-  content: ''; position: absolute; left: 0; top: 11px;
-  width: 8px; height: 8px; border-radius: 2px;
-}
-.bridge-card.scorecard-card .bridge-features li::before { background: var(--teal); }
-.bridge-card.service-card .bridge-features li::before { background: var(--amber); }
-
-/* ===== BOTTOM CTA ===== */
-.bottom-cta { background: var(--white); padding: 96px 40px; text-align: center; }
-.bottom-cta-inner { max-width: 640px; margin: 0 auto; }
-.bottom-cta h2 {
-  font-size: clamp(28px, 4vw, 44px); font-weight: 800;
-  color: var(--navy); margin-bottom: 16px; line-height: 1.12;
-}
-.bottom-cta h2 .teal { color: var(--teal); }
-.bottom-cta p { font-size: 16px; color: var(--body-text); margin-bottom: 36px; line-height: 1.7; }
-.bottom-cta .cta-box { justify-content: center; }
-
-/* ===== FOOTER ===== */
-footer {
-  padding: 40px; background: var(--navy);
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 16px;
-}
-.footer-brand {
-  font-size: 13px; font-weight: 500; color: var(--white);
-  display: flex; align-items: center; gap: 12px;
-}
-.footer-logo { display: flex; align-items: center; gap: 8px; }
-.footer-logo-bar { width: 3px; height: 24px; background: var(--white); border-radius: 2px; flex-shrink: 0; }
-.footer-logo-text { font-weight: 800; font-size: 11px; color: var(--white); line-height: 1.15; letter-spacing: 0.3px; }
-.footer-logo-text span { display: block; }
-.footer-links { display: flex; gap: 24px; }
-.footer-links a { font-size: 13px; color: #94A3B8; text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--white); }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  /* NAV */
-  nav { padding: 0 20px; height: 56px; }
-  .nav-cta { padding: 8px 20px; font-size: 12px; }
-
-  /* HERO */
-  .hero { padding: 64px 24px 48px; background: var(--white); }
-  .shader-container { display: none; }
-  .hero h1 { font-size: 28px; line-height: 1.15; margin-bottom: 16px; }
-  .hero h1 br, .section-title br, .bottom-cta h2 br { display: none; }
-  .hero-tag { font-size: 11px; padding: 6px 16px; margin-bottom: 20px; }
-  .hero-sub { font-size: 15px; line-height: 1.6; margin-bottom: 32px; }
-  .hero-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-    margin-bottom: 32px;
-  }
-  .hero-stat { padding: 14px 12px; align-items: center; min-width: auto; background: var(--white); border-color: #E5E7EB; }
-  .hero-stat-num { font-size: 24px; }
-  .hero-stat-num span { font-size: 14px; }
-  .hero-stat-label { font-size: 10px; margin-top: 2px; }
-
-  /* CTA */
-  .cta-box { flex-direction: column; gap: 10px; }
-  .cta-box input[type="email"] { min-width: 100%; padding: 12px 18px; font-size: 14px; background: var(--white); }
-  .cta-box button { width: 100%; padding: 14px 24px; font-size: 14px; }
-  .cta-note { font-size: 11px; }
-
-  /* SECTIONS */
-  section { padding: 56px 24px; }
-  .section-tag { font-size: 10px; padding: 5px 14px; }
-  .section-title { font-size: 24px; margin-bottom: 12px; }
-  .section-title br { display: none; }
-  .section-desc { font-size: 14px; margin-bottom: 32px; }
-
-  /* BENEFITS */
-  .benefits { grid-template-columns: 1fr; gap: 16px; }
-  .benefit { padding: 28px 24px; }
-  .benefit-icon { width: 40px; height: 40px; font-size: 16px; margin-bottom: 16px; border-radius: 10px; }
-  .benefit h3 { font-size: 15px; }
-  .benefit p { font-size: 13px; }
-
-  /* DIMENSIONS */
-  .dimensions-section { padding: 56px 24px; }
-  .dimension { grid-template-columns: 32px 1fr; gap: 12px; padding: 18px 16px; }
-  .dim-num { font-size: 22px; }
-  .dim-content h3 { font-size: 14px; }
-  .dim-content p { font-size: 12px; }
-  .dim-tag { display: none; }
-
-  /* RATING SCALE */
-  .rating-scale { grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 28px; }
-  .rating-item { padding: 12px 4px; }
-  .rating-letter { font-size: 20px; }
-  .rating-name { font-size: 8px; line-height: 1.3; }
-  .rating-range { font-size: 8px; }
-
-  /* HOW IT WORKS */
-  .steps { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .step { padding: 24px 20px; background: var(--white); }
-  .step::before { font-size: 40px; top: 8px; right: 12px; }
-  .step h3 { font-size: 12px; margin-bottom: 8px; }
-  .step p { font-size: 13px; }
-
-  /* PORTFOLIO */
-  .portfolio-section { padding: 56px 24px; background: var(--white); }
-  .portfolio-preview { padding: 20px 16px; }
-  .portfolio-preview h3 { font-size: 11px; }
-  .heatmap { font-size: 11px; min-width: 500px; }
-  .heatmap th { padding: 8px 8px; font-size: 9px; }
-  .heatmap td { padding: 8px 8px; }
-  .dot { width: 22px; height: 22px; line-height: 22px; font-size: 12px; }
-
-  /* WHO THIS IS FOR */
-  .who-cards { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
-  .who-card { padding: 28px 24px; }
-  .who-card-tag { font-size: 11px; margin-bottom: 10px; }
-  .who-card p { font-size: 13px; }
-
-  /* BRIDGE */
-  .bridge-section { padding: 56px 24px; }
-  .bridge-cards { grid-template-columns: 1fr; gap: 0; }
-  .bridge-card { padding: 28px 24px; }
-  .bridge-arrow { justify-content: center; transform: rotate(90deg); padding: 8px 0; }
-  .card-label { font-size: 11px; }
-  .bridge-card h3 { font-size: 16px; }
-  .bridge-card p { font-size: 13px; }
-  .bridge-features li { font-size: 13px; }
-
-  /* BOTTOM CTA */
-  .bottom-cta { padding: 56px 24px; }
-  .bottom-cta h2 { font-size: 24px; }
-  .bottom-cta p { font-size: 14px; }
-
-  /* FOOTER */
-  footer { padding: 20px 24px; }
-  .footer-brand { font-size: 11px; flex-direction: column; gap: 4px; }
-  footer a { font-size: 11px; }
+.dim-color-bar .fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.4s ease;
+  width: 0%;
 }
 
-/* ===== ANIMATIONS ===== */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
+/* INLINE MOAT REFERENCE */
+.moat-inline {
+  background: var(--slate-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.moat-inline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.moat-inline-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.moat-inline-toggle {
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.moat-inline-body {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 16px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, margin-top 0.3s ease, opacity 0.3s ease;
+}
+.moat-inline-body.collapsed {
+  display: none;
+}
+.moat-inline-card {
+  text-align: center;
+  padding: 12px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  transition: all 0.3s;
+}
+.moat-inline-card.active-level { border-color: var(--teal); background: var(--light-teal); }
+.moat-inline-card .lvl { font-size: 20px; font-weight: 800; color: var(--teal); }
+.moat-inline-card .lvl-name { font-size: 11px; font-weight: 700; color: var(--navy); margin: 2px 0; }
+.moat-inline-card .lvl-desc { font-size: 9px; color: var(--body-text); line-height: 1.35; }
+
+/* QUESTION CARD */
+.q-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.q-card:hover { border-color: var(--indigo-border); }
+.q-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.q-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.q-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
+}
+.q-metric {
+  font-size: 13px;
+  color: var(--body-text);
+  margin-top: 3px;
+  font-weight: 400;
+}
+.q-hint {
+  font-size: 12px;
+  color: var(--body-text);
+  margin-top: 4px;
+  font-style: italic;
+  font-weight: 400;
+}
+.q-selected-score {
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--muted);
+  min-width: 30px;
+  text-align: right;
+  transition: color 0.2s;
+}
+.q-selected-score.scored { color: var(--navy); }
+
+/* SCORING BUTTONS */
+.q-scores {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.score-btn {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 8px;
+  background: var(--white);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.score-btn:hover { border-color: var(--teal); background: var(--light-teal); }
+.score-btn .score-num {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+  display: block;
+  margin-bottom: 4px;
+}
+.score-btn .score-desc {
+  font-size: 10px;
+  color: var(--body-text);
+  line-height: 1.35;
+  display: block;
+}
+/* Score 0 = slate/neutral (not measured) */
+.score-btn.active-slate { border-color: var(--slate); background: var(--slate-bg); }
+.score-btn.active-slate .score-num { color: var(--slate); }
+/* Score 1 = red */
+.score-btn.active-red { border-color: var(--red); background: var(--red-bg); }
+.score-btn.active-red .score-num { color: var(--red); }
+/* Score 2 = yellow */
+.score-btn.active-yellow { border-color: var(--yellow); background: var(--yellow-bg); }
+.score-btn.active-yellow .score-num { color: var(--yellow); }
+/* Score 3 = green */
+.score-btn.active-green { border-color: var(--green); background: var(--green-bg); }
+.score-btn.active-green .score-num { color: var(--green); }
+/* Score 4 = teal (brand) */
+.score-btn.active-teal { border-color: var(--teal); background: var(--light-teal); }
+.score-btn.active-teal .score-num { color: var(--teal); }
+
+/* CRITERIA HINT ROW - 5 hints */
+.q-criteria {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  gap: 6px;
+}
+.q-criteria .crit {
+  flex: 1;
+  font-size: 9px;
+  line-height: 1.35;
+  padding: 0;
+  max-width: 18%;
+  text-align: center;
+}
+.q-criteria .crit-slate { color: var(--slate); }
+.q-criteria .crit-red { color: var(--red); }
+.q-criteria .crit-yellow { color: var(--yellow); }
+.q-criteria .crit-green { color: var(--green); }
+.q-criteria .crit-teal { color: var(--teal); }
+
+/* RESULTS */
+.results-section {
+  background: var(--light-blue);
+  padding: 60px 24px;
+}
+.results-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.total-score-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.total-num {
+  font-size: 72px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+}
+.total-of {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.rating-badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 32px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.rating-desc {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--body-text);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.incomplete-warning {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--amber);
+  font-weight: 600;
+}
+
+/* DIMENSION SUMMARY */
+.dim-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.dim-sum-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.dim-sum-card.full-width { grid-column: 1 / -1; }
+.dim-sum-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dim-sum-info { flex: 1; }
+.dim-sum-name { font-size: 13px; font-weight: 700; color: var(--navy); }
+.dim-sum-action { font-size: 12px; color: var(--body-text); margin-top: 2px; }
+.dim-sum-score {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.dim-sum-score .dim-sum-of { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+/* TOP 3 LEVERS */
+.levers-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+  margin-bottom: 32px;
+}
+.buyer-insights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.insight-card {
+  border-radius: var(--radius);
+  padding: 28px;
+  position: relative;
+}
+.objection-card {
+  background: #FFF8F0;
+  border: 1px solid #FDDCAB;
+}
+.fix-card {
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+}
+.insight-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.insight-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.insight-text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--navy);
+  font-weight: 500;
+}
+/* Show Results Gate */
+.show-results-gate {
+  text-align: center; padding: 40px 0 8px;
+  border-top: 1px solid var(--border); margin-top: 12px;
+}
+.gate-btn {
+  background: var(--teal); color: var(--white); font-weight: 700;
+  font-size: 18px; padding: 20px 52px; border: none; cursor: pointer;
+  border-radius: var(--radius-pill); transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 14px rgba(0, 180, 216, 0.3);
+}
+.gate-btn:hover { background: #009BB8; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4); }
+.gate-btn:disabled { opacity: 0.6; cursor: wait; box-shadow: none; }
+.gate-note { font-size: 12px; color: var(--body-text); margin-top: 14px; }
+.gate-missing {
+  font-size: 13px; color: var(--amber); font-weight: 500;
+  margin-bottom: 16px; line-height: 1.5;
+}
+/* Detailed results fade-in */
+#detailedResults {
+  animation: fadeInResults 0.5s ease-out;
+}
+@keyframes fadeInResults {
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.hero-inner > * { animation: fadeUp 0.7s ease-out both; }
-.hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
-.hero-inner > *:nth-child(2) { animation-delay: 0.2s; }
-.hero-inner > *:nth-child(3) { animation-delay: 0.3s; }
-.hero-inner > *:nth-child(4) { animation-delay: 0.4s; }
-.hero-inner > *:nth-child(5) { animation-delay: 0.5s; }
-.hero-inner > *:nth-child(6) { animation-delay: 0.6s; }
+.levers-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+.lever-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.lever-item:last-child { border-bottom: none; }
+.lever-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--red-bg);
+  color: var(--red);
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.lever-rank.rank-2 { background: var(--yellow-bg); color: var(--yellow); }
+.lever-rank.rank-3 { background: var(--light-blue); color: var(--navy); }
+.lever-info { flex: 1; }
+.lever-q { font-size: 14px; font-weight: 700; color: var(--navy); }
+.lever-dim { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.lever-score { font-weight: 800; font-size: 18px; min-width: 30px; text-align: right; }
+.no-levers {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
 
-/* FOG SHADER */
-.shader-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-.shader-container canvas { width: 100%; height: 100%; display: block; }
+/* MOAT GRID (bottom reference) */
+.moat-section {
+  padding: 48px 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.moat-section h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.moat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.moat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.moat-card.active-level { border-color: var(--teal); background: var(--light-teal); }
+.moat-level {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+.moat-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.moat-desc {
+  font-size: 10px;
+  color: var(--body-text);
+  line-height: 1.45;
+}
+
+/* RATING TABLE */
+.rating-table-section {
+  background: var(--light-blue);
+  padding: 48px 24px;
+}
+.rating-table-inner { max-width: 860px; margin: 0 auto; }
+.rating-table-inner h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 20px;
+  text-align: center;
+}
+.rating-table {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.rating-table th {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  padding: 14px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.rating-table td {
+  padding: 14px 20px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--body-text);
+  vertical-align: top;
+}
+.rating-table tr:last-child td { border-bottom: none; }
+.rating-table .rt-score { font-weight: 800; color: var(--navy); }
+.rating-table .rt-rating { font-weight: 800; }
+.rating-table tr.active-row { background: var(--light-teal); }
+
+/* CTA */
+.cta-section {
+  padding: 60px 24px;
+  text-align: center;
+}
+.cta-section h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.cta-section h2 .light { color: var(--teal); }
+.cta-section p {
+  color: var(--body-text);
+  max-width: 480px;
+  margin: 0 auto 28px;
+  font-size: 15px;
+}
+.cta-form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  max-width: 460px;
+  margin: 0 auto 12px;
+}
+.cta-form input {
+  flex: 1;
+  border: 1px solid #D1D5DB;
+  border-radius: var(--radius-pill);
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  outline: none;
+}
+.cta-form input:focus { border-color: var(--teal); }
+.btn {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: var(--radius-pill);
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--mid-navy); }
+.cta-helper { font-size: 12px; color: var(--muted); }
+
+/* FOOTER */
+footer {
+  background: var(--navy);
+  padding: 40px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-brand { display: flex; align-items: center; gap: 10px; }
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo-bar { width: 3px; height: 24px; background: var(--white); border-radius: 1.5px; }
+.footer-logo-text { font-weight: 800; font-size: 11px; color: var(--white); line-height: 1.15; }
+.footer-logo-text span { display: block; }
+.footer-tagline { color: rgba(255,255,255,0.6); font-size: 12px; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: var(--white); text-decoration: none; font-size: 13px; font-weight: 500; opacity: 0.75; transition: opacity 0.2s; }
+.footer-links a:hover { opacity: 1; }
+
+/* RESPONSIVE - TABLET */
+@media (max-width: 768px) {
+  h1 { font-size: 32px; }
+  .hero { padding: 60px 20px 40px; }
+  .company-inner { grid-template-columns: 1fr; }
+  .dim-summary-grid { grid-template-columns: 1fr; }
+  .moat-grid { grid-template-columns: repeat(2, 1fr); }
+  .moat-inline-body { grid-template-columns: repeat(2, 1fr); }
+  .how-to-use-grid { grid-template-columns: 1fr; }
+  .cta-form { flex-direction: column; }
+  .dim-header { flex-wrap: wrap; }
+  .dim-number { font-size: 28px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .total-num { font-size: 56px; }
+  .nav-progress { display: none; }
+}
+
+/* RESPONSIVE - MOBILE */
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+  .hero { padding: 48px 16px 32px; }
+  .hero-sub { font-size: 15px; }
+  .dimensions { padding: 24px 16px; }
+  .company-bar { padding: 24px 16px; overflow-x: hidden; }
+  .company-inner input, .company-inner select { padding: 10px 16px; font-size: 16px; } /* 16px prevents iOS zoom on focus */
+  .company-inner input[type="date"] { -webkit-appearance: none; appearance: none; }
+  .company-inner select { background-position: right 12px center; }
+  .how-to-use { padding: 24px 16px 0; }
+  .how-to-use-card { padding: 16px; }
+
+  .dim-header { gap: 8px; }
+  .dim-number { font-size: 24px; margin-right: 8px; }
+  h2.dim-title { font-size: 18px; }
+  .dim-subtitle { font-size: 12px; }
+  .dim-score-badge { font-size: 22px; min-width: 60px; }
+  .dim-score-badge .of { font-size: 12px; }
+
+  .q-card { padding: 16px; margin-bottom: 10px; }
+  .q-top { flex-direction: column; gap: 8px; }
+  .q-selected-score { text-align: left; font-size: 16px; }
+  .q-text { font-size: 14px; }
+  .q-label { font-size: 10px; }
+
+  /* Score buttons: big touch targets, number only */
+  .q-scores {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .score-btn {
+    padding: 14px 4px;
+    border-radius: 10px;
+    min-width: 0;
+    min-height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .score-btn .score-num { font-size: 18px; margin-bottom: 0; }
+  .score-btn .score-desc { display: none; }
+
+  /* Mobile feedback label shown below buttons */
+  .q-score-feedback {
+    display: block !important;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--slate-bg);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.45;
+    animation: feedbackIn 0.2s ease;
+  }
+  .q-score-feedback .fb-score { font-weight: 800; }
+  .q-score-feedback .fb-crit {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--body-text);
+    font-style: italic;
+  }
+  @keyframes feedbackIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hide criteria row on mobile - replaced by feedback */
+  .q-criteria { display: none; }
+
+  /* Moat inline: horizontal scroll */
+  .moat-inline-body {
+    grid-template-columns: none !important;
+    display: flex !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding-bottom: 8px;
+  }
+  .moat-inline-body.collapsed {
+    display: none !important;
+  }
+  .moat-inline-card {
+    min-width: 120px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  .results-section { padding: 40px 16px; }
+  .total-score-card { padding: 32px 20px; }
+  .total-num { font-size: 48px; }
+  .total-of { font-size: 18px; }
+  .rating-badge { font-size: 14px; padding: 8px 20px; }
+  .rating-desc { font-size: 13px; }
+  .levers-card { padding: 20px; }
+  .gate-btn { font-size: 16px; padding: 18px 32px; }
+  .buyer-insights { grid-template-columns: 1fr; }
+  .insight-card { padding: 20px; }
+  .levers-title { font-size: 17px; }
+
+  /* Moat grid bottom: horizontal scroll */
+  .moat-grid {
+    grid-template-columns: none !important;
+    display: flex !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .moat-card {
+    min-width: 140px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    padding: 16px 14px;
+  }
+  .moat-level { font-size: 22px; }
+  .moat-desc { font-size: 10px; }
+
+  /* Rating table: card layout */
+  .rating-table-section { padding: 32px 16px; }
+  .rating-table thead { display: none; }
+  .rating-table, .rating-table tbody { display: block; width: 100%; }
+  .rating-table tr {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+  }
+  .rating-table tr.active-row { background: var(--light-teal); border-color: var(--teal); }
+  .rating-table td {
+    border-bottom: none;
+    padding: 2px 0;
+    font-size: 13px;
+  }
+  .rating-table td.rt-score {
+    font-size: 12px;
+    color: var(--muted);
+    order: 3;
+  }
+  .rating-table td:nth-child(2) {
+    font-size: 15px;
+    order: 1;
+    margin-bottom: 4px;
+  }
+  .rating-table td:nth-child(3) {
+    order: 2;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  nav { padding: 12px 16px; }
+  .nav-score-pill { padding: 5px 12px; font-size: 12px; }
+  .nav-score-pill .score-val { font-size: 14px; }
+
+  .cta-section { padding: 40px 16px; }
+  .cta-section h2 { font-size: 26px; }
+
+  footer { padding: 32px 16px; flex-direction: column; gap: 16px; text-align: center; }
+  .footer-brand { flex-direction: column; gap: 8px; }
+  .footer-links { gap: 16px; }
+}
+
+/* Feedback element hidden on desktop */
+.q-score-feedback { display: none; }
+
+/* PRINT */
+@media print {
+  nav { position: relative; }
+  .results-section, .cta-section { break-inside: avoid; }
+}
 </style>
 </head>
 <body>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
 <!-- NAV -->
 <nav>
@@ -441,388 +1029,1067 @@ footer {
     <div class="nav-logo"></div>
     <div class="nav-name"><span>AI Value</span><span>Firm</span></div>
   </div>
-  <button class="nav-cta" onclick="document.querySelector('.bottom-cta').scrollIntoView({behavior:'smooth'})">Get the Scorecard</button>
+  <div class="nav-right">
+    <div class="nav-progress">
+      <span id="navProgress">0 / 15</span>
+      <div class="nav-progress-bar"><div class="fill" id="navProgressBar"></div></div>
+    </div>
+    <div class="nav-score-pill" id="navPill" style="display:none;">
+      Score: <span class="score-val" id="navScore">0</span> / 100
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="shader-container"><canvas id="fog-shader"></canvas></div>
-  <div class="hero-inner">
-    <div class="hero-tag">Free Assessment Tool</div>
-    <h1>Would a buyer pay a <br><span class="amber">premium</span> for your AI?</h1>
-    <p class="hero-sub">
-      Most companies can't prove what their AI is worth. Score your exit readiness across 5 dimensions in 15 minutes and discover where a buyer would discount - or pay more.
-    </p>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">15</div>
-        <div class="hero-stat-label">Questions</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">5</div>
-        <div class="hero-stat-label">Dimensions</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">15<span>min</span></div>
-        <div class="hero-stat-label">To complete</div>
-      </div>
-    </div>
-    <form class="cta-box" onsubmit="return handleEmailSubmit(event, this)">
-      <input type="email" placeholder="Your work email" required>
-      <button type="submit">Start the Scorecard</button>
-    </form>
-    <div class="cta-note">See how a buyer would score your AI. Free, instant results.</div>
-  </div>
-</div>
+<section class="hero">
+  <span class="section-tag">Free Assessment Tool</span>
+  <h1>AI Exit Readiness <span class="light">Scorecard</span></h1>
+  <p class="hero-sub">Would a buyer pay a premium for your AI? Score your organization across 5 dimensions in 15 minutes and discover where a buyer would discount - or pay more.</p>
+</section>
 
-<!-- WHAT YOU GET -->
-<section>
-  <div class="section-tag">What You Get</div>
-  <h2 class="section-title">See your company through <br><span class="light">a buyer's eyes</span></h2>
-  <p class="section-desc">Not another generic AI maturity framework. This scorecard applies a buyer's due diligence lens, so you know exactly where AI adds to your valuation - and where it creates risk.</p>
-  <div class="benefits">
-    <div class="benefit">
-      <div class="benefit-icon" style="color:var(--teal)">&#9632;</div>
-      <h3>Score 0 - 100</h3>
-      <p>15 questions across 5 dimensions with clear thresholds. Your rating goes from F (Multiple Compression) to A (Premium Ready) - the same language buyers use.</p>
+<!-- COMPANY INFO -->
+<section class="company-bar">
+  <div class="company-inner">
+    <div><label>Company</label><input type="text" id="companyName" placeholder="Your company name"></div>
+    <div><label>Industry</label><input type="text" id="industry" placeholder="e.g. SaaS, Manufacturing, Healthcare"></div>
+    <div><label>Your Role</label>
+      <select id="role">
+        <option value="" disabled selected>Select your role</option>
+        <option value="CEO / Founder">CEO / Founder</option>
+        <option value="CFO / Finance">CFO / Finance</option>
+        <option value="CTO / Tech">CTO / Tech</option>
+        <option value="COO / Operations">COO / Operations</option>
+        <option value="Operating Partner (PE)">Operating Partner (PE)</option>
+        <option value="Board / Advisor">Board / Advisor</option>
+        <option value="Other">Other</option>
+      </select>
     </div>
-    <div class="benefit">
-      <div class="benefit-icon" style="color:var(--amber)">&#9650;</div>
-      <h3>Buyer's Lens</h3>
-      <p>Every question is framed the way a buyer would ask it in due diligence. Revenue visibility, defensibility, cost control, operating leverage, and governance readiness.</p>
+    <div><label>Annual Revenue</label>
+      <select id="revenue">
+        <option value="" disabled selected>Select range</option>
+        <option value="< €1M">&lt; €1M</option>
+        <option value="€1M – €5M">€1M – €5M</option>
+        <option value="€5M – €20M">€5M – €20M</option>
+        <option value="€20M – €50M">€20M – €50M</option>
+        <option value="€50M+">€50M+</option>
+      </select>
     </div>
-    <div class="benefit">
-      <div class="benefit-icon" style="color:var(--teal)">&#9654;</div>
-      <h3>Top 3 Levers</h3>
-      <p>Your three lowest-scoring areas become your priority list. Concrete gaps a buyer would flag - with clear direction on what to fix first.</p>
+    <div><label>Exit / Funding Horizon</label>
+      <select id="exitHorizon">
+        <option value="" disabled selected>Select timeframe</option>
+        <option value="0 – 12 months">0 – 12 months</option>
+        <option value="12 – 24 months">12 – 24 months</option>
+        <option value="24+ months">24+ months</option>
+        <option value="No specific timeline">No specific timeline</option>
+      </select>
+    </div>
+    <div><label>Assessed by</label><input type="text" id="assessor" placeholder="Your name"></div>
+    <div><label>Date</label><input type="date" id="assessDate"></div>
+  </div>
+</section>
+
+<!-- HOW TO USE -->
+<section class="how-to-use">
+  <div class="how-to-use-card">
+    <div class="how-to-use-title"><span class="icon">&#9432;</span> How to use this scorecard</div>
+    <div class="how-to-use-grid">
+      <div class="how-to-use-item"><strong>Score 0 (grey)</strong> means you don't measure or have this. That's a blind spot - and blind spots cost you in due diligence.</div>
+      <div class="how-to-use-item"><strong>Scores 1-3</strong> represent a spectrum from weak to solid. Score based on what you can prove with data, not what you believe to be true.</div>
+      <div class="how-to-use-item"><strong>Score 4 (teal)</strong> means buyer-ready with evidence. Only select this if you could back it up in a diligence data room.</div>
     </div>
   </div>
 </section>
 
-<!-- 5 DIMENSIONS -->
-<div class="dimensions-section">
-  <div class="dimensions-inner">
-    <div class="section-tag">The Framework</div>
-    <h2 class="section-title">Five dimensions <span class="light">buyers care about</span></h2>
-    <p class="section-desc">Each dimension scores 0 - 20 based on 3 targeted questions. Together they reveal whether your AI would command a premium - or become a discount.</p>
-    <div class="dimensions-grid">
-      <div class="dimension"><div class="dim-num">1</div><div class="dim-content"><h3>AI Revenue &amp; Monetization</h3><p>Can a buyer see AI in your revenue model? Measures pricing visibility, retention impact, and revenue per employee trend.</p></div><div class="dim-tag">3 questions</div></div>
-      <div class="dimension"><div class="dim-num">2</div><div class="dim-content"><h3>Product Defensibility &amp; Moat</h3><p>What do you own that a competitor can't replicate in 12 months? Covers proprietary data, switching costs, and IP ownership.</p></div><div class="dim-tag">3 questions</div></div>
-      <div class="dimension"><div class="dim-num">3</div><div class="dim-content"><h3>AI Economics &amp; Margin Quality</h3><p>Does the organization understand and control AI costs? Measures cost visibility, return on investment, and forecast accuracy.</p></div><div class="dim-tag">3 questions</div></div>
-      <div class="dimension"><div class="dim-num">4</div><div class="dim-content"><h3>Operational Leverage</h3><p>Does AI deliver proven, measurable impact - or is it "cool tech" with no P&amp;L effect? Covers output vs. headcount, automation rate, and attributable impact.</p></div><div class="dim-tag">3 questions</div></div>
-      <div class="dimension"><div class="dim-num">5</div><div class="dim-content"><h3>Governance &amp; Deal Readiness</h3><p>Would your AI practices survive a buyer's legal team? Assesses governance documentation, IP ownership trail, and talent risk.</p></div><div class="dim-tag">3 questions</div></div>
+<!-- DIMENSIONS -->
+<section class="dimensions" id="dimensionsContainer">
+  <noscript>
+    <div style="background:#FEF2F2;border:1px solid #EF4444;border-radius:14px;padding:24px;text-align:center;color:#1B2A4A;">
+      <strong>JavaScript is required</strong><br>
+      This scorecard needs JavaScript to work. Please open this file directly in Safari or Chrome on your phone (not in a file preview or email viewer).
     </div>
-
-    <!-- Rating Scale -->
-    <div class="rating-scale">
-      <div class="rating-item">
-        <div class="rating-letter" style="color:var(--teal)">A</div>
-        <div class="rating-name">Premium Ready</div>
-        <div class="rating-range">80 - 100</div>
-      </div>
-      <div class="rating-item">
-        <div class="rating-letter" style="color:#22C55E">B</div>
-        <div class="rating-name">Investable with Gaps</div>
-        <div class="rating-range">60 - 79</div>
-      </div>
-      <div class="rating-item">
-        <div class="rating-letter" style="color:#EAB308">C</div>
-        <div class="rating-name">Discount Territory</div>
-        <div class="rating-range">40 - 59</div>
-      </div>
-      <div class="rating-item">
-        <div class="rating-letter" style="color:var(--amber)">D</div>
-        <div class="rating-name">Earn-out Risk</div>
-        <div class="rating-range">20 - 39</div>
-      </div>
-      <div class="rating-item">
-        <div class="rating-letter" style="color:#EF4444">F</div>
-        <div class="rating-name">Multiple Compression</div>
-        <div class="rating-range">0 - 19</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<section>
-  <div class="section-tag">How It Works</div>
-  <h2 class="section-title">From download to action <span class="light">in 15 minutes</span></h2>
-  <div class="steps">
-    <div class="step"><h3>Score</h3><p>Answer 15 questions honestly. Each scores 0-4 based on what you can prove - not what you believe.</p></div>
-    <div class="step"><h3>Diagnose</h3><p>See your score per dimension: red (buyer would discount), yellow (needs work), green (strong position).</p></div>
-    <div class="step"><h3>Prioritize</h3><p>Your 3 lowest scores become your focus areas - the gaps a buyer would flag first.</p></div>
-    <div class="step"><h3>Act</h3><p>Use the results as a starting point, or go deeper with our AI Exit Readiness assessment.</p></div>
-  </div>
+  </noscript>
 </section>
 
-<!-- PORTFOLIO PREVIEW -->
-<div class="portfolio-section">
-  <div class="portfolio-preview">
-    <h3>Built for portfolio reviews</h3>
-    <table class="heatmap">
-      <tr><th>Company</th><th>Revenue</th><th>Moat</th><th>Economics</th><th>Leverage</th><th>Governance</th><th>Total</th></tr>
-      <tr><td>Portco Alpha</td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td>62 / B</td></tr>
-      <tr><td>Portco Beta</td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-red">&#9679;</span></td><td>38 / D</td></tr>
-      <tr><td>Portco Gamma</td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-yellow">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td><span class="dot dot-green">&#9679;</span></td><td>81 / A</td></tr>
-    </table>
-    <p style="font-size:12px;color:var(--body-text);margin-top:16px;">PE operating partners use the scorecard to create portfolio-wide heatmaps and prioritize AI interventions by impact on exit multiples.</p>
-  </div>
-</div>
-
-<!-- WHO IS THIS FOR -->
-<section>
-  <div class="section-tag">Who This Is For</div>
-  <h2 class="section-title">Two audiences, <span class="light">one scorecard</span></h2>
-  <div class="who-cards">
-    <div class="who-card">
-      <div class="who-card-tag" style="color:var(--teal);">PE Operating Partners</div>
-      <p>Score every portfolio company in your fund. Aggregate into a heatmap. Prioritize interventions by impact on exit multiples. Track quarter-over-quarter improvement across the portfolio.</p>
+<!-- RESULTS -->
+<section class="results-section" id="resultsSection" style="display:none;">
+  <div class="results-inner">
+    <!-- SHOW RESULTS GATE -->
+    <div class="show-results-gate" id="showResultsGate" style="display:none;">
+      <p class="gate-missing" id="gateMissing" style="display:none;"></p>
+      <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Results & Recommendations</button>
+      <p class="gate-note">See where a buyer would challenge your AI story.</p>
     </div>
-    <div class="who-card">
-      <div class="who-card-tag" style="color:var(--amber);">CFOs &amp; Business Leaders</div>
-      <p>Find out what a buyer would see when they look at your AI. Identify the 3 areas where you're leaving value on the table. Build the case for AI investment with concrete gaps - not opinions.</p>
+
+    <!-- ALL RESULTS (hidden until gate is clicked) -->
+    <div id="detailedResults" style="display:none;">
+      <div class="total-score-card">
+        <div><span class="total-num" id="totalScore">0</span><span class="total-of"> / 100</span></div>
+        <div class="rating-badge" id="ratingBadge" style="background:var(--border);color:var(--muted);">-</div>
+        <p class="rating-desc" id="ratingDesc">Answer all 15 questions above to see your full rating and personalized recommendations.</p>
+        <p class="incomplete-warning" id="incompleteWarning"></p>
+      </div>
+      <div class="dim-summary-grid" id="dimSummaryGrid"></div>
+
+      <div class="levers-card">
+        <div class="levers-title">Top 3 Levers - Your Biggest Opportunities</div>
+        <div id="leversContainer">
+          <div class="no-levers">Score at least one question to see your priority levers.</div>
+        </div>
+      </div>
+
+      <!-- BUYER INSIGHTS -->
+      <div class="buyer-insights" id="buyerInsights" style="display:none;">
+        <div class="insight-card objection-card">
+          <div class="insight-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <div class="insight-label">Biggest Buyer Objection</div>
+          <div class="insight-text" id="buyerObjection"></div>
+        </div>
+        <div class="insight-card fix-card">
+          <div class="insight-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div class="insight-label">Fix in 30 Days</div>
+          <div class="insight-text" id="fixIn30"></div>
+        </div>
+      </div>
+
+      <!-- RATING TABLE -->
+      <div class="rating-table-section" style="margin:0;padding:40px 0 0;">
+        <div class="rating-table-inner">
+          <h3>Scoring Guide</h3>
+          <table class="rating-table" id="ratingTable">
+            <thead><tr><th>Score</th><th>Rating</th><th>What It Means</th></tr></thead>
+            <tbody>
+              <tr data-range="A"><td class="rt-score">80-100</td><td class="rt-rating" style="color:var(--teal)">A - Premium Ready</td><td>Your AI practices would withstand buyer scrutiny. Strong position for premium valuation. Focus: document and package for data room.</td></tr>
+              <tr data-range="B"><td class="rt-score">60-79</td><td class="rt-rating" style="color:var(--green)">B - Investable with Gaps</td><td>Solid foundation, gaps in 1-2 dimensions. A buyer would still engage but negotiate. Focus: close gaps within 90 days.</td></tr>
+              <tr data-range="C"><td class="rt-score">40-59</td><td class="rt-rating" style="color:var(--yellow)">C - Discount Territory</td><td>AI activity exists but limited proof of P&L impact. Buyers will cap the multiple. Focus: prove 2-3 use cases with hard numbers.</td></tr>
+              <tr data-range="D"><td class="rt-score">20-39</td><td class="rt-rating" style="color:var(--amber)">D - Earn-out Risk</td><td>Aware of AI but nothing a buyer can underwrite. Value shifts to earn-outs and contingencies. Focus: quick wins with measurable ROI.</td></tr>
+              <tr data-range="F"><td class="rt-score">0-19</td><td class="rt-rating" style="color:var(--red)">F - Multiple Compression</td><td>No credible AI story. Buyers either walk or discount heavily. Urgent: establish baseline metrics and governance.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- NEXT STEP CTA -->
+      <div class="cta-section" style="padding:48px 32px 48px;background:#FFFFFF;border-radius:var(--radius);margin-top:64px;">
+        <span class="section-tag">Next Step</span>
+        <h2>Turn your score into a <span class="light">buyer-ready AI narrative</span></h2>
+        <p>Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a concrete 90-day action plan.</p>
+        <a href="#" class="btn book-call-btn" style="display:inline-block;text-decoration:none;margin-top:20px;">Book Your Exit Readiness Review</a>
+        <p class="cta-helper">30-minute call. No strings attached.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- BRIDGE: SCORECARD → SERVICE -->
-<div class="bridge-section">
-  <div class="bridge-inner">
-    <div class="section-tag">Go Deeper</div>
-    <h2 class="section-title">The scorecard tells you <span class="light">what</span>. <br>We tell you <span class="light">why and how</span>.</h2>
-    <p class="section-desc">Scored below a B? Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a 90-day action plan.</p>
-    <div class="bridge-cards">
-      <div class="bridge-card scorecard-card">
-        <div class="card-label">Free Scorecard</div>
-        <h3>Self-Assessment</h3>
-        <p>15 questions, 15 minutes. See where you stand and where the gaps are.</p>
-        <ul class="bridge-features">
-          <li>Score across 5 dimensions</li>
-          <li>Top 3 priority levers</li>
-          <li>A through F rating</li>
-        </ul>
-      </div>
-      <div class="bridge-arrow">&#8594;</div>
-      <div class="bridge-card service-card">
-        <div class="card-label">AI Exit Readiness</div>
-        <h3>Expert Assessment</h3>
-        <p>3-week deep dive. Data-validated scores, peer benchmarks, and a concrete plan.</p>
-        <ul class="bridge-features">
-          <li>P&amp;L impact analysis</li>
-          <li>Peer benchmarking</li>
-          <li>Board-ready report</li>
-          <li>90-day action plan</li>
-        </ul>
-      </div>
+<!-- MOAT LAYERS (reference - stays outside gate, visible during assessment) -->
+<section class="moat-section">
+  <span class="section-tag" style="display:block;text-align:center;margin-bottom:20px;">Reference</span>
+  <h3>AI Defensibility Layers (for Q4-Q6)</h3>
+  <div class="moat-grid" id="moatGrid">
+    <div class="moat-card" data-layer="1">
+      <div class="moat-level">1</div>
+      <div class="moat-name">Tool Layer</div>
+      <div class="moat-desc">Off-the-shelf AI (GPT wrappers). No moat - competitors have this tomorrow.</div>
+    </div>
+    <div class="moat-card" data-layer="2">
+      <div class="moat-level">2</div>
+      <div class="moat-name">Workflow Layer</div>
+      <div class="moat-desc">AI in processes, custom procedures. Moderate - requires org knowledge to replicate.</div>
+    </div>
+    <div class="moat-card" data-layer="3">
+      <div class="moat-level">3</div>
+      <div class="moat-name">Data Layer</div>
+      <div class="moat-desc">Proprietary data, feedback loops. Strong - more users = better models.</div>
+    </div>
+    <div class="moat-card" data-layer="4">
+      <div class="moat-level">4</div>
+      <div class="moat-name">Model/IP Layer</div>
+      <div class="moat-desc">Own models, training data, patents. Very strong - but rare and capital-intensive.</div>
     </div>
   </div>
-</div>
-
-<!-- BOTTOM CTA -->
-<div class="bottom-cta">
-  <div class="bottom-cta-inner">
-    <h2>Stop guessing. <br>Start <span class="teal">measuring</span>.</h2>
-    <p>Get the AI Exit Readiness Scorecard and find out in 15 minutes whether a buyer would pay a premium for your AI - or discount it.</p>
-    <form class="cta-box" onsubmit="return handleEmailSubmit(event, this)">
-      <input type="email" placeholder="Your work email" required>
-      <button type="submit">Start the Scorecard</button>
-    </form>
-    <p class="cta-note-bottom" style="font-size:12px;color:var(--body-text);margin-top:12px;">See how a buyer would score your AI. Free, instant results.</p>
-  </div>
-</div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-brand"><div class="footer-logo"><div class="footer-logo-bar"></div><div class="footer-logo-text"><span>AI Value</span><span>Firm</span></div></div><span>&middot; AI that shows up in the numbers</span></div>
+  <div class="footer-brand">
+    <div class="footer-logo">
+      <div class="footer-logo-bar"></div>
+      <div class="footer-logo-text"><span>AI Value</span><span>Firm</span></div>
+    </div>
+    <span class="footer-tagline"></span>
+  </div>
   <div class="footer-links">
+    <a href="https://aivaluefirm.com" target="_blank">Website</a>
     <a href="https://linkedin.com/company/meijanto" target="_blank">LinkedIn</a>
-    <a href="#">Newsletter</a>
     <a href="mailto:arno@meijanto.com">Contact</a>
   </div>
 </footer>
 
-<!-- FOG SHADER SCRIPT -->
 <script>
-(function() {
-  var canvas = document.getElementById('fog-shader');
-  if (!canvas) return;
-  var container = canvas.parentElement;
-  var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
-  if (!gl) return;
+// -- DATA v3 --
+const dimensions = [
+  {
+    id: 'rev',
+    num: '01',
+    title: 'AI Revenue & Monetization',
+    subtitle: 'Can a buyer see AI in your revenue model - and does it drive retention and growth?',
+    questions: [
+      {
+        id: 'q1', label: 'Q1',
+        text: 'AI pricing visibility',
+        desc: 'Can a buyer see on invoices how much revenue comes from AI (paid add-on, premium tier, separate product) vs. "AI included" with no price signal?',
+        hint: 'If AI is free/bundled with no separate tracking, it\'s invisible to a buyer\'s revenue model.',
+        scores: [
+          { val: 0, desc: 'No AI in product' },
+          { val: 1, desc: 'AI free, no signal' },
+          { val: 2, desc: 'Bundled, not tracked' },
+          { val: 3, desc: 'Separate tracking' },
+          { val: 4, desc: 'AI priced + proven impact' }
+        ],
+        crit: [
+          'No AI revenue story',
+          'Buyer can\'t value the AI',
+          'Value exists but unproven',
+          'Credible for diligence',
+          'Premium revenue narrative'
+        ]
+      },
+      {
+        id: 'q2', label: 'Q2',
+        text: 'AI user retention & expansion',
+        desc: 'Do customers who use your AI features stay longer and spend more than those who don\'t - proven with data?',
+        scores: [
+          { val: 0, desc: 'Not measured' },
+          { val: 1, desc: 'Anecdotal only' },
+          { val: 2, desc: 'Basic before/after' },
+          { val: 3, desc: 'Proven by customer group' },
+          { val: 4, desc: 'Proven by segment + size' }
+        ],
+        crit: [
+          'Retention impact unknown',
+          'No proof - hard to value',
+          'Directional, not rigorous',
+          'Investable with context',
+          'Board-ready retention story'
+        ]
+      },
+      {
+        id: 'q3', label: 'Q3',
+        text: 'Revenue per employee trend',
+        desc: 'Is revenue per employee trending up for 4+ quarters, and can you explain the drivers (automation, self-serve, fewer services)?',
+        hint: 'Improving revenue per employee signals operating leverage - buyers underwrite higher future margins.',
+        scores: [
+          { val: 0, desc: 'Not tracked' },
+          { val: 1, desc: 'Declining or flat' },
+          { val: 2, desc: 'Growing <5%' },
+          { val: 3, desc: '+5-15%, drivers clear' },
+          { val: 4, desc: '>15%, AI-attributed' }
+        ],
+        crit: [
+          'Can\'t prove efficiency',
+          'Cost pressure signal',
+          'Stable, no AI lift',
+          'Healthy leverage story',
+          'Strong operating edge'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'moat',
+    num: '02',
+    title: 'Product Defensibility & Moat',
+    subtitle: 'What do you own that a competitor can\'t replicate in 12 months?',
+    moatRef: true,
+    questions: [
+      {
+        id: 'q4', label: 'Q4',
+        text: 'Proprietary data advantage',
+        desc: 'Do you have data assets competitors can\'t easily replicate - with contractual rights to use them?',
+        hint: 'Exclusive data rights are one of the few defensible AI advantages. Own data that competitors could also collect doesn\'t count.',
+        scores: [
+          { val: 0, desc: 'No proprietary data' },
+          { val: 1, desc: 'Own data, easily copied' },
+          { val: 2, desc: 'Unique, unclear rights' },
+          { val: 3, desc: 'Exclusive + contracted' },
+          { val: 4, desc: 'Self-reinforcing data loop' }
+        ],
+        crit: [
+          'No data moat',
+          'Easily copied',
+          'Asset exists, legally risky',
+          'Defensible with cleanup',
+          'Strategic acquisition asset'
+        ]
+      },
+      {
+        id: 'q5', label: 'Q5',
+        text: 'Switching costs & lock-in',
+        desc: 'How long would it take a customer to replace you - and what breaks when they try (integrations, governance, automations)?',
+        scores: [
+          { val: 0, desc: 'Days to replace' },
+          { val: 1, desc: 'Weeks, light integrations' },
+          { val: 2, desc: '1-3 months' },
+          { val: 3, desc: '3-6 months, deep workflows' },
+          { val: 4, desc: '>6 months, mission-critical' }
+        ],
+        crit: [
+          'Commodity - no lock-in',
+          'Replaceable without friction',
+          'Some stickiness',
+          'Strong retention lever',
+          'Premium retention multiple'
+        ]
+      },
+      {
+        id: 'q6', label: 'Q6',
+        text: 'IP & model ownership',
+        desc: 'What do you actually own (models, training data, pipelines) vs. what do you rent (API wrappers)? What happens if your main vendor doubles price?',
+        hint: 'Expand the reference card above to see the 4 moat layers.',
+        scores: [
+          { val: 0, desc: 'Only reselling vendor AI' },
+          { val: 1, desc: 'Thin layer, 1 vendor' },
+          { val: 2, desc: 'Custom setup, 1 vendor' },
+          { val: 3, desc: 'Test pipeline + multi-vendor' },
+          { val: 4, desc: 'Own models/IP/data' }
+        ],
+        crit: [
+          'No moat - commodity risk',
+          'Single vendor = price risk',
+          'Execution only',
+          'Defensible capability',
+          'Strategic IP asset'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'econ',
+    num: '03',
+    title: 'AI Economics & Margin Quality',
+    subtitle: 'Does the organization understand and control the financial side of AI - or is it a black box?',
+    questions: [
+      {
+        id: 'q7', label: 'Q7',
+        text: 'AI cost visibility',
+        desc: 'Do you know exactly how much you spend on AI (compute, licenses, internal time) - per use case, per customer?',
+        scores: [
+          { val: 0, desc: 'No idea' },
+          { val: 1, desc: 'Vague estimate' },
+          { val: 2, desc: 'Known globally' },
+          { val: 3, desc: 'Per department' },
+          { val: 4, desc: 'Per use case & P&L' }
+        ],
+        crit: [
+          'Unmanaged cost risk',
+          'Fails due diligence cost questions',
+          'Basic financial hygiene',
+          'Real cost control',
+          'Cost per unit known and improvable'
+        ]
+      },
+      {
+        id: 'q8', label: 'Q8',
+        text: 'AI return on investment',
+        desc: 'For every euro spent on AI, how much measurable value comes back? Can you prove the methodology?',
+        hint: 'Buyers want auditable attribution - not "we think AI helped."',
+        scores: [
+          { val: 0, desc: 'Not measured' },
+          { val: 1, desc: 'Negative (<1x)' },
+          { val: 2, desc: 'Break-even (~1x)' },
+          { val: 3, desc: 'Positive (1-3x)' },
+          { val: 4, desc: 'Strong (>3x)' }
+        ],
+        crit: [
+          'Spending without proof',
+          'Destroying value - urgent',
+          'Justifiable, not compelling',
+          'Investable returns',
+          'Reinvest with confidence'
+        ]
+      },
+      {
+        id: 'q9', label: 'Q9',
+        text: 'AI cost forecasting',
+        desc: 'Can you forecast AI costs within ±10-15% for the next two quarters - and prove what levers control variance?',
+        hint: 'Buyers price opaque costs as downside risk. Controlled costs support higher valuation.',
+        scores: [
+          { val: 0, desc: 'No forecast' },
+          { val: 1, desc: 'Order of magnitude' },
+          { val: 2, desc: '±30%+ variance' },
+          { val: 3, desc: '±15-30%, some levers' },
+          { val: 4, desc: '±10%, levers documented' }
+        ],
+        crit: [
+          'Buyer assumes worst case',
+          'Can\'t underwrite margins',
+          'Directionally useful',
+          'Credible for projections',
+          'Clean margin underwriting'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'lever',
+    num: '04',
+    title: 'Operational Leverage',
+    subtitle: 'Does AI deliver proven, attributable impact - or is it "cool tech" with no P&L effect?',
+    questions: [
+      {
+        id: 'q10', label: 'Q10',
+        text: 'Output vs. headcount growth',
+        desc: 'Is output (revenue, throughput) growing faster than headcount - and can you name the drivers?',
+        scores: [
+          { val: 0, desc: 'Not tracked' },
+          { val: 1, desc: 'Headcount growing faster' },
+          { val: 2, desc: 'Growing equally' },
+          { val: 3, desc: 'Output 1-2x faster' },
+          { val: 4, desc: 'Output >2x faster' }
+        ],
+        crit: [
+          'Can\'t prove leverage',
+          'Scaling inefficiently',
+          'No leverage effect',
+          'True leverage emerging',
+          'Exceptional scalability'
+        ]
+      },
+      {
+        id: 'q11', label: 'Q11',
+        text: 'Automation rate + redeployment',
+        desc: 'What % of core workflows are automated end-to-end, and where did the freed capacity go - growth or margin?',
+        hint: 'Automation only matters if freed time converts to margin or growth. Otherwise it\'s invisible to a buyer.',
+        scores: [
+          { val: 0, desc: 'Not tracked' },
+          { val: 1, desc: '<10%, time lost' },
+          { val: 2, desc: '10-20%, partial' },
+          { val: 3, desc: '20-40%, structured' },
+          { val: 4, desc: '>40%, fuels growth' }
+        ],
+        crit: [
+          'Automation potential unknown',
+          'Efficiency gains evaporate',
+          'Some value recaptured',
+          'Deliberate reinvestment',
+          'Freed capacity = growth'
+        ]
+      },
+      {
+        id: 'q12', label: 'Q12',
+        text: 'Attributable AI impact',
+        desc: 'Can you point to 3+ AI initiatives with audited impact (lower churn, more upsells, lower acquisition costs) and a clear attribution method?',
+        scores: [
+          { val: 0, desc: 'No attribution' },
+          { val: 1, desc: 'Anecdotal claims' },
+          { val: 2, desc: '1-2 basic cases' },
+          { val: 3, desc: '2-3 with methodology' },
+          { val: 4, desc: '3+ audited, board-ready' }
+        ],
+        crit: [
+          'Hand-wavy AI story',
+          'Gets discounted in due diligence',
+          'Early proof points',
+          'Credible value creation',
+          'Premium AI narrative'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'gov',
+    num: '05',
+    title: 'Governance & Deal Readiness',
+    subtitle: 'Would your AI practices survive a buyer\'s legal team - or would they become a discount?',
+    questions: [
+      {
+        id: 'q13', label: 'Q13',
+        text: 'AI governance producibility',
+        desc: 'If a buyer\'s legal team asks "show me your AI governance," can you produce it in 24 hours - policies, testing results, monitoring, incident logs?',
+        scores: [
+          { val: 0, desc: 'Nothing exists' },
+          { val: 1, desc: 'Informal, undocumented' },
+          { val: 2, desc: 'Some policies, scattered' },
+          { val: 3, desc: 'Documented, not tested' },
+          { val: 4, desc: 'Producible in 24h' }
+        ],
+        crit: [
+          'Unmanaged AI risk',
+          'No accountability trail',
+          'Works on paper only',
+          'Scalable governance',
+          'Clean diligence - no holdbacks'
+        ]
+      },
+      {
+        id: 'q14', label: 'Q14',
+        text: 'IP & data ownership trail',
+        desc: 'Do you have clean IP and data rights (employee/contractor assignments, open-source compliance, customer consent, data processing agreements, training rights) ready for diligence?',
+        scores: [
+          { val: 0, desc: 'Unknown / messy' },
+          { val: 1, desc: 'Major gaps known' },
+          { val: 2, desc: 'Partial, gaps remain' },
+          { val: 3, desc: 'Mostly clean' },
+          { val: 4, desc: 'Clean ownership trail' }
+        ],
+        crit: [
+          'Deal-breaker risk',
+          'Cleanup needed before deal closes',
+          'Fixable but adds cost',
+          'Minor cleanup only',
+          'Buyer confidence - premium'
+        ]
+      },
+      {
+        id: 'q15', label: 'Q15',
+        text: 'AI talent & key person risk',
+        desc: 'Does the organization have the people and skills to keep shipping AI post-close, or does everything depend on 1-2 people?',
+        scores: [
+          { val: 0, desc: 'No internal capability' },
+          { val: 1, desc: '1-2 people dependency' },
+          { val: 2, desc: 'Small team, high risk' },
+          { val: 3, desc: 'Core team + external' },
+          { val: 4, desc: 'Broad capability' }
+        ],
+        crit: [
+          'No ability to execute',
+          'Key person = deal risk',
+          'Retention packages needed',
+          'Manageable transition',
+          'Buyer confidence in team'
+        ]
+      }
+    ]
+  }
+];
 
-  var vertSource = 'attribute vec2 a_position; void main() { gl_Position = vec4(a_position, 0.0, 1.0); }';
-  var fragSource = [
-    'precision highp float;',
-    'uniform vec2 u_resolution;',
-    'uniform float u_time;',
-    'vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }',
-    'vec2 mod289v2(vec2 x) { return x - floor(x * (1.0/289.0)) * 289.0; }',
-    'vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }',
-    'float snoise(vec2 v) {',
-    '  const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);',
-    '  vec2 i = floor(v + dot(v, C.yy));',
-    '  vec2 x0 = v - i + dot(i, C.xx);',
-    '  vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);',
-    '  vec4 x12 = x0.xyxy + C.xxzz;',
-    '  x12.xy -= i1;',
-    '  i = mod289v2(i);',
-    '  vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));',
-    '  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);',
-    '  m = m*m; m = m*m;',
-    '  vec3 x = 2.0 * fract(p * C.www) - 1.0;',
-    '  vec3 h = abs(x) - 0.5;',
-    '  vec3 ox = floor(x + 0.5);',
-    '  vec3 a0 = x - ox;',
-    '  m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);',
-    '  vec3 g;',
-    '  g.x = a0.x * x0.x + h.x * x0.y;',
-    '  g.yz = a0.yz * x12.xz + h.yz * x12.yw;',
-    '  return 130.0 * dot(m, g);',
-    '}',
-    'float fbm(vec2 p) {',
-    '  float f = 0.0;',
-    '  f += 0.5000 * snoise(p); p *= 2.01;',
-    '  f += 0.2500 * snoise(p); p *= 2.02;',
-    '  f += 0.1250 * snoise(p); p *= 2.03;',
-    '  f += 0.0625 * snoise(p);',
-    '  return f;',
-    '}',
-    'void main() {',
-    '  vec2 uv = gl_FragCoord.xy / u_resolution;',
-    '  float t = u_time * 0.50;',
-    '  float scl = mix(1.0, 5.0, 0.50);',
-    '  vec2 p = uv * scl;',
-    '  vec3 teal = vec3(0.0, 0.706, 0.847);',
-    '  vec3 lightBlue = vec3(0.933, 0.949, 1.0);',
-    '  vec3 amber = vec3(0.910, 0.659, 0.220);',
-    '  vec2 q = vec2(fbm(p + t * 0.04), fbm(p + vec2(5.2, 1.3) + t * 0.03));',
-    '  vec2 r = vec2(fbm(p + 4.0 * q + vec2(1.7, 9.2) + t * 0.02), fbm(p + 4.0 * q + vec2(8.3, 2.8) + t * 0.025));',
-    '  float f = fbm(p + 4.0 * r);',
-    '  float density = smoothstep(-0.4, 0.8, f);',
-    '  float density2 = smoothstep(-0.2, 1.0, fbm(p * 0.6 + vec2(t * 0.02, -t * 0.015) + 3.0));',
-    '  float vertGrad = smoothstep(0.9, 0.1, uv.y) * 0.6 + 0.4;',
-    '  density *= vertGrad;',
-    '  density2 *= (1.0 - vertGrad) * 0.7 + 0.3;',
-    '  vec3 col = vec3(0.0);',
-    '  col += mix(lightBlue, teal * 0.8, density * 0.9) * density;',
-    '  col += lightBlue * density2 * 0.8;',
-    '  col += amber * 0.08 * smoothstep(0.5, 1.0, uv.y) * density2;',
-    '  float alpha = (density * 0.75 + density2 * 0.50) * 1.0;',
-    '  float edge = smoothstep(0.0, 0.05, uv.x) * smoothstep(1.0, 0.95, uv.x);',
-    '  edge *= smoothstep(0.0, 0.03, uv.y) * smoothstep(1.0, 0.97, uv.y);',
-    '  alpha *= edge;',
-    '  gl_FragColor = vec4(col, alpha);',
-    '}'
-  ].join('\n');
+// -- STATE --
+const state = {};
+dimensions.forEach(d => d.questions.forEach(q => { state[q.id] = null; }));
 
-  function createShader(type, source) {
-    var s = gl.createShader(type);
-    gl.shaderSource(s, source);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error('Fog shader:', gl.getShaderInfoLog(s)); return null; }
-    return s;
+// -- RENDER DIMENSIONS --
+function renderDimensions() {
+  const container = document.getElementById('dimensionsContainer');
+  container.innerHTML = dimensions.map(d => `
+    <div class="dimension-block" id="dim-${d.id}">
+      <div class="dim-header">
+        <span class="dim-number">${d.num}</span>
+        <div class="dim-title-wrap">
+          <h2 class="dim-title">${d.title}</h2>
+          <div class="dim-subtitle">${d.subtitle}</div>
+        </div>
+        <div class="dim-score-badge"><span id="dimScore-${d.id}">0</span><span class="of">/20</span></div>
+      </div>
+      <div class="dim-color-bar"><div class="fill" id="dimBar-${d.id}"></div></div>
+      ${d.moatRef ? renderMoatInline() : ''}
+      ${d.questions.map(q => `
+        <div class="q-card" id="card-${q.id}">
+          <div class="q-top">
+            <div>
+              <div class="q-label">${q.label}</div>
+              <div class="q-text">${q.desc}</div>
+              <div class="q-metric">${q.text}</div>
+              ${q.hint ? `<div class="q-hint">${q.hint}</div>` : ''}
+            </div>
+            <div class="q-selected-score" id="sel-${q.id}">-</div>
+          </div>
+          <div class="q-scores">
+            ${q.scores.map(s => `
+              <button class="score-btn" data-q="${q.id}" data-val="${s.val}" onclick="selectScore('${q.id}', ${s.val}, this)">
+                <span class="score-num">${s.val}</span>
+                <span class="score-desc">${s.desc}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div class="q-score-feedback" id="feedback-${q.id}" style="display:none;"></div>
+          <div class="q-criteria">
+            ${q.crit.map((c, i) => {
+              const cls = i === 0 ? 'crit-slate' : i === 1 ? 'crit-red' : i === 2 ? 'crit-yellow' : i === 3 ? 'crit-green' : 'crit-teal';
+              return `<div class="crit ${cls}">${c}</div>`;
+            }).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function renderMoatInline() {
+  const layers = [
+    { num: 1, name: 'Tool Layer', desc: 'Off-the-shelf AI (GPT wrappers). No moat.' },
+    { num: 2, name: 'Workflow Layer', desc: 'AI in processes, custom procedures. Moderate moat.' },
+    { num: 3, name: 'Data Layer', desc: 'Proprietary data, feedback loops. Strong moat.' },
+    { num: 4, name: 'Model/IP Layer', desc: 'Own models, training data, patents. Very strong.' }
+  ];
+  return `
+    <div class="moat-inline" id="moatInline">
+      <div class="moat-inline-header" onclick="toggleMoatRef()">
+        <div class="moat-inline-title">AI Defensibility Layers (for Q4-Q6)</div>
+        <div class="moat-inline-toggle" id="moatToggle">&#9660; Show</div>
+      </div>
+      <div class="moat-inline-body collapsed" id="moatInlineBody" style="display:none;">
+        ${layers.map(l => `
+          <div class="moat-inline-card" data-layer="${l.num}">
+            <div class="lvl">${l.num}</div>
+            <div class="lvl-name">${l.name}</div>
+            <div class="lvl-desc">${l.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function toggleMoatRef() {
+  const body = document.getElementById('moatInlineBody');
+  const toggle = document.getElementById('moatToggle');
+  const isCollapsed = body.classList.toggle('collapsed');
+  if (isCollapsed) {
+    toggle.innerHTML = '&#9660; Show';
+    body.style.display = 'none';
+  } else {
+    toggle.innerHTML = '&#9650; Hide';
+    body.style.removeProperty('display');
+  }
+}
+
+// -- HELPER: find question data --
+function findQuestion(qId) {
+  for (const d of dimensions) {
+    for (const q of d.questions) {
+      if (q.id === qId) return q;
+    }
+  }
+  return null;
+}
+
+// -- SELECT SCORE (with deselect) --
+function selectScore(qId, val, el) {
+  const parent = el.parentElement;
+  const feedbackEl = document.getElementById(`feedback-${qId}`);
+
+  // Deselect if same button clicked
+  if (state[qId] === val) {
+    state[qId] = null;
+    parent.querySelectorAll('.score-btn').forEach(b => {
+      b.classList.remove('active-slate', 'active-red', 'active-yellow', 'active-green', 'active-teal');
+    });
+    const selEl = document.getElementById(`sel-${qId}`);
+    selEl.textContent = '-';
+    selEl.classList.remove('scored');
+    if (feedbackEl) feedbackEl.style.display = 'none';
+    updateAll();
+    return;
   }
 
-  var prog = gl.createProgram();
-  gl.attachShader(prog, createShader(gl.VERTEX_SHADER, vertSource));
-  gl.attachShader(prog, createShader(gl.FRAGMENT_SHADER, fragSource));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
+  state[qId] = val;
 
-  var buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
-  var pos = gl.getAttribLocation(prog, 'a_position');
-  gl.enableVertexAttribArray(pos);
-  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  // Reset siblings
+  parent.querySelectorAll('.score-btn').forEach(b => {
+    b.classList.remove('active-slate', 'active-red', 'active-yellow', 'active-green', 'active-teal');
+  });
 
-  var uRes = gl.getUniformLocation(prog, 'u_resolution');
-  var uTime = gl.getUniformLocation(prog, 'u_time');
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+  // Apply color class: 0=slate, 1=red, 2=yellow, 3=green, 4=teal
+  let cls = val === 0 ? 'active-slate' : val === 1 ? 'active-red' : val === 2 ? 'active-yellow' : val === 3 ? 'active-green' : 'active-teal';
+  el.classList.add(cls);
 
-  function resize() {
-    var dpr = Math.min(window.devicePixelRatio, 2);
-    var rect = container.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    gl.viewport(0, 0, canvas.width, canvas.height);
+  // Update individual score display
+  const selEl = document.getElementById(`sel-${qId}`);
+  selEl.textContent = val;
+  selEl.classList.add('scored');
+
+  // Mobile feedback: show selected score description + criteria
+  if (feedbackEl) {
+    const q = findQuestion(qId);
+    if (q) {
+      const scoreObj = q.scores[val];
+      const critText = q.crit[val] || '';
+      feedbackEl.innerHTML = `<span class="fb-score">${val} - ${scoreObj.desc}</span><span class="fb-crit">${critText}</span>`;
+      feedbackEl.style.removeProperty('display');
+    }
   }
-  resize();
-  window.addEventListener('resize', resize);
 
-  function render(time) {
-    gl.clearColor(1, 1, 1, 0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.uniform2f(uRes, canvas.width, canvas.height);
-    gl.uniform1f(uTime, time * 0.001);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
-    requestAnimationFrame(render);
-  }
-  requestAnimationFrame(render);
-})();
-</script>
+  updateAll();
+}
 
-<!-- Hidden iframe for form submissions -->
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
-<!-- EMAIL CAPTURE -->
-<script>
+// -- CONFIG --
 var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzJ_l9Icvc_oWiJ2a8IF9o2B_9Y9EfUmz5oXPN3EkwZKHN1ELWitTA3QFNzHiDiQRTE/exec';
 
-// Collect UTM params once on page load
-var utmParams = (function() {
-  var params = new URLSearchParams(window.location.search);
-  return {
-    utm_source: params.get('utm_source') || '',
-    utm_medium: params.get('utm_medium') || '',
-    utm_campaign: params.get('utm_campaign') || '',
-    utm_content: params.get('utm_content') || '',
-    utm_term: params.get('utm_term') || ''
-  };
-})();
+// Read URL parameters (email + UTM from landing page)
+var urlParams = new URLSearchParams(window.location.search);
+var userEmail = urlParams.get('email') || '';
+var utmParams = {
+  utm_source: urlParams.get('utm_source') || '',
+  utm_medium: urlParams.get('utm_medium') || '',
+  utm_campaign: urlParams.get('utm_campaign') || ''
+};
 
-function handleEmailSubmit(e, form) {
-  e.preventDefault();
-  var input = form.querySelector('input[type="email"]');
-  var btn = form.querySelector('button');
-  var email = input.value.trim();
+// Pre-fill CTA email if we have it
+if (userEmail) {
+  var ctaEmail = document.querySelector('.cta-section input[type="email"]');
+  if (ctaEmail) ctaEmail.value = userEmail;
+}
 
-  if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return false;
+// -- UPDATE ALL --
+const RAW_MAX = 12;
+const SCALED_MAX = 20;
+const TOTAL_QUESTIONS = 15;
 
+function scaleScore(raw) {
+  return Math.round((raw / RAW_MAX) * SCALED_MAX);
+}
+
+function updateAll() {
+  let total = 0;
+  let answered = 0;
+  const dimScores = [];
+
+  dimensions.forEach(d => {
+    let rawTotal = 0;
+    d.questions.forEach(q => {
+      if (state[q.id] !== null) {
+        rawTotal += state[q.id];
+        answered++;
+      }
+    });
+    const scaled = scaleScore(rawTotal);
+    dimScores.push({ id: d.id, title: d.title, score: scaled, raw: rawTotal });
+    total += scaled;
+
+    // Dimension score
+    document.getElementById(`dimScore-${d.id}`).textContent = scaled;
+
+    // Bar
+    const bar = document.getElementById(`dimBar-${d.id}`);
+    const pct = (scaled / SCALED_MAX) * 100;
+    bar.style.width = pct + '%';
+    bar.style.background = scaled <= 7 ? 'var(--red)' : scaled <= 14 ? 'var(--yellow)' : 'var(--teal)';
+  });
+
+  // Progress
+  document.getElementById('navProgress').textContent = `${answered} / ${TOTAL_QUESTIONS}`;
+  document.getElementById('navProgressBar').style.width = ((answered / TOTAL_QUESTIONS) * 100) + '%';
+
+  // Total
+  document.getElementById('totalScore').textContent = total;
+  document.getElementById('navScore').textContent = total;
+
+  // Incomplete warning
+  const warningEl = document.getElementById('incompleteWarning');
+  if (answered < TOTAL_QUESTIONS && answered > 0) {
+    warningEl.textContent = `${TOTAL_QUESTIONS - answered} question${TOTAL_QUESTIONS - answered > 1 ? 's' : ''} unanswered. Your score may be lower than your actual maturity.`;
+  } else {
+    warningEl.textContent = '';
+  }
+
+  // Rating
+  let rating, ratingColor, ratingBg, ratingText;
+  if (total >= 80) { rating = 'A - Premium Ready'; ratingColor = 'var(--teal)'; ratingBg = 'var(--light-teal)'; ratingText = 'Your AI practices would withstand buyer scrutiny. Strong position for premium valuation. Focus: document and package for data room.'; }
+  else if (total >= 60) { rating = 'B - Investable with Gaps'; ratingColor = 'var(--green)'; ratingBg = 'var(--green-bg)'; ratingText = 'Solid foundation, gaps in 1-2 dimensions. A buyer would still engage but negotiate. Focus: close gaps within 90 days.'; }
+  else if (total >= 40) { rating = 'C - Discount Territory'; ratingColor = 'var(--yellow)'; ratingBg = 'var(--yellow-bg)'; ratingText = 'AI activity exists but limited proof of P&L impact. Buyers will cap the multiple. Focus: prove 2-3 use cases with hard numbers.'; }
+  else if (total >= 20) { rating = 'D - Earn-out Risk'; ratingColor = 'var(--amber)'; ratingBg = '#FFF3E0'; ratingText = 'Aware of AI but nothing a buyer can underwrite. Value shifts to earn-outs and contingencies. Focus: quick wins with measurable ROI.'; }
+  else { rating = 'F - Multiple Compression'; ratingColor = 'var(--red)'; ratingBg = 'var(--red-bg)'; ratingText = 'No credible AI story. Buyers either walk or discount heavily. Urgent: establish baseline metrics and governance.'; }
+
+  const badge = document.getElementById('ratingBadge');
+  badge.textContent = rating;
+  badge.style.background = ratingBg;
+  badge.style.color = ratingColor;
+  document.getElementById('ratingDesc').textContent = ratingText;
+
+  // Highlight rating table row
+  const ratingLetter = total >= 80 ? 'A' : total >= 60 ? 'B' : total >= 40 ? 'C' : total >= 20 ? 'D' : 'F';
+  document.querySelectorAll('#ratingTable tbody tr').forEach(tr => {
+    tr.classList.toggle('active-row', tr.dataset.range === ratingLetter);
+  });
+
+  // Dimension summary
+  const grid = document.getElementById('dimSummaryGrid');
+  grid.innerHTML = dimScores.map((ds, i) => {
+    const color = ds.score <= 7 ? 'var(--red)' : ds.score <= 14 ? 'var(--yellow)' : 'var(--teal)';
+    const action = ds.score <= 7 ? 'Urgent gap - value at risk' : ds.score <= 14 ? 'Work in progress - focus within 90 days' : 'Strong - document & use as proof point';
+    const fullWidth = i === dimScores.length - 1 && dimScores.length % 2 !== 0 ? ' full-width' : '';
+    return `<div class="dim-sum-card${fullWidth}">
+      <div class="dim-sum-dot" style="background:${color}"></div>
+      <div class="dim-sum-info">
+        <div class="dim-sum-name">${ds.title}</div>
+        <div class="dim-sum-action">${action}</div>
+      </div>
+      <div class="dim-sum-score">${ds.score}<span class="dim-sum-of">/20</span></div>
+    </div>`;
+  }).join('');
+
+  // Top 3 Levers
+  const scored = [];
+  dimensions.forEach(d => {
+    d.questions.forEach(q => {
+      if (state[q.id] !== null) {
+        scored.push({ qId: q.id, label: q.label, text: q.text, dim: d.title, score: state[q.id] });
+      }
+    });
+  });
+  scored.sort((a, b) => a.score - b.score);
+  const levers = scored.slice(0, 3);
+  const leverContainer = document.getElementById('leversContainer');
+  if (levers.length === 0) {
+    leverContainer.innerHTML = '<div class="no-levers">Score at least one question to see your priority levers.</div>';
+  } else {
+    leverContainer.innerHTML = levers.map((l, i) => {
+      const rankClass = i === 0 ? '' : i === 1 ? ' rank-2' : ' rank-3';
+      const scoreColor = l.score === 0 ? 'var(--slate)' : l.score === 1 ? 'var(--red)' : l.score === 2 ? 'var(--yellow)' : l.score === 3 ? 'var(--green)' : 'var(--teal)';
+      return `<div class="lever-item">
+        <div class="lever-rank${rankClass}">${i + 1}</div>
+        <div class="lever-info">
+          <div class="lever-q">${l.label}: ${l.text}</div>
+          <div class="lever-dim">${l.dim}</div>
+        </div>
+        <div class="lever-score" style="color:${scoreColor}">${l.score}/4</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Buyer insights (show when all answered)
+  const insightsEl = document.getElementById('buyerInsights');
+  if (insightsEl) {
+    insightsEl.style.display = answered === TOTAL_QUESTIONS ? 'grid' : 'none';
+    if (answered === TOTAL_QUESTIONS) {
+      // Buyer Objection — based on weakest dimension
+      const weakest = [...dimScores].sort((a, b) => a.score - b.score)[0];
+      const objections = {
+        rev: '"We can\'t see AI in your revenue model." Buyers will question whether AI is a feature or a business. Without visible AI pricing or retention data, they\'ll discount the AI narrative entirely.',
+        moat: '"Any competitor could replicate this in 6 months." Without proprietary data, switching costs, or owned IP, a buyer sees no defensible moat — and no reason to pay a premium.',
+        econ: '"Your AI costs are a black box." If you can\'t show unit economics, ROI per use case, or cost forecasts, buyers assume AI is burning cash — and they\'ll price that risk into the deal.',
+        lever: '"Where\'s the leverage?" If headcount grows at the same rate as output, AI isn\'t creating operational leverage. Buyers want to see more output per person, not more people.',
+        gov: '"This won\'t survive due diligence." Without governance documentation, IP trails, and key-person risk mitigation, a buyer\'s legal team will flag your AI as a liability, not an asset.'
+      };
+      document.getElementById('buyerObjection').textContent = objections[weakest.id] || '';
+
+      // Fix in 30 Days — based on top lever (lowest-scoring question)
+      const fixes = {
+        q1: 'Create a separate AI pricing tier or add-on. Even a simple "AI-powered" line item on invoices makes AI revenue visible to buyers within one billing cycle.',
+        q2: 'Run a cohort analysis: AI users vs. non-AI users on retention and expansion. If the data shows uplift, you have a buyer-ready proof point. If not, you know where to focus.',
+        q3: 'Calculate revenue per employee for the last 4 quarters. If AI is working, this ratio should be climbing. Package this as a one-slide trend for your data room.',
+        q4: 'Audit your data assets: what proprietary data do you collect that competitors don\'t? Document data sources, volume, and refresh rate. This is the foundation of a moat argument.',
+        q5: 'Map your top 10 customers\' switching costs. How deeply is your AI embedded in their workflows? Document integration points, custom configurations, and training investments.',
+        q6: 'Catalogue all AI-related IP: models, training data, algorithms, patents. Even if you don\'t have patents, documenting unique approaches creates a defensibility narrative.',
+        q7: 'Set up cost tracking per AI use case — API calls, compute, storage. A simple spreadsheet that maps costs to revenue impact transforms your AI from "expense" to "investment".',
+        q8: 'Pick your best AI use case and calculate ROI: cost of AI vs. revenue generated or cost saved. One proven use case with hard numbers is worth more than ten anecdotes.',
+        q9: 'Build a 12-month AI cost forecast with 3 scenarios (current, moderate growth, aggressive). Buyers need to see you understand and can predict your AI economics.',
+        q10: 'Document output metrics (deals processed, tickets resolved, content produced) alongside headcount for the last 4 quarters. Show the divergence — that\'s your leverage story.',
+        q11: 'Identify the top 3 manual tasks your team still does that AI could automate. Estimate hours saved and create a 30-day pilot plan. Quick wins build the automation narrative.',
+        q12: 'Pick one business metric that improved since AI adoption (speed, accuracy, cost, revenue). Isolate the AI contribution and document the methodology. One solid attribution beats vague claims.',
+        q13: 'Create a one-page AI governance document: what AI you use, who owns it, what data it touches, what controls exist. This alone puts you ahead of 80% of companies in DD.',
+        q14: 'Audit your AI vendor contracts and employee IP agreements. Ensure you own the outputs, training data rights are clear, and there are no surprise clauses. Fix gaps now, not in the data room.',
+        q15: 'Document which team members are critical to your AI operations. Create cross-training plans and runbooks so AI knowledge isn\'t locked in one or two heads.'
+      };
+      const topLever = levers[0];
+      document.getElementById('fixIn30').textContent = topLever ? (fixes[topLever.qId] || '') : '';
+    }
+  }
+
+  // Show results section + gate when all questions answered (only if not already revealed)
+  const resultsSection = document.getElementById('resultsSection');
+  const gateEl = document.getElementById('showResultsGate');
+  const detailedEl = document.getElementById('detailedResults');
+  if (gateEl && detailedEl && detailedEl.style.display === 'none') {
+    const allAnswered = answered === TOTAL_QUESTIONS;
+    resultsSection.style.display = allAnswered ? '' : 'none';
+    gateEl.style.display = allAnswered ? 'block' : 'none';
+    // Clear any previous missing-fields message when gate first appears
+    if (allAnswered) {
+      document.getElementById('gateMissing').style.display = 'none';
+    }
+  }
+
+  // Update moat highlight based on Q6
+  document.querySelectorAll('.moat-card').forEach(c => c.classList.remove('active-level'));
+  document.querySelectorAll('.moat-inline-card').forEach(c => c.classList.remove('active-level'));
+  if (state.q6 !== null && state.q6 >= 0) {
+    let layer = state.q6 === 0 ? 1 : state.q6 === 1 ? 1 : state.q6 === 2 ? 2 : state.q6 === 3 ? 3 : 4;
+    document.querySelectorAll(`.moat-card[data-layer="${layer}"], .moat-inline-card[data-layer="${layer}"]`).forEach(c => c.classList.add('active-level'));
+  }
+}
+
+// -- LISTEN TO QUALIFICATION FIELDS (clear missing-message on edit) --
+['companyName','industry','role','revenue','exitHorizon','assessor'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    ['input','change','blur'].forEach(function(evt) {
+      el.addEventListener(evt, function() {
+        var msg = document.getElementById('gateMissing');
+        if (msg) msg.style.display = 'none';
+      });
+    });
+  }
+});
+
+// -- INIT --
+try {
+  renderDimensions();
+  updateAll();
+} catch(e) {
+  var c = document.getElementById('dimensionsContainer');
+  if (c) c.innerHTML = '<div style="background:#FEF2F2;border:1px solid #EF4444;border-radius:14px;padding:24px;text-align:center;color:#1B2A4A;"><strong>Error loading questions</strong><br><span style="font-size:12px;color:#64748B;">'+e.message+'</span></div>';
+}
+
+// Set today's date
+try {
+  document.getElementById('assessDate').valueAsDate = new Date();
+} catch(e) {
+  document.getElementById('assessDate').value = new Date().toISOString().split('T')[0];
+}
+
+// -- REVEAL RESULTS (save data + show detailed results) --
+function revealResults() {
+  // Check if field is truly empty (handles browser autofill)
+  function isFieldEmpty(el) {
+    if (!el) return true;
+    if (el.value && el.value.trim() !== '') return false;
+    // Chrome/Safari autofill: field looks filled but .value is empty
+    try { if (el.matches(':-webkit-autofill')) return false; } catch(e) {}
+    try { if (el.matches(':autofill')) return false; } catch(e) {}
+    return true;
+  }
+
+  // Validate required fields at click time
+  var requiredFields = [
+    { id: 'companyName', label: 'Company' },
+    { id: 'industry', label: 'Industry' },
+    { id: 'role', label: 'Role' },
+    { id: 'revenue', label: 'Annual Revenue' },
+    { id: 'exitHorizon', label: 'Exit / Funding Horizon' },
+    { id: 'assessor', label: 'Your name' }
+  ];
+  var missing = requiredFields.filter(function(f) {
+    return isFieldEmpty(document.getElementById(f.id));
+  });
+  if (missing.length > 0) {
+    var missingEl = document.getElementById('gateMissing');
+    missingEl.textContent = 'Please complete: ' + missing.map(function(f) { return f.label; }).join(', ');
+    missingEl.style.display = 'block';
+    // Scroll to the first missing field
+    var firstMissing = document.getElementById(missing[0].id);
+    if (firstMissing) firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  var btn = document.getElementById('showResultsBtn');
   btn.disabled = true;
-  btn.textContent = 'Starting...';
+  btn.textContent = 'Saving...';
 
-  // Build payload with UTM tracking
+  // Collect dimension scores
+  var scores = {};
+  dimensions.forEach(function(d) {
+    var rawTotal = 0;
+    d.questions.forEach(function(q) {
+      if (state[q.id] !== null) rawTotal += state[q.id];
+    });
+    scores[d.id] = scaleScore(rawTotal);
+  });
+
+  // Total and rating + segment letter
+  var total = Object.values(scores).reduce(function(a, b) { return a + b; }, 0);
+  var rating, segment;
+  if (total >= 80) { rating = 'A - Premium Ready'; segment = 'A'; }
+  else if (total >= 60) { rating = 'B - Investable with Gaps'; segment = 'B'; }
+  else if (total >= 40) { rating = 'C - Discount Territory'; segment = 'C'; }
+  else if (total >= 20) { rating = 'D - Earn-out Risk'; segment = 'D'; }
+  else { rating = 'F - Multiple Compression'; segment = 'F'; }
+
+  // Top 3 levers (lowest-scoring questions)
+  var scored = [];
+  dimensions.forEach(function(d) {
+    d.questions.forEach(function(q) {
+      if (state[q.id] !== null) {
+        scored.push({ label: q.label, text: q.text, dim: d.title, score: state[q.id] });
+      }
+    });
+  });
+  scored.sort(function(a, b) { return a.score - b.score; });
+  var topRisks = scored.slice(0, 3).map(function(l) { return l.label + ': ' + l.text + ' (' + l.dim + ', ' + l.score + '/4)'; });
+
+  // Get email: URL param > CTA input > empty
+  var ctaEmailEl = document.querySelector('.cta-section input[type="email"]');
+  var email = userEmail || (ctaEmailEl ? ctaEmailEl.value.trim() : '');
+
   var payload = {
-    action: 'landing',
+    action: 'scorecard',
+    lead_source: 'Exit Tool',
     email: email,
-    source: 'landing-page',
-    landing_url: window.location.href,
+    company: document.getElementById('companyName').value.trim(),
+    industry: document.getElementById('industry').value.trim(),
+    role: document.getElementById('role').value || '',
+    revenue: document.getElementById('revenue').value || '',
+    exitHorizon: document.getElementById('exitHorizon').value || '',
+    assessor: document.getElementById('assessor').value.trim(),
+    // Scores - flat for easy CRM mapping
+    exit_score: total,
+    segment: segment,
+    rating: rating,
+    pillar_revenue: scores.rev || 0,
+    pillar_moat: scores.moat || 0,
+    pillar_economics: scores.econ || 0,
+    pillar_leverage: scores.lever || 0,
+    pillar_governance: scores.gov || 0,
+    top_risks: topRisks,
+    // UTM tracking
     utm_source: utmParams.utm_source,
     utm_medium: utmParams.utm_medium,
     utm_campaign: utmParams.utm_campaign,
-    utm_content: utmParams.utm_content,
-    utm_term: utmParams.utm_term
+    landing_url: document.referrer || '',
+    assessment_date: new Date().toISOString()
   };
 
-  // Build scorecard redirect URL (absolute so Google can redirect back)
-  var origin = window.location.origin + window.location.pathname.replace(/[^\/]*$/, '');
-  var scorecardUrl = origin + 'scorecard.html?email=' + encodeURIComponent(email);
-  if (utmParams.utm_source) scorecardUrl += '&utm_source=' + encodeURIComponent(utmParams.utm_source);
-  if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
-  if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
-
-  // Navigate directly to Google Apps Script (100% reliable on all browsers)
-  // Script saves data, then redirects browser back to scorecard
+  // Send data via direct navigation in hidden window (100% reliable on all browsers)
   var payloadStr = JSON.stringify(payload);
-  window.location.href = WEBHOOK_URL +
-    '?payload=' + encodeURIComponent(payloadStr) +
-    '&redirect=' + encodeURIComponent(scorecardUrl);
+  var sendUrl = WEBHOOK_URL + '?payload=' + encodeURIComponent(payloadStr);
+  var revealed = false;
 
-  return false;
+  function showResults() {
+    if (revealed) return;
+    revealed = true;
+    document.getElementById('showResultsGate').style.display = 'none';
+    document.getElementById('detailedResults').style.display = 'block';
+    document.getElementById('navPill').style.display = '';
+    document.getElementById('detailedResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    trackEvent('tool_completed', { exit_score: total, segment: segment });
+  }
+
+  // Open in hidden iframe via direct navigation (no form POST, just GET)
+  var sendFrame = document.createElement('iframe');
+  sendFrame.style.display = 'none';
+  sendFrame.src = sendUrl;
+  document.body.appendChild(sendFrame);
+
+  // Show results after short delay (don't wait for response)
+  setTimeout(function() {
+    showResults();
+    // Clean up iframe after data is sent
+    setTimeout(function() {
+      if (sendFrame.parentNode) sendFrame.parentNode.removeChild(sendFrame);
+    }, 5000);
+  }, 800);
 }
+
+// -- TRACKING EVENTS --
+function trackEvent(eventName, data) {
+  // Google Analytics 4 (if loaded)
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, data);
+  }
+  // Generic dataLayer push (GTM compatible)
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: eventName, ...data });
+}
+
+// Track Calendly / booking CTA clicks
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('.book-call-btn');
+  if (link) {
+    trackEvent('book_call_clicked', {
+      exit_score: document.getElementById('totalScore').textContent,
+      source: 'scorecard_results'
+    });
+  }
+});
 </script>
 </body>
 </html>
