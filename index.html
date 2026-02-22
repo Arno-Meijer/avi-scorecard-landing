@@ -469,6 +469,7 @@ footer {
     </div>
     <form class="cta-box" onsubmit="return handleEmailSubmit(event, this)">
       <input type="email" placeholder="Your work email" required>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="compact" data-theme="light"></div>
       <button type="submit">Start the Scorecard</button>
     </form>
     <div class="cta-note">See how a buyer would score your AI. Free, instant results.</div>
@@ -626,6 +627,7 @@ footer {
     <p>Get the AI Exit Readiness Scorecard and find out in 15 minutes whether a buyer would pay a premium for your AI - or discount it.</p>
     <form class="cta-box" onsubmit="return handleEmailSubmit(event, this)">
       <input type="email" placeholder="Your work email" required>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="compact" data-theme="light"></div>
       <button type="submit">Start the Scorecard</button>
     </form>
     <p class="cta-note-bottom" style="font-size:12px;color:var(--body-text);margin-top:12px;">See how a buyer would score your AI. Free, instant results.</p>
@@ -764,13 +766,11 @@ footer {
 })();
 </script>
 
-<!-- Hidden iframe for form submissions -->
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+<!-- Cloudflare Turnstile (bot protection) -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <!-- EMAIL CAPTURE -->
 <script>
-var WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzRJpFmaVAu3a37W-wYlZUt7W5QA7_VLq37P5XyFucNN-EWOJW43ovxrsDx5poYPayY/exec';
-
 // Collect UTM params once on page load
 var utmParams = (function() {
   var params = new URLSearchParams(window.location.search);
@@ -791,14 +791,20 @@ function handleEmailSubmit(e, form) {
 
   if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return false;
 
+  // Get Turnstile token (bot protection)
+  var turnstileInput = form.querySelector('[name="cf-turnstile-response"]');
+  var turnstileToken = turnstileInput ? turnstileInput.value : '';
+
   btn.disabled = true;
   btn.textContent = 'Starting...';
 
-  // Build payload with UTM tracking
+  // Build payload with UTM tracking + Turnstile token
   var payload = {
     action: 'landing',
     email: email,
     source: 'landing-page',
+    turnstileToken: turnstileToken,
+    submission_id: crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(36).substr(2, 9),
     landing_url: window.location.href,
     utm_source: utmParams.utm_source,
     utm_medium: utmParams.utm_medium,
