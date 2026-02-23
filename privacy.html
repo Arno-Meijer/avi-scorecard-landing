@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | AI Value Firm</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B2A4A;
+  --teal: #00B4D8;
+  --light-blue: #EEF2FF;
+  --white: #FFFFFF;
+  --body-text: #64748B;
+  --muted: #94A3B8;
+  --radius-pill: 100px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1e293b;
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #F0F0F0;
+  padding: 0 40px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.nav-logo { width: 4px; height: 32px; background: var(--teal); border-radius: 2px; flex-shrink: 0; }
+.nav-name { font-weight: 800; font-size: 13px; color: var(--navy); line-height: 1.15; letter-spacing: 0.3px; }
+.nav-name span { display: block; }
+.nav-cta {
+  background: var(--navy); color: var(--white); font-weight: 700; font-size: 13px;
+  padding: 10px 28px; border: none; cursor: pointer; letter-spacing: 0.3px;
+  transition: all 0.2s; border-radius: var(--radius-pill); text-decoration: none;
+}
+.nav-cta:hover { background: #111827; transform: translateY(-1px); }
+
+/* CONTENT */
+.content {
+  max-width: 720px; margin: 0 auto;
+  padding: 120px 40px 80px;
+}
+.content h1 {
+  font-size: 36px; font-weight: 800; color: var(--navy);
+  margin-bottom: 8px; line-height: 1.2;
+}
+.content .last-updated {
+  font-size: 13px; color: var(--muted); margin-bottom: 40px;
+}
+.content h2 {
+  font-size: 20px; font-weight: 700; color: var(--navy);
+  margin-top: 40px; margin-bottom: 12px;
+}
+.content p {
+  font-size: 15px; color: #475569; line-height: 1.8;
+  margin-bottom: 16px;
+}
+.content ul {
+  margin: 0 0 16px 20px; padding: 0;
+}
+.content li {
+  font-size: 15px; color: #475569; line-height: 1.8;
+  margin-bottom: 4px;
+}
+.content a {
+  color: var(--teal); text-decoration: none;
+}
+.content a:hover { text-decoration: underline; }
+
+/* FOOTER */
+footer {
+  padding: 40px; background: var(--navy);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-brand {
+  font-size: 13px; font-weight: 500; color: var(--white);
+  display: flex; align-items: center; gap: 12px;
+}
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo-bar { width: 3px; height: 24px; background: var(--white); border-radius: 2px; flex-shrink: 0; }
+.footer-logo-text { font-weight: 800; font-size: 11px; color: var(--white); line-height: 1.15; letter-spacing: 0.3px; }
+.footer-logo-text span { display: block; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; color: #94A3B8; text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--white); }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; height: 56px; }
+  .nav-cta { padding: 8px 20px; font-size: 12px; }
+  .content { padding: 88px 24px 56px; }
+  .content h1 { font-size: 28px; }
+  .content h2 { font-size: 18px; }
+  .content p, .content li { font-size: 14px; }
+  footer { padding: 20px 24px; }
+  .footer-brand { font-size: 11px; flex-direction: column; gap: 4px; }
+  footer a { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="/">
+    <div class="nav-logo"></div>
+    <div class="nav-name"><span>AI Value</span><span>Firm</span></div>
+  </a>
+  <a class="nav-cta" href="/">Get the Scorecard</a>
+</nav>
+
+<div class="content">
+  <h1>Privacy Policy</h1>
+  <p class="last-updated">Last updated: February 23, 2026</p>
+
+  <p>AI Value Firm ("we", "us", or "our") operates the AI Exit Readiness Scorecard at avi-scorecard-landing.vercel.app. This policy explains what data we collect, why, and how we handle it.</p>
+
+  <h2>1. What we collect</h2>
+  <p>When you use the scorecard, we collect:</p>
+  <ul>
+    <li>Your work email address</li>
+    <li>Company name (if provided)</li>
+    <li>Your scorecard answers and resulting scores</li>
+    <li>UTM parameters and referral source (for marketing attribution)</li>
+    <li>Timestamp of submission</li>
+  </ul>
+  <p>We do not collect passwords, financial data, or any other sensitive personal information.</p>
+
+  <h2>2. Why we collect it</h2>
+  <p>We use your data to:</p>
+  <ul>
+    <li>Generate and deliver your personalized scorecard results</li>
+    <li>Follow up with a tailored recommendation based on your scores</li>
+    <li>Improve the scorecard tool and our services</li>
+  </ul>
+
+  <h2>3. How we store and process it</h2>
+  <p>Your data is stored in Google Sheets (hosted by Google Cloud, EU/US) and processed through our automation platform (n8n). Scorecard leads may be added to our CRM (Pipedrive) for follow-up purposes.</p>
+  <p>We use industry-standard security measures and limit access to authorized team members only.</p>
+
+  <h2>4. Cookies</h2>
+  <p>This site uses Cloudflare Turnstile for bot protection, which may set strictly necessary cookies. We do not use analytics cookies, advertising cookies, or third-party tracking pixels.</p>
+
+  <h2>5. Third-party services</h2>
+  <p>We use the following third-party services to operate the scorecard:</p>
+  <ul>
+    <li>Vercel (hosting)</li>
+    <li>Cloudflare (bot protection)</li>
+    <li>Google Sheets (data storage)</li>
+    <li>n8n (workflow automation)</li>
+    <li>Pipedrive (CRM)</li>
+  </ul>
+  <p>Each of these services has their own privacy policy and processes data in accordance with applicable regulations.</p>
+
+  <h2>6. Data retention</h2>
+  <p>We retain your scorecard data for as long as it is relevant to our business relationship with you. You can request deletion at any time (see below).</p>
+
+  <h2>7. Your rights</h2>
+  <p>Under the GDPR, you have the right to:</p>
+  <ul>
+    <li>Access the personal data we hold about you</li>
+    <li>Request correction of inaccurate data</li>
+    <li>Request deletion of your data</li>
+    <li>Object to or restrict processing of your data</li>
+    <li>Data portability (receive your data in a structured format)</li>
+  </ul>
+  <p>To exercise any of these rights, email us at <a href="mailto:arno@meijanto.com">arno@meijanto.com</a>.</p>
+
+  <h2>8. Contact</h2>
+  <p>If you have questions about this privacy policy or how we handle your data, contact us at <a href="mailto:arno@meijanto.com">arno@meijanto.com</a>.</p>
+
+  <h2>9. Changes</h2>
+  <p>We may update this policy from time to time. Any changes will be posted on this page with an updated "last updated" date.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand"><div class="footer-logo"><div class="footer-logo-bar"></div><div class="footer-logo-text"><span>AI Value</span><span>Firm</span></div></div><span>&middot; AI that shows up in the numbers</span></div>
+  <div class="footer-links">
+    <a href="/">Scorecard</a>
+    <a href="https://linkedin.com/company/meijanto" target="_blank">LinkedIn</a>
+    <a href="mailto:arno@meijanto.com">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
