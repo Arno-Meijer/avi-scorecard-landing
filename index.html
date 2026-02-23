@@ -310,7 +310,14 @@ section { padding: 96px 40px; max-width: 1000px; margin: 0 auto; }
   display: block;
 }
 .founder-info { padding: 28px 28px 32px; display: flex; flex-direction: column; }
-.founder-name { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.founder-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+.founder-name { font-size: 18px; font-weight: 700; color: var(--navy); }
+.founder-linkedin {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; flex-shrink: 0;
+}
+.founder-linkedin svg { width: 18px; height: 18px; fill: #0A66C2; transition: fill 0.2s; }
+.founder-linkedin:hover svg { fill: #004182; }
 .founder-role { font-size: 13px; font-weight: 600; color: var(--teal); margin-bottom: 14px; }
 .founder-bio { font-size: 14px; color: var(--body-text); line-height: 1.7; }
 .founder-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
@@ -673,7 +680,10 @@ footer {
           <img class="founder-photo" src="images/Christan.jpeg" alt="Christan Doornhof" style="object-position: center 15%; transform: scale(1.15);">
         </div>
         <div class="founder-info">
-          <div class="founder-name">Christan Doornhof</div>
+          <div class="founder-name-row">
+            <div class="founder-name">Christan Doornhof</div>
+            <a class="founder-linkedin" href="https://www.linkedin.com/in/christan-doornhof/" target="_blank" title="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          </div>
           <div class="founder-role">Co-founder, AI Value Firm</div>
           <p class="founder-bio">Works with leadership teams on AI decisions that have real consequences for cost, performance, and accountability. Hands-on experience taking AI from pilot to production - in strategy roles, product ownership, and implementation where outcomes had to hold up beyond the demo.</p>
           <div class="founder-tags">
@@ -688,7 +698,10 @@ footer {
           <img class="founder-photo" src="images/Arno.jpg" alt="Arno Meijer">
         </div>
         <div class="founder-info">
-          <div class="founder-name">Arno Meijer</div>
+          <div class="founder-name-row">
+            <div class="founder-name">Arno Meijer</div>
+            <a class="founder-linkedin" href="https://www.linkedin.com/in/arnomeijer1/" target="_blank" title="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          </div>
           <div class="founder-role">Co-founder, AI Value Firm</div>
           <p class="founder-bio">Built the financial models and valuation frameworks behind 30+ tech transactions. Applied that same lens as a VC investor - managing a portfolio of several companies, stress-testing unit economics, and advising founders on the numbers that matter at exit.</p>
           <div class="founder-tags">
