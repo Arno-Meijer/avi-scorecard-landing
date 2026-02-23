@@ -294,35 +294,43 @@ section { padding: 96px 40px; max-width: 1000px; margin: 0 auto; }
   max-width: 620px; margin-bottom: 48px;
 }
 .founders-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  display: flex; flex-direction: column; gap: 24px;
 }
 .founder-card {
-  padding: 36px; background: var(--white); border-radius: var(--radius);
-  border: 1px solid #F0F0F0; transition: transform 0.2s, box-shadow 0.2s;
+  display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+  padding: 0; background: transparent; border-radius: var(--radius);
+  overflow: hidden; align-items: stretch;
 }
-.founder-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.founder-photo-wrap {
+  width: 200px; min-height: 260px; overflow: hidden;
+  border-radius: var(--radius); flex-shrink: 0;
+}
 .founder-photo {
-  width: 80px; height: 80px; border-radius: 50%;
+  width: 100%; height: 100%;
   object-fit: cover; object-position: center top;
-  margin-bottom: 20px; border: 3px solid var(--white);
-  box-shadow: 0 2px 8px rgba(27,42,74,0.12);
+  display: block;
 }
-.founder-name { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.founder-info { padding: 8px 0; display: flex; flex-direction: column; justify-content: center; }
+.founder-name { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
 .founder-role { font-size: 13px; font-weight: 600; color: var(--teal); margin-bottom: 14px; }
 .founder-bio { font-size: 14px; color: var(--body-text); line-height: 1.7; }
 .founder-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
 .founder-tag {
-  font-size: 11px; font-weight: 600; color: var(--navy); background: #F3F4F6;
+  font-size: 11px; font-weight: 600; color: var(--navy); background: var(--white);
   padding: 5px 12px; border-radius: var(--radius-pill); border: 1px solid #E5E7EB;
 }
 
 @media (max-width: 768px) {
   .why-us-section { padding: 56px 24px; }
-  .founders-grid { grid-template-columns: 1fr; gap: 16px; }
-  .founder-card { padding: 28px 24px; }
-  .founder-photo { width: 64px; height: 64px; margin-bottom: 16px; }
-  .founder-name { font-size: 15px; }
+  .founder-card { grid-template-columns: 140px 1fr; gap: 20px; }
+  .founder-photo-wrap { width: 140px; min-height: 180px; }
+  .founder-name { font-size: 16px; }
   .founder-bio { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .founder-card { grid-template-columns: 1fr; gap: 0; }
+  .founder-photo-wrap { width: 100%; min-height: 240px; border-radius: var(--radius) var(--radius) 0 0; }
+  .founder-info { padding: 24px; background: var(--white); border-radius: 0 0 var(--radius) var(--radius); border: 1px solid #F0F0F0; border-top: 0; }
 }
 
 /* ===== BOTTOM CTA ===== */
@@ -667,25 +675,33 @@ footer {
     <p class="why-us-lead">This scorecard wasn't built by AI enthusiasts. It was built by people who've run AI due diligence for buyers - and helped sellers prove what their AI is actually worth.</p>
     <div class="founders-grid">
       <div class="founder-card">
-        <img class="founder-photo" src="images/Christan.jpeg" alt="Christan Doornhof">
-        <div class="founder-name">Christan Doornhof</div>
-        <div class="founder-role">Co-founder, AI Value Firm</div>
-        <p class="founder-bio">Former EY-Parthenon strategy consultant. Led commercial due diligence on 20+ tech transactions. Now helps PE-backed companies turn AI from a cost center into a valuation driver.</p>
-        <div class="founder-tags">
-          <span class="founder-tag">EY-Parthenon</span>
-          <span class="founder-tag">M&amp;A Strategy</span>
-          <span class="founder-tag">Commercial DD</span>
+        <div class="founder-photo-wrap">
+          <img class="founder-photo" src="images/Christan.jpeg" alt="Christan Doornhof">
+        </div>
+        <div class="founder-info">
+          <div class="founder-name">Christan Doornhof</div>
+          <div class="founder-role">Co-founder, AI Value Firm</div>
+          <p class="founder-bio">Former EY-Parthenon strategy consultant. Led commercial due diligence on 20+ tech transactions. Now helps PE-backed companies turn AI from a cost center into a valuation driver.</p>
+          <div class="founder-tags">
+            <span class="founder-tag">EY-Parthenon</span>
+            <span class="founder-tag">M&amp;A Strategy</span>
+            <span class="founder-tag">Commercial DD</span>
+          </div>
         </div>
       </div>
       <div class="founder-card">
-        <img class="founder-photo" src="images/Arno.png" alt="Arno Meijer">
-        <div class="founder-name">Arno Meijer</div>
-        <div class="founder-role">Co-founder, AI Value Firm</div>
-        <p class="founder-bio">Former EY-Parthenon with deep expertise in AI economics and SaaS benchmarking. Built valuation frameworks for 50+ AI-native companies. Bridges the gap between what AI does and what it's worth.</p>
-        <div class="founder-tags">
-          <span class="founder-tag">EY-Parthenon</span>
-          <span class="founder-tag">AI Economics</span>
-          <span class="founder-tag">SaaS Benchmarks</span>
+        <div class="founder-photo-wrap">
+          <img class="founder-photo" src="images/Arno.png" alt="Arno Meijer">
+        </div>
+        <div class="founder-info">
+          <div class="founder-name">Arno Meijer</div>
+          <div class="founder-role">Co-founder, AI Value Firm</div>
+          <p class="founder-bio">Former EY-Parthenon with deep expertise in AI economics and SaaS benchmarking. Built valuation frameworks for 50+ AI-native companies. Bridges the gap between what AI does and what it's worth.</p>
+          <div class="founder-tags">
+            <span class="founder-tag">EY-Parthenon</span>
+            <span class="founder-tag">AI Economics</span>
+            <span class="founder-tag">SaaS Benchmarks</span>
+          </div>
         </div>
       </div>
     </div>
