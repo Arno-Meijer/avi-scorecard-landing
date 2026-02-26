@@ -233,6 +233,8 @@ section { padding: 96px 40px; max-width: 1000px; margin: 0 auto; }
 .rating-range { font-size: 10px; color: var(--muted); }
 
 /* ===== WHO THIS IS FOR ===== */
+.who-section { background: var(--light-blue); padding: 96px 40px; }
+.who-inner { max-width: 1000px; margin: 0 auto; }
 .who-cards {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px; margin-top: 40px;
@@ -437,6 +439,7 @@ footer {
   .dot { width: 22px; height: 22px; line-height: 22px; font-size: 12px; }
 
   /* WHO THIS IS FOR */
+  .who-section { padding: 56px 24px; }
   .who-cards { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
   .who-card { padding: 28px 24px; }
   .who-card-tag { font-size: 11px; margin-bottom: 10px; }
@@ -606,20 +609,22 @@ footer {
 </section>
 
 <!-- WHO IS THIS FOR -->
-<section>
-  <div class="section-tag">Who This Is For</div>
-  <h2 class="section-title">Two audiences, <span class="light">one scorecard</span></h2>
-  <div class="who-cards">
-    <div class="who-card">
-      <div class="who-card-tag" style="color:var(--teal);">PE Operating Partners</div>
-      <p>Score every portfolio company in your fund. Aggregate into a heatmap. Prioritize interventions by impact on exit multiples. Track quarter-over-quarter improvement across the portfolio.</p>
-    </div>
-    <div class="who-card">
-      <div class="who-card-tag" style="color:var(--amber);">CFOs &amp; Business Leaders</div>
-      <p>Find out what a buyer would see when they look at your AI. Identify the 3 areas where you're leaving value on the table. Build the case for AI investment with concrete gaps - not opinions.</p>
+<div class="who-section">
+  <div class="who-inner">
+    <div class="section-tag">Who This Is For</div>
+    <h2 class="section-title">Two audiences, <span class="light">one scorecard</span></h2>
+    <div class="who-cards">
+      <div class="who-card">
+        <div class="who-card-tag" style="color:var(--teal);">PE Operating Partners</div>
+        <p>Score every portfolio company in your fund. Aggregate into a heatmap. Prioritize interventions by impact on exit multiples. Track quarter-over-quarter improvement across the portfolio.</p>
+      </div>
+      <div class="who-card">
+        <div class="who-card-tag" style="color:var(--amber);">CFOs &amp; Business Leaders</div>
+        <p>Find out what a buyer would see when they look at your AI. Identify the 3 areas where you're leaving value on the table. Build the case for AI investment with concrete gaps - not opinions.</p>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
 <!-- PORTFOLIO PREVIEW -->
 <div class="portfolio-section">
