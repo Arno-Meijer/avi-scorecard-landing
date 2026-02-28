@@ -1237,7 +1237,7 @@ const dimensions = [
       {
         id: 'q1', label: 'Q1',
         text: 'AI pricing visibility',
-        desc: 'Can a buyer see on invoices how much revenue comes from AI (paid add-on, premium tier, separate product) vs. "AI included" with no price signal?',
+        desc: 'Can you show how AI contributes to your revenue?',
         hint: 'If AI is free/bundled with no separate tracking, it\'s invisible to a buyer\'s revenue model.',
         scores: [
           { val: 0, desc: 'No AI in product' },
@@ -1257,7 +1257,7 @@ const dimensions = [
       {
         id: 'q2', label: 'Q2',
         text: 'AI user retention & expansion',
-        desc: 'Do customers who use your AI features stay longer and spend more than those who don\'t - proven with data?',
+        desc: 'Do you have data showing AI improves retention or upsell?',
         scores: [
           { val: 0, desc: 'Not measured' },
           { val: 1, desc: 'Anecdotal only' },
@@ -1276,7 +1276,7 @@ const dimensions = [
       {
         id: 'q3', label: 'Q3',
         text: 'Revenue per employee trend',
-        desc: 'Is revenue per employee trending up for 4+ quarters, and can you explain the drivers (automation, self-serve, fewer services)?',
+        desc: 'Is AI helping you grow revenue without growing headcount?',
         hint: 'Improving revenue per employee signals operating leverage - buyers underwrite higher future margins.',
         scores: [
           { val: 0, desc: 'Not tracked' },
@@ -1305,7 +1305,7 @@ const dimensions = [
       {
         id: 'q4', label: 'Q4',
         text: 'Proprietary data advantage',
-        desc: 'Do you have data assets competitors can\'t easily replicate - with contractual rights to use them?',
+        desc: 'Do you have proprietary data that competitors can\'t easily replicate?',
         hint: 'Exclusive data rights are one of the few defensible AI advantages. Own data that competitors could also collect doesn\'t count.',
         scores: [
           { val: 0, desc: 'No proprietary data' },
@@ -1325,7 +1325,7 @@ const dimensions = [
       {
         id: 'q5', label: 'Q5',
         text: 'Switching costs & lock-in',
-        desc: 'How long would it take a customer to replace you - and what breaks when they try (integrations, governance, automations)?',
+        desc: 'Would customers lose critical functionality if your AI were removed?',
         scores: [
           { val: 0, desc: 'Days to replace' },
           { val: 1, desc: 'Weeks, light integrations' },
@@ -1344,7 +1344,7 @@ const dimensions = [
       {
         id: 'q6', label: 'Q6',
         text: 'IP & model ownership',
-        desc: 'What do you actually own (models, training data, pipelines) vs. what do you rent (API wrappers)? What happens if your main vendor doubles price?',
+        desc: 'Do you have clear, documented ownership of your AI-related IP?',
         hint: 'Expand the reference card above to see the 4 moat layers.',
         scores: [
           { val: 0, desc: 'Only reselling vendor AI' },
@@ -1372,7 +1372,7 @@ const dimensions = [
       {
         id: 'q7', label: 'Q7',
         text: 'AI cost visibility',
-        desc: 'Do you know exactly how much you spend on AI (compute, licenses, internal time) - per use case, per customer?',
+        desc: 'Can you break down your AI costs per product, feature, or customer?',
         scores: [
           { val: 0, desc: 'No idea' },
           { val: 1, desc: 'Vague estimate' },
@@ -1391,7 +1391,7 @@ const dimensions = [
       {
         id: 'q8', label: 'Q8',
         text: 'AI return on investment',
-        desc: 'For every euro spent on AI, how much measurable value comes back? Can you prove the methodology?',
+        desc: 'Can you quantify the return on your AI investments?',
         hint: 'Buyers want auditable attribution - not "we think AI helped."',
         scores: [
           { val: 0, desc: 'Not measured' },
@@ -1411,7 +1411,7 @@ const dimensions = [
       {
         id: 'q9', label: 'Q9',
         text: 'AI cost forecasting',
-        desc: 'Can you forecast AI costs within ±10-15% for the next two quarters - and prove what levers control variance?',
+        desc: 'How confident are you in forecasting your AI costs for next year?',
         hint: 'Buyers price opaque costs as downside risk. Controlled costs support higher valuation.',
         scores: [
           { val: 0, desc: 'No forecast' },
@@ -1439,7 +1439,7 @@ const dimensions = [
       {
         id: 'q10', label: 'Q10',
         text: 'Output vs. headcount growth',
-        desc: 'Is output (revenue, throughput) growing faster than headcount - and can you name the drivers?',
+        desc: 'Has AI allowed you to do more without hiring more?',
         scores: [
           { val: 0, desc: 'Not tracked' },
           { val: 1, desc: 'Headcount growing faster' },
@@ -1458,7 +1458,7 @@ const dimensions = [
       {
         id: 'q11', label: 'Q11',
         text: 'Automation rate + redeployment',
-        desc: 'What % of core workflows are automated end-to-end, and where did the freed capacity go - growth or margin?',
+        desc: 'What share of your repeatable work is automated by AI?',
         hint: 'Automation only matters if freed time converts to margin or growth. Otherwise it\'s invisible to a buyer.',
         scores: [
           { val: 0, desc: 'Not tracked' },
@@ -1478,7 +1478,7 @@ const dimensions = [
       {
         id: 'q12', label: 'Q12',
         text: 'Attributable AI impact',
-        desc: 'Can you point to 3+ AI initiatives with audited impact (lower churn, more upsells, lower acquisition costs) and a clear attribution method?',
+        desc: 'Can you point to specific metrics that improved because of AI?',
         scores: [
           { val: 0, desc: 'No attribution' },
           { val: 1, desc: 'Anecdotal claims' },
@@ -1505,7 +1505,7 @@ const dimensions = [
       {
         id: 'q13', label: 'Q13',
         text: 'AI governance producibility',
-        desc: 'If a buyer\'s legal team asks "show me your AI governance," can you produce it in 24 hours - policies, testing results, monitoring, incident logs?',
+        desc: 'Do you have documented policies for how AI is used, tested, and monitored?',
         scores: [
           { val: 0, desc: 'Nothing exists' },
           { val: 1, desc: 'Informal, undocumented' },
@@ -1524,7 +1524,7 @@ const dimensions = [
       {
         id: 'q14', label: 'Q14',
         text: 'IP & data ownership trail',
-        desc: 'Do you have clean IP and data rights (employee/contractor assignments, open-source compliance, customer consent, data processing agreements, training rights) ready for diligence?',
+        desc: 'Are your AI data rights and IP contracts ready for a buyer to review?',
         scores: [
           { val: 0, desc: 'Unknown / messy' },
           { val: 1, desc: 'Major gaps known' },
@@ -1543,7 +1543,7 @@ const dimensions = [
       {
         id: 'q15', label: 'Q15',
         text: 'AI talent & key person risk',
-        desc: 'Does the organization have the people and skills to keep shipping AI post-close, or does everything depend on 1-2 people?',
+        desc: 'If your top AI person left tomorrow, would your AI keep running?',
         scores: [
           { val: 0, desc: 'No internal capability' },
           { val: 1, desc: '1-2 people dependency' },
