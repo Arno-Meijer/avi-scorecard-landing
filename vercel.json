@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/exit-scorecard", "destination": "/index.html" },
+    { "source": "/exit-scorecard-form", "destination": "/scorecard.html" }
+  ]
+}
