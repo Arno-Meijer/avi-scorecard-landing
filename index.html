@@ -929,7 +929,7 @@ function handleEmailSubmit(e, form) {
 
   // Build scorecard URL
   var origin = window.location.origin + window.location.pathname.replace(/[^\/]*$/, '');
-  var scorecardUrl = origin + 'scorecard.html?email=' + encodeURIComponent(email);
+  var scorecardUrl = '/exit-scorecard-form?email=' + encodeURIComponent(email);
   if (utmParams.utm_source) scorecardUrl += '&utm_source=' + encodeURIComponent(utmParams.utm_source);
   if (utmParams.utm_medium) scorecardUrl += '&utm_medium=' + encodeURIComponent(utmParams.utm_medium);
   if (utmParams.utm_campaign) scorecardUrl += '&utm_campaign=' + encodeURIComponent(utmParams.utm_campaign);
