@@ -364,10 +364,17 @@ h2.dim-title {
   color: var(--muted);
   margin-bottom: 6px;
 }
-.q-text {
-  font-size: 15px;
-  font-weight: 600;
+.q-desc {
+  font-size: 17px;
+  font-weight: 700;
   color: var(--navy);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.q-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--body-text);
   line-height: 1.45;
 }
 .q-metric {
@@ -973,7 +980,8 @@ footer {
   .q-card { padding: 16px; margin-bottom: 10px; }
   .q-top { flex-direction: column; gap: 8px; }
   .q-selected-score { text-align: left; font-size: 16px; }
-  .q-text { font-size: 14px; }
+  .q-desc { font-size: 15px; }
+  .q-text { font-size: 12px; }
   .q-label { font-size: 10px; }
 
   .q-scores {
@@ -1150,7 +1158,7 @@ footer {
 <section class="hero">
   <span class="section-tag">Free Assessment Tool</span>
   <h1>AI Valuation Impact <span class="light">Scan</span></h1>
-  <p class="hero-sub">Score your AI practices across 5 dimensions and discover your valuation impact - from baseline metrics to premium positioning with actionable gaps to close.</p>
+  <p class="hero-sub">15 questions. The same ones a buyer's due diligence team would ask about your AI. Your answers determine whether AI lifts your multiple or compresses it.</p>
 </section>
 
 <!-- COMPANY INFO -->
@@ -1212,9 +1220,9 @@ footer {
   <div class="how-to-use-card">
     <div class="how-to-use-title"><span class="icon">ℹ</span> How to use this scorecard</div>
     <div class="how-to-use-grid">
-      <div class="how-to-use-item"><strong>Score 0 (grey)</strong> means you don't measure or have this. That's a blind spot - and blind spots cost you in due diligence.</div>
-      <div class="how-to-use-item"><strong>Scores 1-3</strong> represent a spectrum from weak to solid. Score based on what you can prove with data, not what you believe to be true.</div>
-      <div class="how-to-use-item"><strong>Score 4 (teal)</strong> means buyer-ready with evidence. Only select this if you could back it up in a diligence data room.</div>
+      <div class="how-to-use-item"><strong>Score 0 (grey)</strong> means you don't measure or have this. That's a blind spot, and blind spots cost you in due diligence.</div>
+      <div class="how-to-use-item"><strong>Scores 1-3</strong> are a spectrum from weak to solid. Score based on what you can prove, not what you believe.</div>
+      <div class="how-to-use-item"><strong>Score 4 (teal)</strong> means buyer-ready with evidence. Only select this if you could back it up in a data room.</div>
     </div>
   </div>
 </section>
@@ -1235,8 +1243,8 @@ footer {
     <!-- SHOW RESULTS GATE -->
     <div class="show-results-gate" id="showResultsGate" style="display:none;">
       <p class="gate-missing" id="gateMissing" style="display:none;"></p>
-      <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Results & Recommendations</button>
-      <p class="gate-note">In a 30-minute call, we walk through your scores dimension by dimension, show you where peers in your segment typically stand, and map out the 2-3 moves that would shift your rating fastest.</p>
+      <button class="btn gate-btn" id="showResultsBtn" onclick="revealResults()">Show My Results</button>
+      <p class="gate-note">Your score, your valuation impact, and the 3 gaps a buyer would flag first. Want to go deeper? We'll walk through your results in a 30-minute call.</p>
       <p class="gate-note" style="margin-top:8px;">Your scores will be saved and shared with AI Value Firm. See our <a href="privacy.html" style="color:var(--body-text);text-decoration:underline;">Privacy Policy</a>.</p>
     </div>
 
@@ -1333,13 +1341,13 @@ footer {
         <div class="rating-table-inner">
           <h3>Scoring Guide</h3>
           <table class="rating-table" id="ratingTable">
-            <thead><tr><th>Score</th><th>Rating</th><th>What It Means</th></tr></thead>
+            <thead><tr><th>Score</th><th>Verdict</th><th>What it means for your deal</th></tr></thead>
             <tbody>
-              <tr data-range="A"><td class="rt-score">80-100</td><td class="rt-rating" style="color:var(--teal)">A - Premium Ready</td><td>Your AI practices would withstand buyer scrutiny. Strong position for premium valuation. Focus: document and package for data room.</td></tr>
-              <tr data-range="B"><td class="rt-score">60-79</td><td class="rt-rating" style="color:var(--green)">B - Investable with Gaps</td><td>Solid foundation, gaps in 1-2 dimensions. A buyer would still engage but negotiate. Focus: close gaps within 90 days.</td></tr>
-              <tr data-range="C"><td class="rt-score">40-59</td><td class="rt-rating" style="color:var(--yellow)">C - Discount Territory</td><td>AI activity exists but limited proof of P&L impact. Buyers will cap the multiple. Focus: prove 2-3 use cases with hard numbers.</td></tr>
-              <tr data-range="D"><td class="rt-score">20-39</td><td class="rt-rating" style="color:var(--amber)">D - Earn-out Risk</td><td>Aware of AI but nothing a buyer can underwrite. Value shifts to earn-outs and contingencies. Focus: quick wins with measurable ROI.</td></tr>
-              <tr data-range="F"><td class="rt-score">0-19</td><td class="rt-rating" style="color:var(--red)">F - Multiple Compression</td><td>No credible AI story. Buyers either walk or discount heavily. Urgent: establish baseline metrics and governance.</td></tr>
+              <tr data-range="A"><td class="rt-score">80-100</td><td class="rt-rating" style="color:var(--teal)">Premium Asset</td><td>Buyers compete for you. AI is a value driver in the deal.</td></tr>
+              <tr data-range="B"><td class="rt-score">60-79</td><td class="rt-rating" style="color:var(--green)">Investable</td><td>Solid position, but due diligence will find gaps. Fixable before market.</td></tr>
+              <tr data-range="C"><td class="rt-score">40-59</td><td class="rt-rating" style="color:var(--yellow)">Discount Risk</td><td>A buyer sees enough AI risk to push back on your multiple.</td></tr>
+              <tr data-range="D"><td class="rt-score">20-39</td><td class="rt-rating" style="color:var(--amber)">Earn-out Territory</td><td>Significant gaps. Expect a deal structured around earn-outs.</td></tr>
+              <tr data-range="F"><td class="rt-score">0-19</td><td class="rt-rating" style="color:var(--red)">Compression</td><td>Your company looks like an AI disruption target, not an asset.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1348,10 +1356,10 @@ footer {
       <!-- NEXT STEP CTA -->
       <div class="cta-section" style="padding:48px 32px 48px;background:#FFFFFF;border-radius:var(--radius);margin-top:64px;">
         <span class="section-tag">Next Step</span>
-        <h2>Turn your score into a <span class="light">buyer-ready AI narrative</span></h2>
-        <p>Our AI Exit Readiness assessment takes your scorecard results, validates them with data, benchmarks against peers, and delivers a board-ready report with a concrete 90-day action plan.</p>
-        <a href="https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-review" class="btn book-call-btn" style="display:inline-block;text-decoration:none;margin-top:20px;">Book Your Exit Readiness Review</a>
-        <p class="cta-helper">30-minute call. No strings attached.</p>
+        <h2>Know where you stand. <span class="light">Now decide what to do about it.</span></h2>
+        <p>We take your scorecard results, validate them with data, benchmark against peers, and deliver a board-ready report with a 90-day action plan. You get the full picture before a buyer does.</p>
+        <a href="https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-review" class="btn book-call-btn" style="display:inline-block;text-decoration:none;margin-top:20px;">Book a 30-minute walkthrough</a>
+        <p class="cta-helper">Free. No strings attached.</p>
       </div>
     </div>
   </div>
@@ -1396,7 +1404,7 @@ footer {
   </div>
   <div class="footer-links">
     <a href="privacy.html">Privacy Policy</a>
-    <a href="https://linkedin.com/company/meijanto" target="_blank">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/meijanto" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     <a href="mailto:christan@dornovo.com">Contact</a>
   </div>
 </footer>
@@ -1840,6 +1848,7 @@ function renderDimensions() {
             <div class="q-top">
               <div>
                 <div class="q-label">${q.label}</div>
+                ${q.desc ? '<div class="q-desc">' + q.desc + '</div>' : ''}
                 <div class="q-text">${q.text}</div>
                 ${q.hint ? '<div class="q-hint">' + q.hint + '</div>' : ''}
               </div>
