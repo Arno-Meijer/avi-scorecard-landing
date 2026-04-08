@@ -11,7 +11,7 @@
 
 const https = require('https');
 
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRJpFmaVAu3a37W-wYlZUt7W5QA7_VLq37P5XyFucNN-EWOJW43ovxrsDx5poYPayY/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRAAzcUIwzInsZJAPVlT2e2tydsR6YxZekCYWqNdxk7waOi8hvqTmqNFCAqO0NkjGR/exec';
 const N8N_WEBHOOK_URL = 'https://dornovo.app.n8n.cloud/webhook/exit-tool/submit';
 
 // Turnstile secret key — set as Vercel environment variable
