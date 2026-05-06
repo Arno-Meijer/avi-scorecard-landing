@@ -1169,15 +1169,20 @@ footer {
 }
 body { background: var(--bg); }
 
-/* Apply Newsreader serif to the major display headlines in the wizard
-   and results sections, matching the editorial style of other pages.
-   Functional UI text (form labels, score buttons, badges, etc.) keeps
-   Inter sans because legibility under interaction matters more there. */
+/* Apply Newsreader serif to the major display headlines AND prominent
+   numbers in the wizard/results sections, matching the editorial style
+   of other pages. Functional UI text (form labels, score buttons,
+   small badges, etc.) keeps Inter sans because legibility under
+   interaction matters more there. */
 .results-section h1,
 .results-section h2,
 .impact-section h2,
 .cta-section h2,
-.moat-section h3 {
+.moat-section h3,
+.multiple-range,
+.ic-value,
+.total-num,
+.total-of {
   font-family: 'Newsreader', Georgia, serif;
   font-variation-settings: "opsz" 48;
   font-weight: 700;
@@ -1193,6 +1198,17 @@ body { background: var(--bg); }
   font-weight: 500;
   color: var(--teal);
 }
+
+/* CTA H2 — break the .light span onto a new line so each sentence has
+   its own visual weight ("Know where you stand." / "Now decide..."). */
+.cta-section h2 .light { display: block; }
+
+/* Inverse the navy CTA text colors so .multiple-range/.ic-value/etc.
+   defined above don't accidentally turn navy on the navy background. */
+.cta-section .ic-value,
+.cta-section .multiple-range,
+.cta-section .total-num,
+.cta-section .total-of { color: #fff; }
 
 /* Final CTA card in results — match v4 final-cta pattern (navy bg + teal button) */
 .cta-section {
