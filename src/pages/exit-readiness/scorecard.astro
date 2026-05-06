@@ -1187,7 +1187,10 @@ body { background: var(--bg); }
   font-variation-settings: "opsz" 48;
   font-weight: 700;
   letter-spacing: -0.5px;
-  color: var(--navy);
+  /* No color override — preserve legacy colors:
+     - light backgrounds (results h1/h2, .ic-value, .total-num): navy
+     - navy backgrounds (.impact-section h2, .multiple-range): white
+     - cta-section h2: white (set explicitly below) */
 }
 .results-section h1 .light,
 .results-section h2 .light,
