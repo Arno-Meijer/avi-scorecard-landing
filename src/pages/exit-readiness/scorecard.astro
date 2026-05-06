@@ -1176,7 +1176,6 @@ body { background: var(--bg); }
    interaction matters more there. */
 .results-section h1,
 .results-section h2,
-.impact-section h2,
 .cta-section h2,
 .moat-section h3,
 .multiple-range,
@@ -1189,9 +1188,15 @@ body { background: var(--bg); }
   letter-spacing: -0.5px;
   /* No color override — preserve legacy colors:
      - light backgrounds (results h1/h2, .ic-value, .total-num): navy
-     - navy backgrounds (.impact-section h2, .multiple-range): white
+     - navy backgrounds (.multiple-range): white
      - cta-section h2: white (set explicitly below) */
 }
+
+/* Impact-section h2 stays the legacy uppercase teal eyebrow tag —
+   the BIG number below it is the focal point, the h2 is a section
+   label. Just ensure breathing room between tag and number. */
+.results-panel h2,
+.impact-section h2 { margin-bottom: 28px; }
 .results-section h1 .light,
 .results-section h2 .light,
 .impact-section h2 .light,
@@ -1320,6 +1325,10 @@ footer.site-footer .footer-bottom {
   font-style: italic;
   color: rgba(255, 255, 255, 0.4);
 }
+
+/* Editorial eyebrow inside navy CTA: white-faded line + label */
+.cta-section .eyebrow-line { background: rgba(255, 255, 255, 0.4); }
+.cta-section .eyebrow-label { color: rgba(255, 255, 255, 0.6); }
 
 /* ===== Editorial hero override (matches v4 style on other pages) ===== */
 .scorecard-hero {
@@ -1721,7 +1730,7 @@ footer.site-footer .footer-bottom {
 
       <!-- NEXT STEP CTA -->
       <div class="cta-section" style="padding:48px 32px 48px;background:#FFFFFF;border-radius:var(--radius);margin-top:64px;">
-        <span class="section-tag">Next Step</span>
+        <div class="eyebrow center" style="justify-content:center;margin-bottom:20px;"><span class="eyebrow-line"></span><span class="eyebrow-label">Next Step</span></div>
         <h2>Know where you stand. <span class="light">Now decide what to do about it.</span></h2>
         <p>We take your scorecard results, validate them with data, benchmark against peers, and deliver a board-ready report with a 90-day action plan. You get the full picture before a buyer does.</p>
         <a href="https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-review" class="btn book-call-btn" style="display:inline-block;text-decoration:none;margin-top:20px;">Book a 30-minute walkthrough</a>
@@ -1733,7 +1742,7 @@ footer.site-footer .footer-bottom {
 
 <!-- MOAT LAYERS (reference) -->
 <section class="moat-section">
-  <span class="section-tag" style="display:block;text-align:center;margin-bottom:20px;">Reference</span>
+  <div class="eyebrow center" style="justify-content:center;margin-bottom:20px;"><span class="eyebrow-line"></span><span class="eyebrow-label">Reference</span></div>
   <h3>AI Defensibility Layers (for Q4-Q6)</h3>
   <div class="moat-grid" id="moatGrid">
     <div class="moat-card" data-layer="1">
