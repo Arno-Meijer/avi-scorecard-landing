@@ -90,10 +90,10 @@ const callUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revi
           <span class="eyebrow-line"></span>
           <span class="eyebrow-label">AI Value Advisory</span>
         </div>
-        <h1 class="display">AI value is <span class="accent">measurable.</span><br />Yet it rarely reaches the P&amp;L.</h1>
+        <h1 class="display">AI value is <span class="accent">measurable.</span></h1>
+        <p class="hero-tension">Yet it rarely reaches the P&amp;L.</p>
         <p class="hero-sub">
-          Boards stopped buying the hype. So did buyers. AI Value Firm helps founders, PE-backed
-          operators, and investors put real numbers on what AI is doing to their business.
+          We help founders, PE-backed operators, and investors put real numbers on what AI is doing to their business.
         </p>
 
         <form
@@ -296,7 +296,17 @@ const callUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revi
     display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center;
     max-width: var(--container); margin: 0 auto; padding: 0 40px;
   }
-  .hero-text h1 { margin: 0 0 24px; }
+  .hero-text h1 { margin: 0 0 14px; }
+  .hero-tension {
+    font-family: var(--font-serif);
+    font-variation-settings: "opsz" 36;
+    font-style: italic;
+    font-size: clamp(22px, 2.6vw, 28px);
+    font-weight: 500;
+    color: var(--teal);
+    line-height: 1.25;
+    margin: 0 0 24px;
+  }
   .hero-sub {
     font-family: var(--font-serif); font-weight: 400;
     font-size: 19px; color: var(--body-text); line-height: 1.55;
