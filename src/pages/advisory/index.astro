@@ -1,0 +1,336 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const modules = [
+  {
+    title: 'AI Strategy',
+    body:
+      'Where to invest, where to wait, where to walk away. Built around your sector, your stage, and the data we have on what actually moves valuation.',
+    iconPath: '<circle cx="12" cy="12" r="3"/><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/>',
+  },
+  {
+    title: 'P&L Impact',
+    body:
+      'Translating AI work into the numbers a board reviews. Revenue lift, margin contribution, cost-to-serve, headcount-equivalent leverage.',
+    iconPath: '<polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/>',
+  },
+  {
+    title: 'Implementation Oversight',
+    body:
+      'A measurement layer over your AI build. Are the deployments delivering. What needs to change. What gets rolled back at month twelve.',
+    iconPath: '<path d="M3 12h4l2-7 4 14 2-7h6"/>',
+  },
+  {
+    title: 'Strategic Reviews',
+    body:
+      'Periodic deep-dives on AI investments, vendor decisions, build-versus-buy choices. Available on retainer for boards and ICs.',
+    iconPath: '<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>',
+  },
+];
+
+const formats = [
+  {
+    name: 'Format · 01',
+    title: 'Sprint',
+    duration: '6 weeks',
+    items: [
+      'Single AI question, deep-dive',
+      'Build vs buy on a specific use case',
+      'Strategy for a new vertical or function',
+      'Stress-test of an AI investment thesis',
+      'Fixed scope, fixed fee, written deliverable',
+    ],
+    featured: false,
+  },
+  {
+    name: 'Format · 02',
+    title: 'Project',
+    duration: '3 to 6 months',
+    items: [
+      'Strategy plus implementation oversight',
+      'Defined initiative or AI investment',
+      'Monthly board updates',
+      'Quarterly outcome review',
+      'Fixed scope, milestone-based fees',
+    ],
+    featured: true,
+  },
+  {
+    name: 'Format · 03',
+    title: 'Fractional',
+    duration: 'Ongoing',
+    items: [
+      'Available 4 to 8 days a month',
+      'Board prep, deal review, vendor decisions',
+      'AI questions across a portfolio',
+      'Quarterly strategic readout',
+      'Retainer-based, three-month minimum',
+    ],
+    featured: false,
+  },
+];
+
+const fitMailto =
+  'mailto:hello@aivaluefirm.com?subject=Advisory%20fit%20call&body=Sector%3A%20%0AStage%3A%20%0AAI%20question%3A%20%0AIdeal%20format%3A%20';
+---
+<Base
+  title="AI Value Advisory. AI work that has to pay off."
+  description="AI Value Advisory engagements. Strategy, P&L impact, implementation, oversight. Scaled per client, from a 6-week sprint to fractional advisory."
+  current="advisory"
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">Service · Ongoing</span>
+      </div>
+      <h1 class="display">AI work that has to <span class="accent">pay off.</span></h1>
+      <p class="hero-sub">
+        AI Value Advisory engagements. Strategy, P&amp;L impact, implementation, oversight.
+        Scaled to your situation, from a 6-week sprint to ongoing fractional advisory.
+        For everyone who is not 12 months from exit.
+      </p>
+      <div class="hero-ctas">
+        <a href={fitMailto} class="btn btn-primary">Book a fit call</a>
+        <a href="#formats" class="btn btn-secondary">See engagement formats</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="modules">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">What We Work On</span>
+        </div>
+        <h2 class="display">Four areas, <span class="accent">one measurement lens.</span></h2>
+        <p>
+          Modular by design. Most engagements pull from two or three areas at once.
+          The throughline is the same one we use in DD: every claim has to land in the numbers.
+        </p>
+      </div>
+
+      <div class="modules-grid">
+        {modules.map((m) => (
+          <article class="module-card">
+            <div class="module-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1527" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={m.iconPath} />
+            </div>
+            <h3>{m.title}</h3>
+            <p>{m.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="formats" class="formats">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">Engagement Formats</span>
+        </div>
+        <h2 class="display">Three shapes. <span class="accent">Same discipline.</span></h2>
+        <p>
+          Pick what fits your situation. We scope every engagement against a measurable outcome,
+          and walk away if the work cannot move a number on a P&amp;L or a multiple.
+        </p>
+      </div>
+
+      <div class="formats-grid">
+        {formats.map((f) => (
+          <article class={`format-card ${f.featured ? 'featured' : ''}`}>
+            {f.featured && <span class="format-badge">Most common</span>}
+            <div class="format-name">{f.name}</div>
+            <h3>{f.title}</h3>
+            <div class="format-duration">{f.duration}</div>
+            <ul>
+              {f.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="who-for">
+    <div class="container">
+      <div class="who-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-label">Who It Is For</span>
+          </div>
+          <h2 class="display">Three audiences. <span class="accent">Same need.</span></h2>
+        </div>
+        <div class="who-list">
+          <div class="who-item">
+            <div class="who-num">i</div>
+            <div>
+              <h4>Founders and CEOs (mid-market SaaS)</h4>
+              <p>Companies between 5M and 100M ARR who want an AI compass without hiring a consulting team. We sit alongside the leadership team for the duration of the engagement.</p>
+            </div>
+          </div>
+          <div class="who-item">
+            <div class="who-num">ii</div>
+            <div>
+              <h4>PE and VC firms (portfolio support)</h4>
+              <p>Investors deploying AI plays across portfolio companies. We standardise the measurement framework and apply it across multiple portcos at once.</p>
+            </div>
+          </div>
+          <div class="who-item">
+            <div class="who-num">iii</div>
+            <div>
+              <h4>C-suite at larger companies (multiple initiatives)</h4>
+              <p>Enterprise teams running several AI initiatives in parallel who want an external measurement layer. We work alongside internal AI leadership, not against it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container final-cta-inner">
+      <div class="final-cta-mark">✦</div>
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">Before You Commit</span>
+      </div>
+      <h2 class="display">Tell us where AI <span class="accent">has to land.</span></h2>
+      <p>
+        30-minute fit call. We hear what you are trying to do, you hear what we would actually run.
+        We confirm fit before either of us scope anything. No pitch.
+      </p>
+      <a class="btn btn-teal" href={fitMailto}>Book a fit call</a>
+      <div class="final-cta-after">No email wall. No follow-up spam.</div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    margin-top: var(--nav-height);
+    padding: 96px 0 80px; text-align: center;
+  }
+  .hero-inner { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+  .hero-inner h1 { margin: 0 0 24px; }
+  .hero-sub {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 19px; color: var(--body-text); line-height: 1.55;
+    max-width: 680px; margin: 0 auto 36px;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* MODULES */
+  .modules { background: var(--soft-bg); }
+  .modules-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  }
+  .module-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 14px;
+    border-top: 4px solid var(--mid-navy);
+  }
+  .module-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--light-blue);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px;
+  }
+  .module-card h3 { font-family: var(--font-sans); color: var(--navy); font-size: 19px; }
+  .module-card p { font-size: 14.5px; line-height: 1.65; }
+
+  /* FORMATS */
+  .formats-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .format-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px 28px;
+    box-shadow: var(--shadow); position: relative;
+  }
+  .format-card.featured { border: 2px solid var(--teal); }
+  .format-badge {
+    position: absolute; top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--teal); color: var(--navy);
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px; border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+  .format-name {
+    font-family: var(--font-sans); font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .format-card h3 {
+    font-family: var(--font-serif); font-variation-settings: "opsz" 36;
+    font-size: 28px; color: var(--navy); margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .format-duration {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 14px; color: var(--teal); margin-bottom: 20px;
+  }
+  .format-card ul { list-style: none; padding: 0; margin: 0; }
+  .format-card li {
+    position: relative; padding-left: 22px;
+    font-size: 14px; line-height: 1.6; color: var(--body-text);
+    margin-bottom: 10px;
+  }
+  .format-card li::before {
+    content: ""; position: absolute; left: 0; top: 9px;
+    width: 6px; height: 6px; background: var(--teal); border-radius: 50%;
+  }
+
+  /* WHO IT IS FOR */
+  .who-for { background: var(--soft-bg); }
+  .who-grid {
+    display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start;
+  }
+  .who-grid h2 { margin-top: 0; }
+  .who-list { display: grid; gap: 24px; }
+  .who-item {
+    display: grid; grid-template-columns: 36px 1fr; gap: 20px; align-items: start;
+  }
+  .who-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--light-blue); color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-serif); font-style: italic;
+    font-weight: 600; font-size: 14px;
+  }
+  .who-item h4 { font-family: var(--font-sans); color: var(--navy); font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .who-item p { font-size: 14.5px; line-height: 1.65; }
+
+  /* FINAL CTA */
+  .final-cta { background: var(--navy); color: #fff; padding: 120px 0; }
+  .final-cta-inner { text-align: center; max-width: 720px; margin: 0 auto; padding: 0 40px; }
+  .final-cta-mark { font-family: var(--font-serif); font-size: 28px; color: var(--teal); margin-bottom: 20px; }
+  .final-cta .eyebrow { justify-content: center; margin-bottom: 22px; }
+  .final-cta .eyebrow-line { background: rgba(255, 255, 255, 0.4); }
+  .final-cta .eyebrow-label { color: rgba(255, 255, 255, 0.6); }
+  .final-cta h2 { color: #fff; margin-bottom: 24px; }
+  .final-cta h2 .accent { color: var(--teal); }
+  .final-cta p {
+    font-family: var(--font-serif); font-weight: 400;
+    color: rgba(255, 255, 255, 0.78); margin: 0 auto 36px;
+    font-size: 18px; max-width: 560px; line-height: 1.55;
+  }
+  .final-cta .btn-teal { padding: 18px 44px; font-size: 13px; }
+  .final-cta-after {
+    margin-top: 22px; font-family: var(--font-serif); font-style: italic;
+    font-size: 13px; color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 880px) {
+    .modules-grid, .formats-grid { grid-template-columns: 1fr; gap: 24px; }
+    .who-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>

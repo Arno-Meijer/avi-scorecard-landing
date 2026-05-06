@@ -1,8 +1,9 @@
 {
   "rewrites": [
-    { "source": "/exit-scorecard", "destination": "/index.html" },
+    { "source": "/exit-readiness/scorecard", "destination": "/scorecard.html" },
+    { "source": "/exit-scorecard", "destination": "/exit-readiness" },
     { "source": "/exit-scorecard-form", "destination": "/scorecard.html" },
-    { "source": "/valuation-scorecard", "destination": "/index-v2.html" },
-    { "source": "/valuation-scorecard/start", "destination": "/scorecard-v2.html" }
+    { "source": "/valuation-scorecard", "destination": "/exit-readiness" },
+    { "source": "/valuation-scorecard/start", "destination": "/scorecard.html" }
   ]
 }

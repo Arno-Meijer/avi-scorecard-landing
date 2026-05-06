@@ -1,0 +1,312 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const pillars = [
+  {
+    num: 'i',
+    title: 'Revenue Resilience',
+    body: 'Is your revenue more sticky or more replaceable because of AI. Retention, expansion, concentration risk.',
+    buyer: '"Will this revenue survive when an AI-native competitor enters the category?"',
+  },
+  {
+    num: 'ii',
+    title: 'Defensibility & Moat',
+    body: 'What is hard to copy. Data, distribution, workflow lock-in, switching costs.',
+    buyer: '"If a competitor wraps GPT around the same problem, what stops them?"',
+  },
+  {
+    num: 'iii',
+    title: 'AI Economics',
+    body: 'The unit economics of every AI feature. Cost-to-serve, gross margin contribution, scaling curve.',
+    buyer: '"Does this margin hold at scale or does it erode with usage?"',
+  },
+  {
+    num: 'iv',
+    title: 'Operational Leverage',
+    body: 'Is AI cutting OPEX or hiding it in tool spend. Measured against headcount benchmarks from the AVI.',
+    buyer: '"Are you running leaner because of AI, or just spending differently?"',
+  },
+  {
+    num: 'v',
+    title: 'Governance & Deal Readiness',
+    body: 'Model risk, IP, data licensing, vendor dependency. The items that show up on every DD checklist.',
+    buyer: '"What gets flagged in our legal and technical review?"',
+  },
+];
+
+const deliverables = [
+  {
+    title: 'Scored scorecard, all five pillars',
+    body: 'Individual pillar scores out of 20, total out of 100, with confidence bands per dimension.',
+  },
+  {
+    title: 'Multiple-mapping document',
+    body: 'How your scores translate to indicative revenue multiple impact, benchmarked against the AI Value Index.',
+  },
+  {
+    title: 'Six-month action roadmap',
+    body: 'The handful of gaps that actually move the multiple, sequenced by impact and dependency.',
+  },
+  {
+    title: 'Optional 90-day follow-up call',
+    body: 'Re-score on key pillars after three months. See if the work has moved the needle.',
+  },
+];
+
+const callMailto =
+  'mailto:hello@aivaluefirm.com?subject=AI%20Exit%20Readiness%20call&body=Sector%3A%20%0AStage%3A%20%0ATime%20to%20exit%3A%20%0AWhat%20I%27m%20trying%20to%20figure%20out%3A%20';
+---
+<Base
+  title="AI Exit Readiness. Two weeks. Five pillars. One verdict."
+  description="A 2-week diagnostic that puts numbers on what AI is doing to your valuation. Five pillars scored, indicative multiple impact, six-month plan."
+  current="exit-readiness"
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">Service · 2 weeks</span>
+      </div>
+      <h1 class="display">Two weeks. Five pillars. <span class="accent">One verdict.</span></h1>
+      <p class="hero-sub">
+        The AI Exit Readiness diagnostic. We score where AI is helping or hurting your valuation today,
+        what it could be doing in six months, and what a buyer will see when they look. Built for
+        SaaS founders 12 to 24 months from exit, and PE houses stress-testing a thesis.
+      </p>
+      <div class="hero-ctas">
+        <a href="/exit-readiness/scorecard" class="btn btn-primary">Start with the free scorecard</a>
+        <a href={callMailto} class="btn btn-secondary">Book a call</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pillars">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">Five Pillars</span>
+        </div>
+        <h2 class="display">What we score, and <span class="accent">why a buyer cares.</span></h2>
+        <p>
+          Each pillar is scored 0 to 20. Together they map to an indicative multiple impact.
+          The framework is the same one PE-backed buyers use when they put your AI under the loupe.
+        </p>
+      </div>
+
+      {pillars.map((p) => (
+        <article class="pillar-row">
+          <div class="pillar-num">{p.num}</div>
+          <h3 class="pillar-title">{p.title}</h3>
+          <div class="pillar-content">
+            <p>{p.body}</p>
+            <p class="pillar-buyer">{p.buyer}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">How It Works</span>
+        </div>
+        <h2 class="display">Two weeks, end to end. <span class="accent">No surprises.</span></h2>
+      </div>
+
+      <div class="how-grid">
+        <article class="how-card">
+          <span class="how-card-num">WEEK 01 · DISCOVERY</span>
+          <h3>Diagnostic across the five pillars</h3>
+          <p>We meet your team, understand the AI footprint, run the diagnostic across every pillar. Document review, technical walkthrough, financial cross-check. Output: scored scorecard with confidence levels.</p>
+        </article>
+        <article class="how-card">
+          <span class="how-card-num">WEEK 02 · SYNTHESIS</span>
+          <h3>Multiple mapping and roadmap</h3>
+          <p>We map your scores to indicative valuation impact, prioritise the gaps that move the multiple most, and write a six-month roadmap you can act on. Final readout to founders or board.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="deliverables">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">What You Get</span>
+        </div>
+        <h2 class="display">Concrete deliverables, <span class="accent">not slideware.</span></h2>
+      </div>
+
+      <div class="deliverables-list">
+        {deliverables.map((d) => (
+          <div class="deliverable">
+            <div class="deliverable-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <strong>{d.title}</strong>
+              <span>{d.body}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip-section">
+    <div class="container">
+      <div class="cta-strip">
+        <div>
+          <h3>Not ready for the full diagnostic?</h3>
+          <p>The free Scorecard takes 5 to 10 minutes and gives you indicative multiples right now.</p>
+        </div>
+        <a href="/exit-readiness/scorecard" class="btn btn-teal">Take the scorecard</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container final-cta-inner">
+      <div class="final-cta-mark">✦</div>
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">Before You Go to Market</span>
+      </div>
+      <h2 class="display">Find out where you stand <span class="accent">before a buyer does.</span></h2>
+      <p>
+        30-minute discovery call with Arno or Christan. Tell us where you sit and what you are
+        trying to figure out. We tell you what we would actually do.
+      </p>
+      <a class="btn btn-teal" href={callMailto}>Book a call</a>
+      <div class="final-cta-after">No email wall. No follow-up spam.</div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    margin-top: var(--nav-height);
+    padding: 96px 0 80px; text-align: center;
+  }
+  .hero-inner { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+  .hero-inner h1 { margin: 0 0 24px; }
+  .hero-sub {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 19px; color: var(--body-text); line-height: 1.55;
+    max-width: 680px; margin: 0 auto 36px;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* PILLARS */
+  .pillars { background: var(--soft-bg); }
+  .pillar-row {
+    display: grid; grid-template-columns: 60px 1fr 2fr;
+    gap: 32px; align-items: start;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: 40px; padding-right: 40px;
+  }
+  .pillar-row:last-child { border-bottom: 1px solid var(--border); }
+  .pillar-num {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 28px; font-weight: 600; color: var(--teal);
+    font-variation-settings: "opsz" 36;
+  }
+  .pillar-title {
+    font-family: var(--font-sans);
+    font-size: 20px; font-weight: 700; color: var(--navy);
+    line-height: 1.3;
+  }
+  .pillar-content { font-size: 15px; line-height: 1.7; }
+  .pillar-content p { margin-bottom: 14px; }
+  .pillar-content p:last-child { margin-bottom: 0; }
+  .pillar-buyer {
+    font-family: var(--font-serif); font-style: italic;
+    color: var(--navy); font-size: 15px;
+    padding: 12px 0 0 16px; border-left: 2px solid var(--teal);
+  }
+
+  /* HOW IT WORKS */
+  .how-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    max-width: 980px; margin: 0 auto;
+  }
+  .how-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow);
+  }
+  .how-card-num {
+    display: inline-block;
+    font-family: var(--font-sans); font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .how-card h3 { font-family: var(--font-sans); color: var(--navy); font-size: 19px; margin-bottom: 12px; }
+  .how-card p { font-size: 14.5px; line-height: 1.65; }
+
+  /* DELIVERABLES */
+  .deliverables { background: var(--soft-bg); }
+  .deliverables-list {
+    display: grid; gap: 16px; max-width: 720px; margin: 0 auto;
+  }
+  .deliverable {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px 26px;
+    display: grid; grid-template-columns: 28px 1fr; gap: 16px; align-items: start;
+  }
+  .deliverable-check {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--light-teal); color: #0F6E56;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .deliverable-check svg { width: 12px; height: 12px; }
+  .deliverable strong {
+    font-weight: 700; color: var(--navy); display: block; margin-bottom: 4px; font-size: 15px;
+  }
+  .deliverable span { font-size: 14px; color: var(--body-text); }
+
+  /* CTA STRIP */
+  .cta-strip-section { padding: 64px 0; }
+  .cta-strip {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px 40px;
+    display: flex; justify-content: space-between; align-items: center; gap: 32px;
+    flex-wrap: wrap; box-shadow: var(--shadow);
+  }
+  .cta-strip h3 { font-family: var(--font-sans); color: var(--navy); margin-bottom: 6px; font-size: 19px; }
+  .cta-strip p { font-family: var(--font-serif); font-size: 15px; }
+
+  /* FINAL CTA */
+  .final-cta { background: var(--navy); color: #fff; padding: 120px 0; }
+  .final-cta-inner { text-align: center; max-width: 720px; margin: 0 auto; padding: 0 40px; }
+  .final-cta-mark { font-family: var(--font-serif); font-size: 28px; color: var(--teal); margin-bottom: 20px; }
+  .final-cta .eyebrow { justify-content: center; margin-bottom: 22px; }
+  .final-cta .eyebrow-line { background: rgba(255, 255, 255, 0.4); }
+  .final-cta .eyebrow-label { color: rgba(255, 255, 255, 0.6); }
+  .final-cta h2 { color: #fff; margin-bottom: 24px; }
+  .final-cta h2 .accent { color: var(--teal); }
+  .final-cta p {
+    font-family: var(--font-serif); font-weight: 400;
+    color: rgba(255, 255, 255, 0.78); margin: 0 auto 36px;
+    font-size: 18px; max-width: 560px; line-height: 1.55;
+  }
+  .final-cta .btn-teal { padding: 18px 44px; font-size: 13px; }
+  .final-cta-after {
+    margin-top: 22px; font-family: var(--font-serif); font-style: italic;
+    font-size: 13px; color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 880px) {
+    .pillar-row { grid-template-columns: 40px 1fr; gap: 20px; }
+    .pillar-row > .pillar-content { grid-column: 1 / -1; }
+    .how-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>

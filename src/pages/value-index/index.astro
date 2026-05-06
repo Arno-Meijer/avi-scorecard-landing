@@ -1,0 +1,276 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const answers = [
+  {
+    title: 'Is this AI use case priced into multiples yet?',
+    body: 'For your sector and function, what value lift do operators report, and how is that showing up in recent deal pricing.',
+  },
+  {
+    title: 'Build, buy, or partner?',
+    body: 'Comparable deployments at companies your size, with the path they chose and the margin impact 12 months later.',
+  },
+  {
+    title: 'Where is your competitor really at?',
+    body: 'Anonymised entries that match the profile of named peers. Useful for thesis testing without naming names in the room.',
+  },
+  {
+    title: 'What does an honest ROI look like?',
+    body: 'Real percentage lifts on the metric that matters, with confidence bands and the rolled-back cases included. No vendor marketing.',
+  },
+  {
+    title: 'What does a buyer want to see?',
+    body: 'The deployment depth, governance, and economics that show up as plus or minus on a DD scorecard.',
+  },
+  {
+    title: 'Where is the cliff?',
+    body: 'Deployments that looked good at 6 months and broke at 12. Pattern analysis on what predicted the rollback.',
+  },
+];
+
+const steps = [
+  {
+    label: 'i. Context',
+    title: 'You tell us where you sit',
+    body: 'One paragraph by email is enough. Sector, function, what you are trying to figure out, and by when. We respond within 48 hours.',
+  },
+  {
+    label: 'ii. Prep',
+    title: 'We pull the relevant entries',
+    body: 'Usually 5 to 15 from the Index that map to your case. We add a one-page summary of what the data says, including the parts that contradict each other.',
+  },
+  {
+    label: 'iii. Walkthrough',
+    title: '45-minute working session',
+    body: 'Screen-shared, live. Arno and Christan run the session together. You ask questions, we answer with the data. You take notes. We send the one-pager after.',
+  },
+];
+
+const groundRules = [
+  {
+    num: 'i',
+    title: 'What you get',
+    body: 'Context-specific entries, scored on six dimensions. Multiple impact ranges. Pattern observations across the matched set. A one-page summary you can put in front of a board or IC.',
+  },
+  {
+    num: 'ii',
+    title: 'What we never share',
+    body: 'Raw export of the Index. Named companies. Source-level confidentials. The Index is a working asset, not a deliverable.',
+  },
+  {
+    num: 'iii',
+    title: 'Who this is for',
+    body: 'SaaS founders 12 to 24 months from exit. PE and VC investors testing a thesis. Operators scoping an AI investment that needs board sign-off.',
+  },
+];
+
+const walkthroughMailto =
+  'mailto:hello@aivaluefirm.com?subject=AI%20Value%20Index%20walkthrough%20request&body=Sector%3A%20%0AFunction%3A%20%0AWhat%20I%27m%20trying%20to%20figure%20out%3A%20%0AIdeal%20timing%3A%20';
+---
+<Base
+  title="AI Value Index. 200+ AI deployments. Walked through in a working session."
+  description="Our private benchmark of 200+ AI deployments scored on the value they actually moved. We don't share the index. We walk you through it in a 45-minute session."
+  current="value-index"
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">Benchmark · Walkthrough Only</span>
+      </div>
+      <h1 class="display">The AI Value <span class="accent">Index.</span></h1>
+      <p class="hero-sub">
+        200+ AI deployments scored on the value they actually moved. We do not share the index.
+        We walk you through it in a 45-minute working session, focused on the entries that map
+        to your sector, function, and the question you are trying to answer.
+      </p>
+      <div class="hero-ctas">
+        <a href="#book" class="btn btn-primary">Book a walkthrough</a>
+        <a href="#how-it-works" class="btn btn-secondary">How it works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="answers">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">What The Index Answers</span>
+        </div>
+        <h2 class="display">Specific questions, <span class="accent">not generic AI maturity.</span></h2>
+        <p>
+          The Index is built to answer the questions that show up in board decks, investment
+          committees, and DD checklists. A few examples of what we pull for a typical walkthrough.
+        </p>
+      </div>
+
+      <div class="answer-grid">
+        {answers.map((a) => (
+          <article class="answer-card">
+            <h4>{a.title}</h4>
+            <p>{a.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="how">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">How It Works</span>
+        </div>
+        <h2 class="display">Three steps, <span class="accent">about a week.</span></h2>
+      </div>
+
+      <div class="steps">
+        {steps.map((s) => (
+          <article class="step-card">
+            <div class="step-num">{s.label}</div>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ground-rules">
+    <div class="container">
+      <div class="ground-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-label">Ground Rules</span>
+          </div>
+          <h2 class="display">What we share, <span class="accent">and what we don't.</span></h2>
+        </div>
+        <div class="ground-points">
+          {groundRules.map((g) => (
+            <div class="ground-points-item">
+              <div class="ground-icon">{g.num}</div>
+              <div>
+                <h4>{g.title}</h4>
+                <p>{g.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" class="final-cta">
+    <div class="container final-cta-inner">
+      <div class="final-cta-mark">✦</div>
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">Walkthrough Request</span>
+      </div>
+      <h2 class="display">See what the data says <span class="accent">about your situation.</span></h2>
+      <p>
+        Email Arno with one paragraph of context. We confirm fit, do the prep, and put a
+        45-minute slot in your calendar.
+      </p>
+      <a class="btn btn-teal" href={walkthroughMailto}>Book a walkthrough</a>
+      <div class="final-cta-after">No email wall. No follow-up spam.</div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    margin-top: var(--nav-height);
+    padding: 96px 0 80px; text-align: center;
+  }
+  .hero-inner { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+  .hero-inner h1 { margin: 0 0 24px; }
+  .hero-sub {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 19px; color: var(--body-text); line-height: 1.55;
+    max-width: 680px; margin: 0 auto 36px;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ANSWERS */
+  .answers { background: var(--soft-bg); }
+  .answer-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .answer-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px;
+    box-shadow: var(--shadow);
+    border-left: 3px solid var(--amber);
+  }
+  .answer-card h4 {
+    font-family: var(--font-sans); font-size: 16px; font-weight: 700;
+    color: var(--navy); margin-bottom: 10px; line-height: 1.35;
+  }
+  .answer-card p { font-size: 14px; line-height: 1.65; }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .step-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px 28px;
+    box-shadow: var(--shadow);
+  }
+  .step-num {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 14px; color: var(--teal); font-weight: 600;
+    letter-spacing: 0.3px; margin-bottom: 12px;
+  }
+  .step-card h3 { font-family: var(--font-sans); color: var(--navy); font-size: 18px; margin-bottom: 12px; }
+  .step-card p { font-size: 14.5px; line-height: 1.65; }
+
+  /* GROUND RULES */
+  .ground-rules { background: var(--soft-bg); }
+  .ground-grid {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start;
+  }
+  .ground-grid h2 { margin-top: 0; }
+  .ground-points { display: grid; gap: 28px; }
+  .ground-points-item {
+    display: grid; grid-template-columns: 36px 1fr; gap: 20px; align-items: start;
+  }
+  .ground-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--light-blue); color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-serif); font-style: italic;
+    font-weight: 600; font-size: 14px;
+  }
+  .ground-points h4 { font-family: var(--font-sans); color: var(--navy); font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .ground-points p { font-size: 15px; }
+
+  /* FINAL CTA */
+  .final-cta { background: var(--navy); color: #fff; padding: 120px 0; }
+  .final-cta-inner { text-align: center; max-width: 720px; margin: 0 auto; padding: 0 40px; }
+  .final-cta-mark { font-family: var(--font-serif); font-size: 28px; color: var(--teal); margin-bottom: 20px; }
+  .final-cta .eyebrow { justify-content: center; margin-bottom: 22px; }
+  .final-cta .eyebrow-line { background: rgba(255, 255, 255, 0.4); }
+  .final-cta .eyebrow-label { color: rgba(255, 255, 255, 0.6); }
+  .final-cta h2 { color: #fff; margin-bottom: 24px; }
+  .final-cta h2 .accent { color: var(--teal); }
+  .final-cta p {
+    font-family: var(--font-serif); font-weight: 400;
+    color: rgba(255, 255, 255, 0.78); margin: 0 auto 36px;
+    font-size: 18px; max-width: 560px; line-height: 1.55;
+  }
+  .final-cta .btn-teal { padding: 18px 44px; font-size: 13px; }
+  .final-cta-after {
+    margin-top: 22px; font-family: var(--font-serif); font-style: italic;
+    font-size: 13px; color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 880px) {
+    .answer-grid, .steps { grid-template-columns: 1fr; gap: 24px; }
+    .ground-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>

@@ -1,0 +1,17 @@
+{
+  "name": "avf-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI Value Firm — masterbrand website (Exit Readiness service, AI Value Brief newsletter, AI Value Index database)",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.16.0"
+  }
+}

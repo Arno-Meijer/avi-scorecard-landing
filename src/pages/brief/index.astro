@@ -1,0 +1,235 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const threads = [
+  {
+    num: 'i.',
+    title: 'AI Value Evidence',
+    body: 'Hard data from the AI Value Index. Use case impact, deployment depth, ROI distributions across sectors and functions.',
+  },
+  {
+    num: 'ii.',
+    title: 'Strategic Frameworks',
+    body: 'Original decision frameworks for AI investment, exit prep, and portfolio management. Originals, not rehashes of consultancy templates.',
+  },
+  {
+    num: 'iii.',
+    title: 'Implementation Reality',
+    body: 'Honest case studies. What worked. What burnt cash. What got rolled back at month twelve and why.',
+  },
+  {
+    num: 'iv.',
+    title: 'AI Value Outlook',
+    body: 'Trend analysis and market commentary. The signal under the hype. Forward-looking, contrarian where the data supports it.',
+  },
+];
+
+// Placeholder issue headlines. Replace with real ones once issues are live.
+const recentIssues = [
+  { meta: 'Issue 14', headline: 'When does an AI feature actually improve gross margin? Notes from 30 SaaS deals.' },
+  { meta: 'Issue 13', headline: 'The hidden AI cost in mid-market SaaS, and what it does to your multiple.' },
+  { meta: 'Issue 12', headline: 'Why some AI deployments are silently rolled back at month twelve.' },
+  { meta: 'Issue 11', headline: 'A PE valuation framework for scoring AI in due diligence, in five pillars.' },
+];
+---
+<Base
+  title="AI Value Brief. Weekly read on AI and company valuations."
+  description="One email a week. The deals, multiples, and frameworks that explain how AI is actually moving company valuations. Written by us."
+  current="brief"
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">Newsletter · Weekly</span>
+      </div>
+      <h1 class="display">AI Value <span class="accent">Brief.</span></h1>
+      <p class="hero-sub">
+        One email a week. The deals, multiples, and frameworks that explain how AI is actually
+        moving company valuations. Written by two former EY-Parthenon consultants. No reposted
+        vendor PR.
+      </p>
+
+      <form class="hero-signup" action="/api/submit" method="post" aria-label="Subscribe to the AI Value Brief">
+        <input type="hidden" name="action" value="landing" />
+        <input type="hidden" name="source" value="brief-landing" />
+        <input type="email" name="email" placeholder="you@company.com" required aria-label="Email address" />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+      <p class="hero-meta">
+        Free. Unsubscribe in one click. We only use your email for the Brief.
+      </p>
+    </div>
+  </section>
+
+  <section class="threads">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">What To Expect</span>
+        </div>
+        <h2 class="display">Four threads. <span class="accent">One editorial line.</span></h2>
+      </div>
+
+      <div class="threads-grid">
+        {threads.map((t) => (
+          <article class="thread-card">
+            <div class="thread-num">{t.num}</div>
+            <h3>{t.title}</h3>
+            <p>{t.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="recent">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow center">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-label">Recent Issues</span>
+        </div>
+        <h2 class="display">A few headlines <span class="accent">from this quarter.</span></h2>
+        <p>
+          A taste of what lands in your inbox. Subscribers get the full archive on signup.
+        </p>
+      </div>
+
+      <div class="issues-list">
+        {recentIssues.map((i) => (
+          <div class="issue-item">
+            <span class="issue-meta">{i.meta}</span>
+            <span class="issue-headline">{i.headline}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="final-cta-inner">
+      <div class="final-cta-mark">✦</div>
+      <div class="eyebrow center">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-label">One Email A Week</span>
+      </div>
+      <h2 class="display">Subscribe to the <span class="accent">Brief.</span></h2>
+      <p>
+        The signal under the hype, delivered every Thursday morning. Written by us, for founders
+        and investors who care about the numbers behind AI claims.
+      </p>
+      <form class="final-cta-form" action="/api/submit" method="post">
+        <input type="hidden" name="action" value="landing" />
+        <input type="hidden" name="source" value="brief-final-cta" />
+        <input type="email" name="email" placeholder="you@company.com" required aria-label="Email address" />
+        <button type="submit" class="btn btn-teal">Subscribe</button>
+      </form>
+      <div class="final-cta-after">No email wall. No follow-up spam. One email a week.</div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    margin-top: var(--nav-height);
+    padding: 96px 0 80px; text-align: center;
+  }
+  .hero-inner { max-width: 720px; margin: 0 auto; padding: 0 40px; }
+  .hero-inner h1 { margin: 0 0 24px; }
+  .hero-sub {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 19px; color: var(--body-text); line-height: 1.55;
+    max-width: 600px; margin: 0 auto 36px;
+  }
+  .hero-signup {
+    display: flex; gap: 8px; max-width: 480px; margin: 0 auto 16px;
+  }
+  .hero-signup input {
+    flex: 1; padding: 16px 20px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill); font-size: 14px; font-family: inherit;
+    background: var(--card-bg); min-width: 0;
+  }
+  .hero-signup input:focus { outline: none; border-color: var(--teal); }
+  .hero-signup button { padding: 16px 28px; }
+  .hero-meta {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 14px; color: var(--muted);
+  }
+
+  /* THREADS */
+  .threads { background: var(--soft-bg); }
+  .threads-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    max-width: 980px; margin: 0 auto;
+  }
+  .thread-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px 28px;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 12px;
+    border-top: 3px solid var(--teal);
+  }
+  .thread-num {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 13px; color: var(--teal); margin-bottom: 4px;
+  }
+  .thread-card h3 { font-family: var(--font-sans); color: var(--navy); font-size: 19px; }
+  .thread-card p { font-size: 14.5px; line-height: 1.65; }
+
+  /* RECENT ISSUES */
+  .issues-list { display: grid; gap: 12px; max-width: 820px; margin: 0 auto; }
+  .issue-item {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 26px;
+    display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: center;
+  }
+  .issue-meta {
+    font-family: var(--font-sans); font-size: 11px; font-weight: 700;
+    letter-spacing: 1.2px; color: var(--muted); text-transform: uppercase;
+  }
+  .issue-headline {
+    font-family: var(--font-serif);
+    font-size: 17px; color: var(--navy); line-height: 1.4; font-weight: 500;
+    font-variation-settings: "opsz" 24;
+  }
+
+  /* FINAL CTA */
+  .final-cta { background: var(--navy); color: #fff; padding: 120px 0; }
+  .final-cta-inner { text-align: center; max-width: 720px; margin: 0 auto; padding: 0 40px; }
+  .final-cta-mark { font-family: var(--font-serif); font-size: 28px; color: var(--teal); margin-bottom: 20px; }
+  .final-cta .eyebrow { justify-content: center; margin-bottom: 22px; }
+  .final-cta .eyebrow-line { background: rgba(255, 255, 255, 0.4); }
+  .final-cta .eyebrow-label { color: rgba(255, 255, 255, 0.6); }
+  .final-cta h2 { color: #fff; margin-bottom: 24px; }
+  .final-cta h2 .accent { color: var(--teal); }
+  .final-cta p {
+    font-family: var(--font-serif); font-weight: 400;
+    color: rgba(255, 255, 255, 0.78); margin: 0 auto 36px;
+    font-size: 18px; max-width: 560px; line-height: 1.55;
+  }
+  .final-cta-form { display: flex; gap: 8px; max-width: 480px; margin: 0 auto; }
+  .final-cta-form input {
+    flex: 1; padding: 16px 20px; border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-pill); font-size: 14px;
+    background: rgba(255,255,255,0.05); color: #fff;
+    font-family: inherit; min-width: 0;
+  }
+  .final-cta-form input::placeholder { color: rgba(255,255,255,0.4); }
+  .final-cta-form input:focus { outline: none; border-color: var(--teal); }
+  .final-cta-form button { padding: 16px 28px; font-size: 12px; }
+  .final-cta-after {
+    margin-top: 22px; font-family: var(--font-serif); font-style: italic;
+    font-size: 13px; color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (max-width: 880px) {
+    .threads-grid { grid-template-columns: 1fr; gap: 24px; }
+    .issue-item { grid-template-columns: 1fr; gap: 8px; padding: 18px 22px; }
+  }
+  @media (max-width: 520px) {
+    .hero-signup, .final-cta-form { flex-direction: column; }
+    .hero-signup button, .final-cta-form button { width: 100%; }
+  }
+</style>
