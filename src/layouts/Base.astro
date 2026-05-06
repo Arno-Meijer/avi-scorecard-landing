@@ -18,6 +18,7 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://aivaluefirm.com').toString();
+const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://aivaluefirm.com').toString();
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -34,13 +35,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://aivaluefirm
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Fonts: Inter (UI/body) + Newsreader (editorial display) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
