@@ -78,11 +78,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://aivaluefirm
               var payload = {};
               formData.forEach(function (v, k) { payload[k] = v; });
 
+              // UTM tracking from URL params
+              try {
+                var urlParams = new URLSearchParams(window.location.search);
+                ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (key) {
+                  var val = urlParams.get(key);
+                  if (val) payload[key] = val;
+                });
+              } catch (err) { /* URLSearchParams unsupported, skip */ }
+              payload.landing_url = window.location.href;
+
+              // Turnstile token
               var tokenInput = form.querySelector('[name="cf-turnstile-response"]');
               if (tokenInput && tokenInput.value) {
                 payload.turnstileToken = tokenInput.value;
               }
 
+              // Unique ID for server-side dedup
               payload.submission_id =
                 (Date.now().toString(36) + Math.random().toString(36).slice(2, 8));
 
@@ -94,6 +106,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://aivaluefirm
                 .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
                 .then(function (result) {
                   if (result.ok) {
+                    // Clean up Turnstile widget before form replacement
+                    var widget = form.querySelector('.cf-turnstile');
+                    if (widget && window.turnstile && window.turnstile.remove) {
+                      try { window.turnstile.remove(widget); } catch (err) { /* ignore */ }
+                    }
                     showSuccess(form);
                   } else {
                     showError(form, result.data && result.data.error ? result.data.error : 'Something went wrong. Please try again.');
