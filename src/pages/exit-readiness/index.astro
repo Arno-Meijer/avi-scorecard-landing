@@ -53,8 +53,7 @@ const deliverables = [
   },
 ];
 
-const callMailto =
-  'mailto:hello@aivaluefirm.com?subject=AI%20Exit%20Readiness%20call&body=Sector%3A%20%0AStage%3A%20%0ATime%20to%20exit%3A%20%0AWhat%20I%27m%20trying%20to%20figure%20out%3A%20';
+const callUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-review';
 ---
 <Base
   title="AI Exit Readiness. Two weeks. Five pillars. One verdict."
@@ -75,7 +74,7 @@ const callMailto =
       </p>
       <div class="hero-ctas">
         <a href="/exit-readiness/scorecard" class="btn btn-primary">Start with the free scorecard</a>
-        <a href={callMailto} class="btn btn-secondary">Book a call</a>
+        <a href={callUrl} target="_blank" rel="noopener" class="btn btn-secondary">Book a call</a>
       </div>
     </div>
   </section>
@@ -182,7 +181,7 @@ const callMailto =
         30-minute discovery call with Arno or Christan. Tell us where you sit and what you are
         trying to figure out. We tell you what we would actually do.
       </p>
-      <a class="btn btn-teal" href={callMailto}>Book a call</a>
+      <a class="btn btn-teal" href={callUrl} target="_blank" rel="noopener">Book a call</a>
       <div class="final-cta-after">No email wall. No follow-up spam.</div>
     </div>
   </section>

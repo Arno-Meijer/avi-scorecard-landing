@@ -70,8 +70,7 @@ const formats = [
   },
 ];
 
-const fitMailto =
-  'mailto:hello@aivaluefirm.com?subject=Advisory%20fit%20call&body=Sector%3A%20%0AStage%3A%20%0AAI%20question%3A%20%0AIdeal%20format%3A%20';
+const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-review';
 ---
 <Base
   title="AI Value Advisory. AI work that has to pay off."
@@ -91,7 +90,7 @@ const fitMailto =
         For everyone who is not 12 months from exit.
       </p>
       <div class="hero-ctas">
-        <a href={fitMailto} class="btn btn-primary">Book a fit call</a>
+        <a href={fitUrl} target="_blank" rel="noopener" class="btn btn-primary">Book a fit call</a>
         <a href="#formats" class="btn btn-secondary">See engagement formats</a>
       </div>
     </div>
@@ -149,7 +148,7 @@ const fitMailto =
             <ul>
               {f.items.map((item) => <li>{item}</li>)}
             </ul>
-            <a href={fitMailto} class="format-cta">Book a fit call →</a>
+            <a href={fitUrl} target="_blank" rel="noopener" class="format-cta">Book a fit call →</a>
           </article>
         ))}
       </div>
@@ -205,7 +204,7 @@ const fitMailto =
         30-minute fit call. We hear what you are trying to do, you hear what we would actually run.
         We confirm fit before either of us scope anything. No pitch.
       </p>
-      <a class="btn btn-teal" href={fitMailto}>Book a fit call</a>
+      <a class="btn btn-teal" href={fitUrl} target="_blank" rel="noopener">Book a fit call</a>
       <div class="final-cta-after">No email wall. No follow-up spam.</div>
     </div>
   </section>

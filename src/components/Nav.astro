@@ -9,8 +9,7 @@ const links = [
   { href: '/brief', label: 'Brief', key: 'brief' },
   { href: '/value-index', label: 'Index', key: 'value-index' },
 ];
-const callMailto =
-  'mailto:hello@aivaluefirm.com?subject=Discovery%20call&body=Sector%3A%20%0AStage%3A%20%0AWhat%20I%27m%20trying%20to%20figure%20out%3A%20%0AIdeal%20timing%3A%20';
+const callUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-review';
 ---
 <nav class="site-nav">
   <a href="/" class="nav-brand" aria-label="AI Value Firm">
@@ -25,7 +24,7 @@ const callMailto =
       <li><a href={l.href} class:list={[{ active: current === l.key }]}>{l.label}</a></li>
     ))}
   </ul>
-  <a href={callMailto} class="btn btn-primary nav-cta">Book a call</a>
+  <a href={callUrl} target="_blank" rel="noopener" class="btn btn-primary nav-cta">Book a call</a>
 </nav>
 
 <style>
