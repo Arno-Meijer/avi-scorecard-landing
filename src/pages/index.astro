@@ -97,11 +97,19 @@ const callMailto =
           operators, and investors put real numbers on what AI is doing to their business.
         </p>
 
-        <form class="hero-signup" action="/api/submit" method="post" aria-label="Subscribe to the AI Value Brief">
+        <form
+          class="hero-signup"
+          action="/api/submit"
+          method="post"
+          aria-label="Subscribe to the AI Value Brief"
+          data-avf-submit
+          data-avf-success="Subscribed. Look out for the Brief on Thursday."
+        >
           <input type="hidden" name="action" value="landing" />
           <input type="hidden" name="source" value="home-hero" />
           <input type="email" name="email" placeholder="you@company.com" required aria-label="Email address" />
           <button type="submit" class="btn btn-primary">Subscribe</button>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="invisible"></div>
         </form>
 
         <p class="hero-meta">

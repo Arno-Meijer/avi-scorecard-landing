@@ -50,11 +50,19 @@ const recentIssues = [
         vendor PR.
       </p>
 
-      <form class="hero-signup" action="/api/submit" method="post" aria-label="Subscribe to the AI Value Brief">
+      <form
+        class="hero-signup"
+        action="/api/submit"
+        method="post"
+        aria-label="Subscribe to the AI Value Brief"
+        data-avf-submit
+        data-avf-success="Subscribed. Look out for the Brief on Thursday."
+      >
         <input type="hidden" name="action" value="landing" />
         <input type="hidden" name="source" value="brief-landing" />
         <input type="email" name="email" placeholder="you@company.com" required aria-label="Email address" />
         <button type="submit" class="btn btn-primary">Subscribe</button>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="invisible"></div>
       </form>
       <p class="hero-meta">
         Free. Unsubscribe in one click. We only use your email for the Brief.
@@ -120,11 +128,19 @@ const recentIssues = [
         The signal under the hype, delivered every Thursday morning. Written by us, for founders
         and investors who care about the numbers behind AI claims.
       </p>
-      <form class="final-cta-form" action="/api/submit" method="post">
+      <form
+        class="final-cta-form"
+        action="/api/submit"
+        method="post"
+        aria-label="Subscribe to the AI Value Brief"
+        data-avf-submit
+        data-avf-success="Subscribed. Look out for the Brief on Thursday."
+      >
         <input type="hidden" name="action" value="landing" />
         <input type="hidden" name="source" value="brief-final-cta" />
         <input type="email" name="email" placeholder="you@company.com" required aria-label="Email address" />
         <button type="submit" class="btn btn-teal">Subscribe</button>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="invisible"></div>
       </form>
       <div class="final-cta-after">No email wall. No follow-up spam. One email a week.</div>
     </div>

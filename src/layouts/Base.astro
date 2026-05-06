@@ -49,6 +49,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://aivaluefirm
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Cloudflare Turnstile (bot protection on landing forms) -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
   </head>
   <body>
     <Nav current={current} />
@@ -56,5 +59,103 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://aivaluefirm
       <slot />
     </main>
     <Footer />
+
+    <!-- Global form submit handler — handles all forms with data-avf-submit -->
+    <script is:inline>
+      (function () {
+        function attach() {
+          var forms = document.querySelectorAll('form[data-avf-submit]');
+          forms.forEach(function (form) {
+            if (form.dataset.avfBound) return;
+            form.dataset.avfBound = '1';
+            form.addEventListener('submit', function (e) {
+              e.preventDefault();
+              var btn = form.querySelector('button[type="submit"]');
+              var originalLabel = btn ? btn.textContent : '';
+              if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+              var formData = new FormData(form);
+              var payload = {};
+              formData.forEach(function (v, k) { payload[k] = v; });
+
+              var tokenInput = form.querySelector('[name="cf-turnstile-response"]');
+              if (tokenInput && tokenInput.value) {
+                payload.turnstileToken = tokenInput.value;
+              }
+
+              payload.submission_id =
+                (Date.now().toString(36) + Math.random().toString(36).slice(2, 8));
+
+              fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              })
+                .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+                .then(function (result) {
+                  if (result.ok) {
+                    showSuccess(form);
+                  } else {
+                    showError(form, result.data && result.data.error ? result.data.error : 'Something went wrong. Please try again.');
+                    if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+                  }
+                })
+                .catch(function () {
+                  showError(form, 'Network error. Please try again.');
+                  if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+                });
+            });
+          });
+        }
+
+        function showSuccess(form) {
+          var msg = form.dataset.avfSuccess || 'Subscribed. Check your inbox for the next issue.';
+          var holder = document.createElement('div');
+          holder.className = 'avf-form-success';
+          holder.setAttribute('role', 'status');
+          holder.textContent = msg;
+          form.replaceWith(holder);
+        }
+
+        function showError(form, message) {
+          var existing = form.querySelector('.avf-form-error');
+          if (existing) existing.remove();
+          var err = document.createElement('div');
+          err.className = 'avf-form-error';
+          err.setAttribute('role', 'alert');
+          err.textContent = message;
+          form.appendChild(err);
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', attach);
+        } else {
+          attach();
+        }
+      })();
+    </script>
+
+    <style is:global>
+      .avf-form-success {
+        max-width: 460px;
+        margin: 0 auto 14px;
+        padding: 14px 22px;
+        background: var(--light-teal, #E8F5F3);
+        color: #0F6E56;
+        border-radius: var(--radius-pill, 100px);
+        font-family: var(--font-sans, 'Inter', sans-serif);
+        font-size: 14px; font-weight: 600;
+        text-align: center;
+      }
+      .avf-form-error {
+        margin-top: 12px;
+        padding: 10px 16px;
+        background: #FCEBEB;
+        color: #A32D2D;
+        border-radius: 10px;
+        font-family: var(--font-sans, 'Inter', sans-serif);
+        font-size: 13px; font-weight: 500;
+      }
+    </style>
   </body>
 </html>
