@@ -38,7 +38,7 @@ const formats = [
       'Build vs buy on a specific use case',
       'Strategy for a new vertical or function',
       'Stress-test of an AI investment thesis',
-      'Fixed scope, fixed fee, written deliverable',
+      'Written deliverable at the end',
     ],
     featured: false,
   },
@@ -51,7 +51,7 @@ const formats = [
       'Defined initiative or AI investment',
       'Monthly board updates',
       'Quarterly outcome review',
-      'Fixed scope, milestone-based fees',
+      'Scoped together on a fit call',
     ],
     featured: true,
   },
@@ -64,7 +64,7 @@ const formats = [
       'Board prep, deal review, vendor decisions',
       'AI questions across a portfolio',
       'Quarterly strategic readout',
-      'Retainer-based, three-month minimum',
+      'Three-month minimum, monthly retainer',
     ],
     featured: false,
   },
@@ -149,6 +149,7 @@ const fitMailto =
             <ul>
               {f.items.map((item) => <li>{item}</li>)}
             </ul>
+            <a href={fitMailto} class="format-cta">Book a fit call →</a>
           </article>
         ))}
       </div>
@@ -278,7 +279,7 @@ const fitMailto =
     font-family: var(--font-serif); font-style: italic;
     font-size: 14px; color: var(--teal); margin-bottom: 20px;
   }
-  .format-card ul { list-style: none; padding: 0; margin: 0; }
+  .format-card ul { list-style: none; padding: 0; margin: 0 0 24px; }
   .format-card li {
     position: relative; padding-left: 22px;
     font-size: 14px; line-height: 1.6; color: var(--body-text);
@@ -288,6 +289,17 @@ const fitMailto =
     content: ""; position: absolute; left: 0; top: 9px;
     width: 6px; height: 6px; background: var(--teal); border-radius: 50%;
   }
+  .format-cta {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-weight: 700; font-size: 13px; letter-spacing: 0.3px;
+    color: var(--navy);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    transition: color 0.15s;
+  }
+  .format-cta:hover { color: var(--teal); }
 
   /* WHO IT IS FOR */
   .who-for { background: var(--soft-bg); }
