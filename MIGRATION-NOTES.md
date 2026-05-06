@@ -24,7 +24,7 @@ Status: v4 design fully migrated to Astro on 2026-05-06. Build verified, all 6 r
 1. **Sample issue headlines op /brief** — fictieve placeholders. Vervangen met echte zodra eerste paar issues live zijn.
 2. **Engagement format prijzen op /advisory** — bewust niet getoond. Toevoegen als Arno+Christan transparant willen zijn over startbedragen.
 3. **Pillar buyer-quotes op /exit-readiness** — door me geschreven om de pillars te verlevendigen. Vervangen door echte quotes uit DD-werk of weghalen als ze niet authentiek klinken.
-4. **Founder LinkedIn URLs** in `index.astro` — nu `linkedin.com/in/arnomeijer` en `linkedin.com/in/christandoornhof` als best-guess. Verifiëren.
+4. ~~**Founder LinkedIn URLs**~~ — Verified 2026-05-06: `linkedin.com/in/christan-doornhof/` en `linkedin.com/in/arnomeijer1/`.
 
 ### Technisch / backend
 5. **n8n tagging** — backend config bij Christan voor `source=home-hero`, `source=brief-landing`, `source=brief-final-cta`. Site werkt zonder, leads landen alleen ongetagd in Pipedrive.
