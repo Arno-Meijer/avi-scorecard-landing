@@ -24,12 +24,12 @@ const threads = [
   },
 ];
 
-// Placeholder issue headlines. Replace with real ones once issues are live.
-const recentIssues = [
-  { meta: 'Issue 14', headline: 'When does an AI feature actually improve gross margin? Notes from 30 SaaS deals.' },
-  { meta: 'Issue 13', headline: 'The hidden AI cost in mid-market SaaS, and what it does to your multiple.' },
-  { meta: 'Issue 12', headline: 'Why some AI deployments are silently rolled back at month twelve.' },
-  { meta: 'Issue 11', headline: 'A PE valuation framework for scoring AI in due diligence, in five pillars.' },
+// Pipeline preview. Replace with real issue archive once issues ship.
+const pipeline = [
+  { meta: 'Topic 01', headline: 'When does an AI feature actually improve gross margin? Notes from 30 SaaS deals.' },
+  { meta: 'Topic 02', headline: 'The hidden AI cost in mid-market SaaS, and what it does to your multiple.' },
+  { meta: 'Topic 03', headline: 'Why some AI deployments are silently rolled back at month twelve.' },
+  { meta: 'Topic 04', headline: 'A PE valuation framework for scoring AI in due diligence, in five pillars.' },
 ];
 ---
 <Base
@@ -41,31 +41,31 @@ const recentIssues = [
     <div class="hero-inner">
       <div class="eyebrow center">
         <span class="eyebrow-line"></span>
-        <span class="eyebrow-label">Newsletter · Weekly</span>
+        <span class="eyebrow-label">Newsletter · Launching Soon</span>
       </div>
       <h1 class="display">AI Value <span class="accent">Brief.</span></h1>
       <p class="hero-sub">
-        One email a week. The deals, multiples, and frameworks that explain how AI is actually
-        moving company valuations. Written by two former EY-Parthenon consultants. No reposted
-        vendor PR.
+        The deals, multiples, and frameworks that explain how AI is actually moving company
+        valuations. Written by two former EY-Parthenon consultants. No reposted vendor PR.
+        We're launching soon. Get on the founding list.
       </p>
 
       <form
         class="hero-signup"
         action="/api/submit"
         method="post"
-        aria-label="Subscribe to the AI Value Brief"
+        aria-label="Join the founding list for the AI Value Brief"
         data-avf-submit
-        data-avf-success="Subscribed. Look out for the Brief on Thursday."
+        data-avf-success="On the list. We'll send the first issue when we launch."
       >
         <input type="hidden" name="action" value="landing" />
         <input type="hidden" name="source" value="brief-landing" />
         <input type="email" name="email" placeholder="you@company.com" required aria-label="Email address" />
-        <button type="submit" class="btn btn-primary">Subscribe</button>
+        <button type="submit" class="btn btn-primary">Join the list</button>
         <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="invisible"></div>
       </form>
       <p class="hero-meta">
-        Free. Unsubscribe in one click. We only use your email for the Brief.
+        Free. Unsubscribe in one click. The first issue lands when we ship.
       </p>
     </div>
   </section>
@@ -97,16 +97,17 @@ const recentIssues = [
       <div class="section-intro">
         <div class="eyebrow center">
           <span class="eyebrow-line"></span>
-          <span class="eyebrow-label">Recent Issues</span>
+          <span class="eyebrow-label">In The Pipeline</span>
         </div>
-        <h2 class="display">A few headlines <span class="accent">from this quarter.</span></h2>
+        <h2 class="display">A preview of <span class="accent">what we're starting with.</span></h2>
         <p>
-          A taste of what lands in your inbox. Subscribers get the full archive on signup.
+          The editorial direction for the first issues. Subscribers on the founding list get
+          the first one in their inbox, and the archive that builds from there.
         </p>
       </div>
 
       <div class="issues-list">
-        {recentIssues.map((i) => (
+        {pipeline.map((i) => (
           <div class="issue-item">
             <span class="issue-meta">{i.meta}</span>
             <span class="issue-headline">{i.headline}</span>
@@ -121,28 +122,28 @@ const recentIssues = [
       <div class="final-cta-mark">✦</div>
       <div class="eyebrow center">
         <span class="eyebrow-line"></span>
-        <span class="eyebrow-label">One Email A Week</span>
+        <span class="eyebrow-label">Founding List</span>
       </div>
-      <h2 class="display">Subscribe to the <span class="accent">Brief.</span></h2>
+      <h2 class="display">Get the first issue <span class="accent">in your inbox.</span></h2>
       <p>
-        The signal under the hype, delivered every Thursday morning. Written by us, for founders
+        The signal under the hype, delivered weekly once we ship. Written by us, for founders
         and investors who care about the numbers behind AI claims.
       </p>
       <form
         class="final-cta-form"
         action="/api/submit"
         method="post"
-        aria-label="Subscribe to the AI Value Brief"
+        aria-label="Join the founding list for the AI Value Brief"
         data-avf-submit
-        data-avf-success="Subscribed. Look out for the Brief on Thursday."
+        data-avf-success="On the list. We'll send the first issue when we launch."
       >
         <input type="hidden" name="action" value="landing" />
         <input type="hidden" name="source" value="brief-final-cta" />
         <input type="email" name="email" placeholder="you@company.com" required aria-label="Email address" />
-        <button type="submit" class="btn btn-teal">Subscribe</button>
+        <button type="submit" class="btn btn-teal">Join the list</button>
         <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="invisible"></div>
       </form>
-      <div class="final-cta-after">No email wall. No follow-up spam. One email a week.</div>
+      <div class="final-cta-after">No email wall. No follow-up spam. The first issue when we ship.</div>
     </div>
   </section>
 </Base>
