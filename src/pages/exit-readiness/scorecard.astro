@@ -1361,6 +1361,7 @@ body { background: var(--bg); }
     <form class="email-gate-form" id="gateForm">
       <input type="email" id="gateEmail" placeholder="you@company.com" required aria-label="Email address" />
       <button type="submit">Start scorecard →</button>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACggX5UqhEOHOx_L" data-size="invisible"></div>
     </form>
     <div class="email-gate-fine">No follow-up spam. Free.</div>
     <div class="email-gate-error" id="gateError" style="display:none;"></div>
@@ -1615,15 +1616,19 @@ body { background: var(--bg); }
       var email = input.value.trim();
       if (!email) return;
 
-      btn.disabled = true; btn.textContent = 'Loading…';
+      btn.disabled = true; btn.textContent = 'Verifying…';
       errBox.style.display = 'none';
 
-      // Capture lead immediately. Don't block UX on response — reveal scorecard either way.
+      // Read Turnstile token from the hidden input the widget injects
+      var tokenInput = form.querySelector('[name="cf-turnstile-response"]');
+      var turnstileToken = tokenInput ? tokenInput.value : '';
+
       var urlParams = new URLSearchParams(window.location.search);
       var payload = {
         action: 'landing',
         source: 'scorecard-gate',
         email: email,
+        turnstileToken: turnstileToken,
         submission_id: (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)),
         landing_url: window.location.href,
         utm_source: urlParams.get('utm_source') || '',
@@ -1637,18 +1642,29 @@ body { background: var(--bg); }
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(function () { /* ignore — reveal anyway */ });
+      })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (!result.ok) {
+            // Surface the error instead of silently revealing
+            errBox.textContent = (result.data && result.data.error) || 'Something went wrong. Please try again.';
+            errBox.style.display = 'block';
+            btn.disabled = false; btn.textContent = 'Start scorecard →';
+            return;
+          }
 
-      // Make email available to the legacy scorecard submit
-      window.userEmail = email;
-
-      // Reveal scorecard content
-      document.getElementById('emailGate').style.display = 'none';
-      document.getElementById('scorecardContent').style.display = 'block';
-
-      // Scroll to first scorecard section
-      var first = document.querySelector('.company-bar');
-      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Success: store email for later submit, reveal scorecard
+          window.userEmail = email;
+          document.getElementById('emailGate').style.display = 'none';
+          document.getElementById('scorecardContent').style.display = 'block';
+          var first = document.querySelector('.company-bar');
+          if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        })
+        .catch(function () {
+          errBox.textContent = 'Network error. Please try again.';
+          errBox.style.display = 'block';
+          btn.disabled = false; btn.textContent = 'Start scorecard →';
+        });
     });
   })();
 </script>
