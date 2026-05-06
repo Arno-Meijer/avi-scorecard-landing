@@ -1159,8 +1159,63 @@ footer {
   --border: #EBE5D5;
   --body-text: #5A6273;
   --muted: #8C8576;
+
+  /* Re-map legacy v2 tokens onto v4 cream palette so existing rules
+     that use these variables (intake form bg, eyebrow pills, score
+     pill backgrounds, slate panels) align with the rest of the site. */
+  --light-blue: #F1ECDD;       /* was #EEF2FF — warm cream-tint */
+  --indigo-border: #E5DCC4;    /* was #C7D2FE — warmer */
+  --slate-bg: #F5F0E2;         /* was #F8FAFC */
 }
 body { background: var(--bg); }
+
+/* Apply Newsreader serif to the major display headlines in the wizard
+   and results sections, matching the editorial style of other pages.
+   Functional UI text (form labels, score buttons, badges, etc.) keeps
+   Inter sans because legibility under interaction matters more there. */
+.results-section h1,
+.results-section h2,
+.impact-section h2,
+.cta-section h2,
+.moat-section h3 {
+  font-family: 'Newsreader', Georgia, serif;
+  font-variation-settings: "opsz" 48;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--navy);
+}
+.results-section h1 .light,
+.results-section h2 .light,
+.impact-section h2 .light,
+.cta-section h2 .light {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--teal);
+}
+
+/* Final CTA card in results — match v4 final-cta pattern (navy bg + teal button) */
+.cta-section {
+  background: var(--navy) !important;
+  color: #fff;
+}
+.cta-section h2 { color: #fff !important; }
+.cta-section p { color: rgba(255, 255, 255, 0.78); }
+.cta-section .section-tag {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.65);
+}
+.cta-section .book-call-btn {
+  background: var(--teal) !important;
+  color: var(--navy) !important;
+}
+.cta-section .book-call-btn:hover { background: #009ec2 !important; color: #fff !important; }
+.cta-section .cta-helper {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.4);
+}
 
 /* ===== Editorial hero override (matches v4 style on other pages) ===== */
 .scorecard-hero {
