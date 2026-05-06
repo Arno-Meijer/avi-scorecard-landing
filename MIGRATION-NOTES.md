@@ -29,7 +29,7 @@ Status: v4 design fully migrated to Astro on 2026-05-06. Build verified, all 6 r
 ### Technisch / backend
 5. **n8n tagging** — backend config bij Christan voor `source=home-hero`, `source=brief-landing`, `source=brief-final-cta`. Site werkt zonder, leads landen alleen ongetagd in Pipedrive.
 6. **Calendly upgrade** — alle CTA's gaan nu via mailto. Calendly link integreren als volume groeit.
-7. **Scorecard-v2 lift-and-shift** — `scorecard-v2.html` (88 KB) uit de legacy repo migreren naar `/exit-readiness/scorecard`. Form submission blijft `action=scorecard` posten naar `/api/submit`.
+7. ~~**Scorecard-v2 lift-and-shift**~~ — DONE 2026-05-06. Lifted into `src/pages/exit-readiness/scorecard.astro` with v4 design token overrides. vercel.json rewrite removed; Astro page now serves directly. Legacy `/scorecard.html` retained in `public/` to keep old `/exit-scorecard-form` and `/valuation-scorecard/start` URLs working.
 
 ## Hoe deze code naar GitHub krijgen
 
