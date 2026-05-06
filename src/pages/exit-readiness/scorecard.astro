@@ -1,11 +1,19 @@
 ---
 import Base from '../../layouts/Base.astro';
 // AI Valuation Impact Scan — 5-pillar wizard scoring tool.
-// Lifted from legacy scorecard-v2.html (88 KB inline HTML+CSS+JS) into the
-// Astro Base layout so it inherits the v4 nav, footer, and shared chrome.
-// Legacy CSS preserved wholesale; v4 design tokens overridden at the end of
-// the style block so the cream/navy/Newsreader palette wins the cascade.
-// Form posts to /api/submit with action=scorecard (unchanged from legacy).
+// Lifted from legacy scorecard-v2.html into the Astro Base layout.
+//
+// Two adaptations on top of the lift-and-shift:
+// 1. Sub-nav strip below Astro nav re-creates the legacy progress/score
+//    elements (navProgress, navProgressBar, navScore, navPill) that the
+//    scoring JS updates as users answer questions.
+// 2. Email gate: scorecard content is hidden until the user submits an
+//    email. Gate posts to /api/submit (action=landing, source=scorecard-gate)
+//    so the lead is captured before they invest 10 minutes in the wizard.
+//    The legacy JS (which reads email from ?email= URL param) is patched
+//    to also read window.userEmail set by the gate handler.
+//
+// Form submit at the end posts to /api/submit (action=scorecard) — unchanged.
 ---
 <Base
   title="AI Valuation Impact Scan. 5 to 10 minutes. Indicative multiples at the end."
@@ -1141,7 +1149,7 @@ footer {
   .results-section, .cta-section { break-inside: avoid; }
 }
 
-/* ===== v4 design token overrides (cream + deeper navy + warmer borders) ===== */
+/* ===== v4 design token overrides ===== */
 :root {
   --navy: #0D1527;
   --mid-navy: #1B2540;
@@ -1154,15 +1162,155 @@ footer {
 }
 body { background: var(--bg); }
 section.hero { padding-top: 32px; }
+
+/* ===== Scorecard sub-nav (progress + score pill, sticky below Astro nav) ===== */
+.scorecard-subnav {
+  position: sticky;
+  top: 64px;
+  z-index: 50;
+  background: rgba(253, 251, 246, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.scorecard-subnav .nav-progress-bar {
+  flex: 1;
+  max-width: 240px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.scorecard-subnav .nav-progress-bar .fill {
+  height: 100%;
+  width: 0;
+  background: var(--teal);
+  transition: width 0.25s ease;
+}
+.scorecard-subnav .nav-score-pill {
+  margin-left: auto;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--light-teal);
+  color: #0F6E56;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* ===== Email gate ===== */
+.email-gate {
+  max-width: 560px;
+  margin: 24px auto 80px;
+  padding: 0 24px;
+}
+.email-gate-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px 36px;
+  box-shadow: 0 8px 32px rgba(13, 21, 39, 0.08);
+  text-align: center;
+}
+.email-gate-eyebrow {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 14px;
+}
+.email-gate-card h2 {
+  font-family: 'Newsreader', Georgia, serif;
+  font-variation-settings: "opsz" 36;
+  font-size: 32px; font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--navy);
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+.email-gate-card h2 em {
+  font-style: italic; color: var(--teal); font-weight: 500;
+}
+.email-gate-card .gate-sub {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 16px; line-height: 1.55; color: var(--body-text);
+  margin-bottom: 28px;
+}
+.email-gate-form {
+  display: flex; gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.email-gate-form input {
+  flex: 1;
+  min-width: 200px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  font-family: inherit; font-size: 14px;
+  background: #fff;
+}
+.email-gate-form input:focus { outline: none; border-color: var(--teal); }
+.email-gate-form button {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 100px;
+  background: var(--navy); color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700; font-size: 13px;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s;
+}
+.email-gate-form button:hover { background: #000; transform: translateY(-1px); }
+.email-gate-form button[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
+.email-gate-fine {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic; font-size: 13px; color: var(--muted);
+}
+.email-gate-error {
+  margin-top: 14px;
+  padding: 10px 16px;
+  background: #FEF2F2;
+  color: #A32D2D;
+  border-radius: 10px;
+  font-size: 13px; font-weight: 500;
+}
 </style>
 
+<div class="scorecard-subnav" aria-label="Scorecard progress">
+  <span id="navProgress">0 / 15</span>
+  <div class="nav-progress-bar"><div class="fill" id="navProgressBar"></div></div>
+  <div class="nav-score-pill" id="navPill" style="display:none;">
+    Score: <span id="navScore">0</span> / 100
+  </div>
+</div>
 <section class="hero">
   <span class="section-tag">Free Assessment Tool</span>
   <h1>AI Valuation Impact <span class="light">Scan</span></h1>
   <p class="hero-sub">15 questions. The same ones a buyer's due diligence team would ask about your AI. Your answers determine whether AI lifts your multiple or compresses it.</p>
 </section>
 
-<!-- COMPANY INFO -->
+
+<section class="email-gate" id="emailGate">
+  <div class="email-gate-card">
+    <div class="email-gate-eyebrow">Start the scan</div>
+    <h2>Enter your email <em>to begin.</em></h2>
+    <p class="gate-sub">15 questions, 5 to 10 minutes. Indicative multiples at the end. We email you a copy of your results.</p>
+    <form class="email-gate-form" id="gateForm">
+      <input type="email" id="gateEmail" placeholder="you@company.com" required aria-label="Email address" />
+      <button type="submit">Start scorecard →</button>
+    </form>
+    <div class="email-gate-fine">No follow-up spam. Free.</div>
+    <div class="email-gate-error" id="gateError" style="display:none;"></div>
+  </div>
+</section>
+
+<div id="scorecardContent" style="display:none;">
 <section class="company-bar">
   <div class="company-inner">
     <div><label>Company</label><input type="text" id="companyName" placeholder="Your company name"></div>
@@ -1395,6 +1543,58 @@ section.hero { padding-top: 32px; }
 </section>
 
 <!-- FOOTER -->
+</div>
+
+<script is:inline>
+  // ===== Email gate handler =====
+  (function () {
+    var form = document.getElementById('gateForm');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var input = document.getElementById('gateEmail');
+      var errBox = document.getElementById('gateError');
+      var email = input.value.trim();
+      if (!email) return;
+
+      btn.disabled = true; btn.textContent = 'Loading…';
+      errBox.style.display = 'none';
+
+      // Capture lead immediately. Don't block UX on response — reveal scorecard either way.
+      var urlParams = new URLSearchParams(window.location.search);
+      var payload = {
+        action: 'landing',
+        source: 'scorecard-gate',
+        email: email,
+        submission_id: (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)),
+        landing_url: window.location.href,
+        utm_source: urlParams.get('utm_source') || '',
+        utm_medium: urlParams.get('utm_medium') || '',
+        utm_campaign: urlParams.get('utm_campaign') || '',
+        utm_content: urlParams.get('utm_content') || '',
+        utm_term: urlParams.get('utm_term') || ''
+      };
+
+      fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(function () { /* ignore — reveal anyway */ });
+
+      // Make email available to the legacy scorecard submit
+      window.userEmail = email;
+
+      // Reveal scorecard content
+      document.getElementById('emailGate').style.display = 'none';
+      document.getElementById('scorecardContent').style.display = 'block';
+
+      // Scroll to first scorecard section
+      var first = document.querySelector('.company-bar');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  })();
+</script>
 
 <script is:inline>
 // -- INDUSTRY CONFIGURATIONS FOR MULTIPLE MAPPING --
@@ -2367,7 +2567,7 @@ function revealResults() {
   var topRisks = scored.slice(0, 3).map(function(l) { return l.label + ': ' + l.text + ' (' + l.dim + ', ' + l.score + '/4)'; });
 
   var ctaEmailEl = document.querySelector('.cta-section input[type="email"]');
-  var email = userEmail || (ctaEmailEl ? ctaEmailEl.value.trim() : '');
+  var email = window.userEmail || userEmail || (ctaEmailEl ? ctaEmailEl.value.trim() : '');
 
   // Calculate multiple impact values
   const industryVal = document.getElementById('industry_v2').value;
@@ -2466,6 +2666,7 @@ document.addEventListener('click', function(e) {
     });
   }
 });
+
 </script>
 
 </Base>
