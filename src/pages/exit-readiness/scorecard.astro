@@ -1161,7 +1161,61 @@ footer {
   --muted: #8C8576;
 }
 body { background: var(--bg); }
-section.hero { padding-top: 32px; }
+
+/* ===== Editorial hero override (matches v4 style on other pages) ===== */
+.scorecard-hero {
+  text-align: center;
+  padding: 96px 24px 80px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.scorecard-hero .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.scorecard-hero .eyebrow-line {
+  width: 24px;
+  height: 1px;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+.scorecard-hero .eyebrow-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--body-text);
+}
+.scorecard-hero h1.display {
+  font-family: 'Newsreader', Georgia, serif;
+  font-variation-settings: "opsz" 60;
+  font-size: clamp(40px, 5.5vw, 60px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  color: var(--navy);
+  line-height: 1.08;
+  margin: 0 0 24px;
+}
+.scorecard-hero h1.display .accent {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-variation-settings: "opsz" 60;
+  font-weight: 500;
+  color: var(--teal);
+}
+.scorecard-hero .hero-sub {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  font-size: 19px;
+  color: var(--body-text);
+  line-height: 1.55;
+  max-width: 600px;
+  margin: 0 auto 0;
+}
 
 /* ===== Scorecard sub-nav (progress + score pill, sticky below Astro nav) ===== */
 .scorecard-subnav {
@@ -1289,9 +1343,12 @@ section.hero { padding-top: 32px; }
     Score: <span id="navScore">0</span> / 100
   </div>
 </div>
-<section class="hero">
-  <span class="section-tag">Free Assessment Tool</span>
-  <h1>AI Valuation Impact <span class="light">Scan</span></h1>
+<section class="hero scorecard-hero">
+  <div class="eyebrow center">
+    <span class="eyebrow-line"></span>
+    <span class="eyebrow-label">Free Assessment</span>
+  </div>
+  <h1 class="display">AI Valuation Impact <span class="accent">Scan.</span></h1>
   <p class="hero-sub">15 questions. The same ones a buyer's due diligence team would ask about your AI. Your answers determine whether AI lifts your multiple or compresses it.</p>
 </section>
 
