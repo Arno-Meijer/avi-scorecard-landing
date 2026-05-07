@@ -253,6 +253,9 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
   }
   .module-card h3 { font-family: var(--font-sans); color: var(--navy); font-size: 19px; }
   .module-card p { font-size: 14.5px; line-height: 1.65; }
+  /* Body p grows to fill available card height so the Output line
+     anchors at the same vertical position across all cards. */
+  .module-card p:not(.module-output) { flex: 1; }
   .module-output {
     font-family: var(--font-serif);
     font-style: italic;
@@ -277,6 +280,8 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
     background: var(--card-bg); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 32px 28px;
     box-shadow: var(--shadow); position: relative;
+    display: flex;
+    flex-direction: column;
   }
   .format-card.featured { border: 2px solid var(--teal); }
   .format-badge {
@@ -308,7 +313,9 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
     text-transform: uppercase;
     color: var(--teal); margin-bottom: 22px;
   }
-  .format-card ul { list-style: none; padding: 0; margin: 0 0 24px; }
+  /* List grows to fill available height so the Book a fit call CTA
+     anchors at the same vertical position across all format cards. */
+  .format-card ul { list-style: none; padding: 0; margin: 0 0 24px; flex: 1; }
   .format-card li {
     position: relative; padding-left: 22px;
     font-size: 14px; line-height: 1.6; color: var(--body-text);
