@@ -6,24 +6,28 @@ const modules = [
     title: 'AI Strategy',
     body:
       'Where to invest, where to wait, where to walk away. Built around your sector, your stage, and the data we have on what actually moves valuation.',
+    output: 'A sequenced investment plan with multiple impact estimates per option.',
     iconPath: '<circle cx="12" cy="12" r="3"/><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/>',
   },
   {
     title: 'P&L Impact',
     body:
       'Translating AI work into the numbers a board reviews. Revenue lift, margin contribution, cost-to-serve, headcount-equivalent leverage.',
+    output: 'A margin attribution model showing what each AI feature is doing per P&L line.',
     iconPath: '<polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/>',
   },
   {
     title: 'Implementation Oversight',
     body:
       'A measurement layer over your AI build. Are the deployments delivering. What needs to change. What gets rolled back at month twelve.',
+    output: 'Monthly board-ready reports plus quarterly roll-back / double-down recommendations.',
     iconPath: '<path d="M3 12h4l2-7 4 14 2-7h6"/>',
   },
   {
     title: 'Strategic Reviews',
     body:
       'Periodic deep-dives on AI investments, vendor decisions, build-versus-buy choices. Available on retainer for boards and ICs.',
+    output: 'A written verdict per question, with the benchmark data behind it.',
     iconPath: '<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>',
   },
 ];
@@ -32,6 +36,7 @@ const formats = [
   {
     name: 'Format · 01',
     title: 'Sprint',
+    tagline: 'Decision in six weeks.',
     duration: '6 weeks',
     items: [
       'Single AI question, deep-dive',
@@ -45,6 +50,7 @@ const formats = [
   {
     name: 'Format · 02',
     title: 'Project',
+    tagline: 'Build alongside you.',
     duration: '3 to 6 months',
     items: [
       'Strategy plus implementation oversight',
@@ -58,6 +64,7 @@ const formats = [
   {
     name: 'Format · 03',
     title: 'Fractional',
+    tagline: 'On-call discipline.',
     duration: 'Ongoing',
     items: [
       'Available 4 to 8 days a month',
@@ -83,7 +90,7 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
         <span class="eyebrow-line"></span>
         <span class="eyebrow-label">Service · Ongoing</span>
       </div>
-      <h1 class="display">AI work that has to <span class="accent">pay off.</span></h1>
+      <h1 class="display">AI work, all the way to the <span class="accent">P&amp;L.</span></h1>
       <p class="hero-sub">
         AI Value Advisory engagements. Strategy, P&amp;L impact, implementation, oversight.
         Scaled to your situation, from a 6-week sprint to ongoing fractional advisory.
@@ -118,6 +125,7 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
             </div>
             <h3>{m.title}</h3>
             <p>{m.body}</p>
+            <p class="module-output"><em>Output:</em> {m.output}</p>
           </article>
         ))}
       </div>
@@ -144,6 +152,7 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
             {f.featured && <span class="format-badge">Most common</span>}
             <div class="format-name">{f.name}</div>
             <h3>{f.title}</h3>
+            <div class="format-tagline">{f.tagline}</div>
             <div class="format-duration">{f.duration}</div>
             <ul>
               {f.items.map((item) => <li>{item}</li>)}
@@ -244,6 +253,21 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
   }
   .module-card h3 { font-family: var(--font-sans); color: var(--navy); font-size: 19px; }
   .module-card p { font-size: 14.5px; line-height: 1.65; }
+  .module-output {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--navy);
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .module-output em {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--teal);
+  }
 
   /* FORMATS */
   .formats-grid {
@@ -271,12 +295,18 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
   }
   .format-card h3 {
     font-family: var(--font-serif); font-variation-settings: "opsz" 36;
-    font-size: 28px; color: var(--navy); margin-bottom: 6px;
+    font-size: 28px; color: var(--navy); margin-bottom: 4px;
     letter-spacing: -0.5px;
   }
-  .format-duration {
+  .format-tagline {
     font-family: var(--font-serif); font-style: italic;
-    font-size: 14px; color: var(--teal); margin-bottom: 20px;
+    font-size: 16px; color: var(--navy); margin-bottom: 6px;
+  }
+  .format-duration {
+    font-family: var(--font-sans);
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--teal); margin-bottom: 22px;
   }
   .format-card ul { list-style: none; padding: 0; margin: 0 0 24px; }
   .format-card li {
