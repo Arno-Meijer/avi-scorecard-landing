@@ -237,6 +237,7 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
   .modules { background: var(--soft-bg); }
   .modules-grid {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    align-items: start;
   }
   .module-card {
     background: var(--card-bg); border: 1px solid var(--border);
@@ -253,15 +254,15 @@ const fitUrl = 'https://cal.com/christan-doornhof-bgrvnw/ai-exit-readiness-revie
   }
   .module-card h3 { font-family: var(--font-sans); color: var(--navy); font-size: 19px; }
   .module-card p { font-size: 14.5px; line-height: 1.65; }
-  /* Body p grows to fill available card height so the Output line
-     anchors at the same vertical position across all cards. */
-  .module-card p:not(.module-output) { flex: 1; }
+  /* Body has a fixed min-height so the Output divider anchors at the
+     same vertical position across all four cards, regardless of how
+     many lines either body or output ends up wrapping to. */
+  .module-card p:not(.module-output) { min-height: 6.6em; }
   .module-output {
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 14px;
     color: var(--navy);
-    margin-top: auto;
     padding-top: 14px;
     border-top: 1px solid var(--border);
     line-height: 1.5;
